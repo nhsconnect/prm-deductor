@@ -6,11 +6,14 @@ describe('When generating a request', () => {
     let result;
 
     beforeAll(async () => {
-        result = await main.handler({});
+        let event = {
+            patient_nhs_number: 12345,
+        };
+        result = await main.handler(event);
     })
 
     test("it should return the expected xml", async () => {
-        let expected_xml = helper.get_ehr_extract(12345, "ABC123", "DEF456");
+        let expected_xml = helper.get_ehr_extract(12345, "XYZ987", "DEF456");
         expect(result).toBe(expected_xml);
     });
 
