@@ -5,10 +5,10 @@ module.exports = () => {
       files: [
         'src/*.js', 
         'test/*.js', 
-        '!test/*.test.js'
+        '!test/*.spec.js'
       ],
       tests: [
-        'test/*.test.js'
+        'test/*.spec.js'
         ],
       hints: {
         ignoreCoverageForFile: /ignore file coverage/,
