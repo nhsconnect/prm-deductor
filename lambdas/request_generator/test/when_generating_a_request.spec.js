@@ -22,6 +22,12 @@ describe('When generating a request', () => {
             if (nhsNumber === event.patient_nhs_number) return fake_patient_most_recent_practice_code;
         };
 
+        ldap_spine_client.does_sending_practice_support_gp2gp = function(arg) {
+            if (arg === fake_patient_most_recent_practice_code) {
+                return true;
+            }
+        }
+
         result = await main.handler(event);
     })
 

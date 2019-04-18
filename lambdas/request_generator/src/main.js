@@ -1,5 +1,6 @@
 const helper = require("./helper");
 const pds_client = require("./pds_client");
+const ldap_spine_client = require("./ldap_spine_client");
 
 exports.handler = async (event) => {
     const deduction_org_id = "DEF456";
@@ -7,9 +8,13 @@ exports.handler = async (event) => {
 
     pds_client.update_patient_practice(deduction_org_id);
 
-    let ehr_extract = helper.get_ehr_extract(event.patient_nhs_number, 
+    let ehr_extract;
+
+    if (ldap_spine_client.does_sending_practice_support_gp2gp(patient_most_recent_practice_code)) {
+        ehr_extract = helper.get_ehr_extract(event.patient_nhs_number, 
                                              patient_most_recent_practice_code,
                                              deduction_org_id);
+    }
 
     return ehr_extract;
 }
