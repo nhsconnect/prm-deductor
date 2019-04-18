@@ -8,8 +8,9 @@ jest.mock("../src/ldap_spine_client");
 describe('When generating a request', () => {
 
     let event;
-    const deduction_org_id = "DEF456";
     let result;
+    
+    const deduction_org_id = "DEF456";
     const fake_patient_most_recent_practice_code = "XYZ987";
     const spyPDSClient = jest.spyOn( pds_client, 'update_patient_practice' );
 
