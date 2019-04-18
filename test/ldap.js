@@ -55,6 +55,42 @@ exports.startServer = async function() {
             uniqueIdentifier: 12345,
             nhsMhsPartyKey: "P6666-0001236"
           }
+        },
+        {
+          dn: req.dn.toString(),
+          attributes: {
+            objectclass: ['nhsMhs', 'top'],
+            nhsMhsPartyKey: "P77777-0001234",
+            nhsMhsSvcIA: "urn:nhs:names:services:gp2gp:RCMR_IN010000UK05",
+            nhsMhsEndpoint: "urn:nhs:test:endpoint",
+            nhsMhsIsAuthenticated: true,
+            nhsMhsPersistduration: 30,
+            nhsMhsRetries: 3,
+            nhsMhsRetryInterval: 30,
+            nhsMhsSyncReplyMode: "always",
+            nhsMhsAckRequested: true,
+            nhsMhsDuplicateElimination: false,
+            nhsMhsActor: "7777777",
+            nhsMhsCPAId: "123456"
+          }
+        },
+        {
+          dn: req.dn.toString(),
+          attributes: {
+            objectclass: ['nhsMhs', 'top'],
+            nhsMhsPartyKey: "P77777-0001234",
+            nhsMhsSvcIA: "urn:nhs:names:services:gp2gp:RCMR_IN010000UK05",
+            nhsMhsEndpoint: "urn:nhs:test:endpoint",
+            nhsMhsIsAuthenticated: true,
+            nhsMhsPersistduration: 30,
+            nhsMhsRetries: 3,
+            nhsMhsRetryInterval: 30,
+            nhsMhsSyncReplyMode: "always",
+            nhsMhsAckRequested: true,
+            nhsMhsDuplicateElimination: false,
+            nhsMhsActor: "77777",
+            nhsMhsCPAId: "000000"
+          }
         }
       ]
 

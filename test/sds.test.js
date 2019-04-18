@@ -60,6 +60,14 @@ describe("When retrieving message handling details", () => {
         })
     })
 
+    test("and no message handling info are returned, an error is thrown", () => {
+        return expect(getMessageHandlingInfo(client, "P44444-0001234")).rejects.toThrowError('No matching entries')
+    })
+
+    test("and more than one message handling info is returned, an error is thrown", () => {
+        return expect(getMessageHandlingInfo(client, "P77777-0001234")).rejects.toThrowError('Greater than one matching entry')
+    })
+
     test("the details are returned", () => {
         return expect(sds.getMessageHandlingDetails(ldap.server.url, "P83020")).resolves.toEqual({
             nhsMhsEndpoint: ["urn:nhs:test:endpoint"],

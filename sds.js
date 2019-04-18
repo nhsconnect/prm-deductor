@@ -64,6 +64,7 @@ function getMessageHandlingInfo(client, partyKey) {
     return new Promise((resolve, reject) => {
         return client.search("ou=services,o=nhs", opts, (err, res) => {
           let match = {}
+          let count = 0
 
           res.on('searchEntry', (entry) => {
               entry.attributes.forEach(element => {
@@ -72,11 +73,18 @@ function getMessageHandlingInfo(client, partyKey) {
                       match[element.type].push(val.toString('utf-8'))
                   })
               })
+              count++
           })
 
           res.on('end', (result) => {
+            if (count===0) {
+                reject(new Error('No matching entries'))
+            }
+            if (count>1) {
+                reject(new Error('Greater than one matching entry'))
+            }
             resolve(match)
-          })
+        })
       })
     })
 }
