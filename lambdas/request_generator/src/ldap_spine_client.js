@@ -1,3 +1,3 @@
-exports.does_sending_practice_support_gp2gp = (sending_practice_code) => {
+exports.retrieve_message_contract_details_for_practice = (sending_practice_code) => {
 
 }

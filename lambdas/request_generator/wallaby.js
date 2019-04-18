@@ -8,7 +8,7 @@ module.exports = () => {
         '!test/*.spec.js'
       ],
       tests: [
-        'test/*.spec.js'
+        'test/**/*.spec.js'
         ],
       hints: {
         ignoreCoverageForFile: /ignore file coverage/,

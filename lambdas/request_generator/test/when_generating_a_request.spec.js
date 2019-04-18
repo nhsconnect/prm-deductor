@@ -2,14 +2,12 @@ const main = require("../src/main");
 const helper = require("../src/helper");
 const pds_client = require("../src/pds_client");
 jest.mock("../src/pds_client");
-const ldap_spine_client = require("../src/ldap_spine_client");
-jest.mock("../src/ldap_spine_client");
 
 describe('When generating a request', () => {
 
     let event;
     let result;
-    
+
     const deduction_org_id = "DEF456";
     const fake_patient_most_recent_practice_code = "XYZ987";
     const spyPDSClient = jest.spyOn( pds_client, 'update_patient_practice' );
@@ -22,12 +20,6 @@ describe('When generating a request', () => {
         pds_client.retrieve_most_recent_practice_code_for = function(nhsNumber) { 
             if (nhsNumber === event.patient_nhs_number) return fake_patient_most_recent_practice_code;
         };
-
-        ldap_spine_client.does_sending_practice_support_gp2gp = function(arg) {
-            if (arg === fake_patient_most_recent_practice_code) {
-                return true;
-            }
-        }
 
         result = await main.handler(event);
     })
