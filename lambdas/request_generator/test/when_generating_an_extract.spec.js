@@ -29,7 +29,7 @@ describe('When generating an extract', () => {
     })
 
     test("it should return the expected xml", async () => {
-        let expected_xml = helper.get_ehr_extract(event.patient_nhs_number, 
+        let expected_xml = helper.build_ehr_extract(event.patient_nhs_number, 
                                                   fake_patient_most_recent_practice_code,
                                                   deduction_org_id);
         expect(result).toBe(expected_xml);
