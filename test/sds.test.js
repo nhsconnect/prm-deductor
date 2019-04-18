@@ -54,7 +54,20 @@ describe("When retrieving message handling details", () => {
         })
     })
 
-    test("the details are returned when exactly one entry matches", async () => {
-        expect(sds.getMessageHandlingDetails(ldap.server.url, "P83020")).resolves.toBeDefined()
+    test("the details are returned", async () => {
+        let messageHandlingDetails = sds.getMessageHandlingDetails(ldap.server.url, "P83020")
+        expect(messageHandlingDetails).resolves.toEqual({
+            nhsMhsPartyKey: "P83020-0005239",
+            nhsMhsEndpoint: "urn:nhs:test:endpoint",
+            nhsMhsIsAuthenticated: true,
+            nhsMhsPersistduration: 30,
+            nhsMhsRetries: 3,
+            nhsMhsRetryInterval: 30,
+            nhsMhsSyncReplyMode: "always",
+            nhsMhsAckRequested: true,
+            nhsMhsDuplicateElimination: false,
+            nhsMhsActor: "66666",
+            nhsMhsCPAId: "123456"
+        })
     })
 })

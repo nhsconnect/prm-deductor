@@ -7,13 +7,10 @@ exports.getMessageHandlingDetails = async function getMessageHandlingDetails(url
 
     try {
       var result = await getServiceDetails(client, odsCode)
-      console.log(result)
-      // var parsedResult = createServiceDetailsResponse(result)
-      return result
+      return await getMessageHandlingDetails(client, serviceDetails.nhsMhsPartyKey[0])
     } finally {
       client.destroy()
     }
-    // return await getMessageHandlingDetails(client, serviceDetails.partyCode)
 }
 
 function getServiceDetails(client, odsCode) {
