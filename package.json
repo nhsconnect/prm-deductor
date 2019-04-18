@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "get-port": "^5.0.0",
-    "jest": "^24.7.1"
+    "jest": "^24.7.1",
+    "rewire": "^4.0.1"
   }
 }

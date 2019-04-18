@@ -33,7 +33,7 @@ exports.startServer = async function() {
           objectclass: ['nhsAs', 'top'],
           nhsIDCode: "P83020",
           nhsAsSvcIA: "urn:nhs:names:services:gp2gp:RCMR_IN010000UK05",
-          uniqueIdentifier: "12345",
+          uniqueIdentifier: 12345,
           nhsMhsPartyKey: "P83020-0005239"
         }
       }; 
