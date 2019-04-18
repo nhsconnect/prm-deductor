@@ -6,26 +6,6 @@ var server = ldap.createServer()
 exports.server = server
 
 exports.startServer = async function() { 
-    server.search('ou=organisation,o=nhs', function(req, res, next) {
-      var practice = {
-        dn: req.dn.toString(),
-        attributes: {
-          objectclass: ['nhsGPPractice', 'top'],
-          nhsIDCode: "P83020",
-          o: "My GP",
-          postaladdress: "This is a postal address",
-          postalcode: "AB234XY",
-          telephonenumber: "01234 576890"
-        }
-      };
-     
-      if (req.filter.matches(practice.attributes)) {
-        res.send(practice);
-      }
-    
-      res.end();
-    });
-    
     server.search('ou=services,o=nhs', function(req, res, next) {
       var autonomousService = {
         dn: req.dn.toString(),
@@ -44,16 +24,16 @@ exports.startServer = async function() {
           objectclass: ['nhsMhs', 'top'],
           nhsMhsPartyKey: "P83020-0005239",
           nhsMhsSvcIA: "urn:nhs:names:services:gp2gp:RCMR_IN010000UK05",
-          nhsMhsEndpoint: "fish",
-          nhsMhsIsAuthenticated: "chips",
-          nhsMhsPersistduration: "puish",
-          nhsMhsRetries: "posh",
-          nhsMhsRetryInterval: "lash",
-          nhsMhsSyncReplyMode: "leash",
-          nhsMhsAckRequested: "link",
-          nhsMhsDuplicateElimination: "lanky",
-          nhsMhsActor: "hunky",
-          nhsMhsCPAId: "wonky"
+          nhsMhsEndpoint: "urn:nhs:test:endpoint",
+          nhsMhsIsAuthenticated: true,
+          nhsMhsPersistduration: 30,
+          nhsMhsRetries: 3,
+          nhsMhsRetryInterval: 30,
+          nhsMhsSyncReplyMode: "always",
+          nhsMhsAckRequested: true,
+          nhsMhsDuplicateElimination: false,
+          nhsMhsActor: "66666",
+          nhsMhsCPAId: "123456"
         }
       }
     

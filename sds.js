@@ -43,10 +43,10 @@ function getServiceDetails(client, odsCode) {
     })
 }
 
-function getMessageHandlingDetails(client, partyCode) {
+function getMessageHandlingInfo(client, partyKey) {
     let opts = {
         filter: `
-            (&(nhsMhsPartyKey=${partyCode})(objectlass=nhsMhs)
+            (&(nhsMhsPartyKey=${partyKey})(objectlass=nhsMhs)
                 (nhsMhsSvcIA=urn:nhs:names:services:gp2gp:RCMR_IN010000UK05))`,
         scope: 'sub',
         attributes: ['nhsMhsEndPoint', 'nhsMhsIsAuthenticated', 'nhsMhsPersistduration', 'nhsMhsRetries',
