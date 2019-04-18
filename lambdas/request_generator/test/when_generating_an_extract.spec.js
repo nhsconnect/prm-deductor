@@ -3,7 +3,7 @@ const helper = require("../src/helper");
 const pds_client = require("../src/pds_client");
 jest.mock("../src/pds_client");
 
-describe('When generating a request', () => {
+describe('When generating an extract', () => {
 
     let event;
     let result;

@@ -7,7 +7,7 @@ exports.handler = async (event) => {
 
     pds_client.update_patient_practice(deduction_org_id);
 
-    let ehr_extract = helper.get_ehr_extract(event.patient_nhs_number, 
+    let ehr_extract = helper.build_ehr_extract(event.patient_nhs_number, 
         patient_most_recent_practice_code,
         deduction_org_id);
         
