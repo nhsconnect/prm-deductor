@@ -43,6 +43,9 @@ function getServiceDetails(client, odsCode) {
               if (count===0) {
                   reject(new Error('No matching entries'))
               }
+              if (count>1) {
+                  reject(new Error('Greater than one matching entry'))
+              }
               resolve(match)
             })
         })

@@ -38,7 +38,11 @@ describe("When retrieving message handling details", () => {
     })
 
     test("and no serviceDetails are returned, an error is thrown", () => {
-        return expect(getServiceDetails(client, "P44444")).rejects.toEqual(new Error('No matching entries'))
+        return expect(getServiceDetails(client, "P44444")).rejects.toThrowError('No matching entries')
+    })
+
+    test("and more than one service is returned, an error is thrown", () => {
+        return expect(getServiceDetails(client, "P6666")).rejects.toThrowError('Greater than one matching entry')
     })
 
     test("the message handling info is returned", () => {
