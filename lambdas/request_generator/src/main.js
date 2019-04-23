@@ -1,4 +1,4 @@
-const helper = require("./helper");
+const message_builder = require("./message_builder");
 const pds_client = require("./pds_client");
 
 exports.handler = async (event) => {
@@ -7,9 +7,9 @@ exports.handler = async (event) => {
 
     pds_client.update_patient_practice(deduction_org_id);
 
-    let ehr_extract = helper.build_ehr_extract(event.patient_nhs_number, 
+    let ehr_request = message_builder.build_ehr_request(event.patient_nhs_number, 
         patient_most_recent_practice_code,
         deduction_org_id);
         
-    return ehr_extract;
+    return ehr_request;
 }

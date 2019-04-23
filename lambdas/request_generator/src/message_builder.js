@@ -1,4 +1,4 @@
-exports.build_ehr_extract = (nhsNumber, authorOrgId, destOrgId) => {
+exports.build_ehr_request = (nhsNumber, authorOrgId, destOrgId) => {
     return `<EhrRequest xmlns="urn:hl7-org:v3" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msg="urn:hl7-org:v3/mif" xmlns:voc="urn:hl7-org:v3/voc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:hl7-org:v3 ../../Schemas/RCMR_MT010101UK03.xsd" classCode="EXTRACT" moodCode="RQO">
                 <id root="BBBBA01A-A9D1-A411-F824-9F7A00A33757"/>
                 <recordTarget typeCode="RCT">

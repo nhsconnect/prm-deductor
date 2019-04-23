@@ -1,9 +1,9 @@
 const main = require("../src/main");
-const helper = require("../src/helper");
+const message_builder = require("../src/message_builder");
 const pds_client = require("../src/pds_client");
 jest.mock("../src/pds_client");
 
-describe('When generating an extract', () => {
+describe('When generating a request', () => {
 
     let event;
     let result;
@@ -29,7 +29,7 @@ describe('When generating an extract', () => {
     })
 
     test("it should return the expected xml", async () => {
-        let expected_xml = helper.build_ehr_extract(event.patient_nhs_number, 
+        let expected_xml = message_builder.build_ehr_request(event.patient_nhs_number, 
                                                   fake_patient_most_recent_practice_code,
                                                   deduction_org_id);
         expect(result).toBe(expected_xml);

@@ -1,4 +1,4 @@
-const helper = require("./helper");
+const helper = require("./message_builder");
 const ldap_spine_client = require("./ldap_spine_client");
 const convert = require('xml-js');
 

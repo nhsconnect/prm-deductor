@@ -1,5 +1,5 @@
 const message_generator = require("../src/message_generator");
-const helper = require("../src/helper");
+const helper = require("../src/message_builder");
 const ldap_spine_client = require("../src/ldap_spine_client");
 jest.mock("../src/ldap_spine_client");
 
@@ -12,7 +12,7 @@ describe('When generating a message', () => {
     beforeAll(async () => {
 
         const destination_practice_code = "DEST456";
-        extract = helper.build_ehr_extract(12345, "AUTH123", destination_practice_code);
+        extract = helper.build_ehr_request(12345, "AUTH123", destination_practice_code);
 
         contract_details = {
             nhsMhsEndPoint: "blah-abba"
