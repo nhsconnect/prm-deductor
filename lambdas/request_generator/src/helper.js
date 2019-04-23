@@ -25,6 +25,7 @@ exports.build_ehr_extract = (nhsNumber, authorOrgId, destOrgId) => {
 
 exports.build_message = (ehr_extract, contract_details) => {
     return `<SomeMessage>
+                <EndPoint>${contract_details.nhsMhsEndPoint}</EndPoint>
                 <Subject>${ehr_extract}</Subject>
             </SomeMessage>`;
 }
