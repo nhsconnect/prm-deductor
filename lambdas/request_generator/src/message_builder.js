@@ -26,6 +26,15 @@ exports.build_ehr_request = (nhsNumber, authorOrgId, destOrgId) => {
 exports.build_message = (ehr_extract, contract_details) => {
     return `<SomeMessage>
                 <EndPoint>${contract_details.nhsMhsEndPoint}</EndPoint>
+                <IsAuthenticated>${contract_details.nhsMhsIsAuthenticated}</IsAuthenticated>
+                <PersistDuration>${contract_details.nhsMhsPersistduration}</PersistDuration>
+                <Retries>${contract_details.nhsMhsRetries}</Retries>
+                <RetryInterval>${contract_details.nhsMhsRetryInterval}</RetryInterval>
+                <SyncReplyMode>${contract_details.nhsMhsSyncReplyMode}</SyncReplyMode>
+                <AckRequested>${contract_details.nhsMhsAckRequested}</AckRequested>
+                <DuplicateElimination>${contract_details.nhsMhsDuplicateElimination}</DuplicateElimination>
+                <Actor>${contract_details.nhsMhsActor}</Actor>
+                <CPAId>${contract_details.nhsMhsCPAId}</CPAId>
                 <Subject>${ehr_extract}</Subject>
             </SomeMessage>`;
 }
