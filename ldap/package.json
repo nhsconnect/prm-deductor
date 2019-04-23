@@ -1,0 +1,19 @@
+{
+  "name": "prm-ldap-spike",
+  "version": "1.0.0",
+  "description": "Investigate how to build and populate an LDAP server for mocking SDS",
+  "main": "query.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ldapjs": "^1.0.2"
+  },
+  "devDependencies": {
+    "get-port": "^5.0.0",
+    "jest": "^24.7.1",
+    "rewire": "^4.0.1"
+  }
+}
