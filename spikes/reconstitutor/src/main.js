@@ -8,7 +8,7 @@ exports.retrieve_master_file = async (content) => {
     fileInfoCollection.forEach(fileInfo => {
         files.push(fileParser.parseFile(fileInfo));
     });
-    
+
     return {
         name,
         content,
