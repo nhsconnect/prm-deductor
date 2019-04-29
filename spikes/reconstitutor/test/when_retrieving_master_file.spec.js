@@ -1,12 +1,11 @@
 const main = require("../src/main");
+const given = require("./given");
 
 describe('When checking my tests work', () => {
     let fileContent;
 
     beforeAll(async () => {
-        let content = `------=_Part_82_12073865.1555409597528
-                    <eb:Manifest
-                    otherthings<RCMR_IN030000UK06evenmorethings<EhrExtractmorethings`;
+        let content = given.fragmentContent;
 
         fileContent = await main.retrieve_master_file(content);
     })
