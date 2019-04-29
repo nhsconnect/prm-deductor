@@ -16,7 +16,7 @@ describe("When receiving a message from the Spine server,", () => {
     test("we response with a 202", () => {
         let options = {
             method : 'POST',
-            uri: 'http://localhost:4003',
+            uri: 'http://localhost:4444',
             resolveWithFullResponse: true
         }
         return expect(request(options)).resolves.toHaveProperty('statusCode', 202)
