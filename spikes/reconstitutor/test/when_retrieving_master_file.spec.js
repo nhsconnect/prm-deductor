@@ -4,7 +4,11 @@ describe('When checking my tests work', () => {
     let fileContent;
 
     beforeAll(async () => {
-        fileContent = await main.retrieve_master_file();
+        let content = `------=_Part_82_12073865.1555409597528
+                    <eb:Manifest
+                    otherthings<RCMR_IN030000UK06evenmorethings<EhrExtractmorethings`;
+
+        fileContent = await main.retrieve_master_file(content);
     })
 
     test("it should contain the message completed element", async () => {
@@ -22,4 +26,5 @@ describe('When checking my tests work', () => {
     test("it should have a name", async () => {
         expect(fileContent.name).toBe('Part_82_12073865.1555409597528');
     });
+
 });
