@@ -5,7 +5,7 @@ const path = require('path');
 exports.send = async function() {
     const options = {
         method: 'POST',
-        uri: 'http://localhost:4001/reliablemessaging/queryrequest',
+        
         multipart: [
             {
                 'content-type': 'text/xml; charset=UTF-8',

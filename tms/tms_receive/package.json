@@ -1,0 +1,17 @@
+{
+  "name": "tms_receive",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tms_receive.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^24.7.1"
+  },
+  "dependencies": {
+    "request-promise-native": "^1.0.7"
+  }
+}
