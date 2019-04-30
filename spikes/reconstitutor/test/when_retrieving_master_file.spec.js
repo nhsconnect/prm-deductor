@@ -28,12 +28,31 @@ describe('When retrieving master file', () => {
     test("it should have 6 files", async () => {
         expect(fragment.files.length).toBe(6);
     });
-
-    test("it should have 2 standard attachments in the file collection", async () => {
-        expect(fragment.files.filter(file => file.largeAttachment === false).length).toBe(2);
-    });
     
     test("it should have 4 large attachments in the file collection", async () => {
-        expect(fragment.files.filter(file => file.largeAttachment).length).toBe(4);
+        let largeAttachments = fragment.files.filter(file => file.largeAttachment);
+        expect(largeAttachments.length).toBe(4);
+    });
+
+    test("it should have 2 standard attachments in the file collection", async () => {
+        let standardAttachments = fragment.files.filter(file => file.largeAttachment === false);
+        expect(standardAttachments.length).toBe(2);
+    });
+
+    test("the standard files should also have their data", async () => {
+        let standardAttachments = fragment.files.filter(file => file.largeAttachment === false);
+        standardAttachments.forEach(attachment => {
+            expect(attachment.data).not.toBeUndefined();
+        });
+    });
+
+    xtest("the first attachment should have the expected data", async () => {
+        let standardAttachments = fragment.files.filter(file => file.largeAttachment === false);
+        expect(standardAttachments[0].data).toBe('2Zp8aeOjOf5EW4A+flpBXBueVnj08I8y66O3uoAW+huk2ak/4d/cKJ2XSnPKfwHFdVvQAF4GAA==');
+    });
+
+    xtest("the second attachment should have the expected data", async () => {
+        let standardAttachments = fragment.files.filter(file => file.largeAttachment === false);
+        expect(standardAttachments[1].data).toBe('8TW8CYaLmjADP/kYvf/4+e2ZnjXleZ/+6vG//H+uHzTqR863AA==');
     });
 });

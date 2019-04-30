@@ -1,5 +1,8 @@
-exports.parseFile = (ebDescriptionText) => {
-    const fileInfo = ebDescriptionText.slice(30);
+exports.parseFile = (ebReferenceText) => {
+    let id = ebReferenceText.match(/xlink\:href=\"(.*?)(?=\"\s)/g)[0].slice(12);  //?
+
+    let fileDescription = getAllFileDescriptions(ebReferenceText)[0]; //?
+    const fileInfo = fileDescription.slice(30); //?
     let name = fileInfo.match(/Filename=\"(.*?)(?=\"\s)/g)[0].slice(10); 
     let contentType = fileInfo.match(/ContentType=(.*?)(?=\s)/g)[0].slice(12); 
     let largeAttachment = fileInfo.match(/LargeAttachment=(.*?)(?=\s)/g)[0].slice(16) === 'Yes'; 
@@ -8,6 +11,7 @@ exports.parseFile = (ebDescriptionText) => {
     let fileLength = parseInt(lastInstanceOfLengthInText.match(/Length=(\d*?)(?=\s|\<)/g)[0].slice(7)); 
     
     let file = {
+        id,
         name,
         contentType,
         largeAttachment,
@@ -15,4 +19,8 @@ exports.parseFile = (ebDescriptionText) => {
     };
 
     return file;
+}
+
+function getAllFileDescriptions(content) {
+    return content.match(/(\<eb\:Description xml\:lang=\"en\"\>Filename)(.*?)\<\/eb\:Description\>/g);
 }
