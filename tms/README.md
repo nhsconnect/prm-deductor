@@ -7,3 +7,7 @@ Ensure you have a JRE of 1.7.0 or higher installed.
 2. Download the latest version of the Spine ITK Testbench
 3. Install the jar by double-clicking on it. Select the location where you want to install the Testbench to and click install.
 
+# Create CA and certificates
+To talk to Spine using mTLS, you need to create a CA and certificates like so:
+
+1. Run `./create-certs.sh`
