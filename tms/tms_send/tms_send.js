@@ -2,10 +2,19 @@ const requestPromise = require('request-promise-native');
 const fs = require('fs');
 const path = require('path');
 
+const CA_DATA = fs.readFileSync(path.resolve(__dirname, "../tls/trust.pem"))
+const CERT = fs.readFileSync(path.resolve(__dirname, "../tls/test.crt"))
+const KEY = fs.readFileSync(path.resolve(__dirname, "../tls/test.key"))
+
 exports.send = async function() {
     const options = {
         method: 'POST',
-        uri: 'http://localhost:4001/reliablemessaging/queryrequest',
+        uri: 'https://localhost:4001/reliablemessaging/queryrequest',
+        agentOptions: {
+            cert: CERT,
+            key: KEY,
+            ca: CA_DATA
+        },
         multipart: [
             {
                 'content-type': 'text/xml; charset=UTF-8',
