@@ -3,6 +3,7 @@ const fileParser = require('./fileParser');
 exports.retrieve_master_file = async (content) => {
     let name = getName(content);
     let files = getAllFiles(content);
+
     
     // for all attachments, add their data to the file
 

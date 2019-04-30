@@ -28,4 +28,12 @@ describe('When retrieving master file', () => {
     test("it should have 6 files", async () => {
         expect(fragment.files.length).toBe(6);
     });
+
+    test("it should have 2 standard attachments in the file collection", async () => {
+        expect(fragment.files.filter(file => file.largeAttachment === false).length).toBe(2);
+    });
+    
+    test("it should have 4 large attachments in the file collection", async () => {
+        expect(fragment.files.filter(file => file.largeAttachment).length).toBe(4);
+    });
 });
