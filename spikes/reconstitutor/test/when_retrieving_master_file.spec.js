@@ -46,12 +46,12 @@ describe('When retrieving master file', () => {
         });
     });
 
-    xtest("the first attachment should have the expected data", async () => {
+    test("the first attachment should have the expected data", async () => {
         let standardAttachments = fragment.files.filter(file => file.largeAttachment === false);
         expect(standardAttachments[0].data).toBe('2Zp8aeOjOf5EW4A+flpBXBueVnj08I8y66O3uoAW+huk2ak/4d/cKJ2XSnPKfwHFdVvQAF4GAA==');
     });
 
-    xtest("the second attachment should have the expected data", async () => {
+    test("the second attachment should have the expected data", async () => {
         let standardAttachments = fragment.files.filter(file => file.largeAttachment === false);
         expect(standardAttachments[1].data).toBe('8TW8CYaLmjADP/kYvf/4+e2ZnjXleZ/+6vG//H+uHzTqR863AA==');
     });
