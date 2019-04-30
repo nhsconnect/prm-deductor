@@ -1,18 +1,29 @@
-exports.appendDataToStandardAttachments = (parsedMasterFile) => {
-    let standardAttachments = parsedMasterFile.attachments.filter(file => file.largeAttachment === false);
+exports.appendDataToStandardAttachments = (masterFile) => {
+    let standardAttachments = masterFile.attachments.filter(file => file.largeAttachment === false);
+    let attachmentParts = getAllAttachmentParts(masterFile);
 
-    let attachmentParts = parsedMasterFile.content.split(`------=_${parsedMasterFile.name}`).filter(part => {
+    standardAttachments.forEach(standardAttachment => {
+        standardAttachment.data = getAttachmentData(attachmentParts, standardAttachment.id);
+    });
+
+    return masterFile;
+}
+
+function getAllAttachmentParts(masterFile) {
+    return masterFile.content.split(`------=_${masterFile.name}`).filter(part => {
         return part.length != 0 && part.indexOf('<Attachment') > -1
     });
-    standardAttachments.forEach(standardAttachment => {
-        let x = attachmentParts.find(attachment => {
-            return attachment.indexOf(standardAttachment.id) > -1
-        })
-        let data = x.split('\n').filter(line => {
-            return line.length != 0 && line.indexOf('Content-') === -1
-        }).join('');
-        standardAttachment.data = data;
-    });
+}
 
-    return parsedMasterFile;
+function getAttachmentData(attachmentParts, attachmentId) {
+    let partWithData = attachmentParts.find(attachmentPart => {
+        return attachmentPart.indexOf(attachmentId) > -1
+    });
+    return getDataSegment(partWithData);
+}
+
+function getDataSegment(partWithData) {
+    return partWithData.split('\n').filter(line => {
+        return line.length != 0 && line.indexOf('Content-') === -1
+    }).join('');
 }
