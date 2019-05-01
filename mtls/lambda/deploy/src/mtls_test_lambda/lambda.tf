@@ -1,3 +1,5 @@
+data "aws_caller_identity" "current" {}
+
 locals {
   function_name = "mtls-test-${var.environment}"
 }
