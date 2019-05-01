@@ -16,7 +16,10 @@ prod_dep/node_modules : package.json
 node_modules package-lock.json : package.json
 	npm install
 
-test : node_modules $(source) test/*.js
+test/tls : create-certs.sh
+	./create-certs.sh
+
+test : node_modules test/tls $(source) test/*.js
 	npm test
 
 clean :

@@ -10,7 +10,7 @@ exports.createServer = (options) => {
   })
 
   server.startServer = () => {
-    server.listen(4444)
+    server.listen(options.port)
   }
 
   return server
