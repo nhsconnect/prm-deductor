@@ -1,0 +1,14 @@
+{
+  "name": "mtls_endpoint",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^24.7.1"
+  }
+}
