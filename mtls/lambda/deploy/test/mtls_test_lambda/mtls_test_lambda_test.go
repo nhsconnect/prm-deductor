@@ -5,11 +5,13 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
-
+	"github.com/aws/aws-sdk-go/service/lambda"
 	"github.com/aws/aws-sdk-go/service/sts"
 	"github.com/gruntwork-io/terratest/modules/random"
 	"github.com/gruntwork-io/terratest/modules/terraform"
+	"github.com/stretchr/testify/assert"
 )
 
 func generateEnvironmentName() string {
@@ -64,4 +66,18 @@ func TestMtlsTestLambdaDeploy(t *testing.T) {
 
 	defer terraform.Destroy(t, setupOptions)
 	terraform.InitAndApply(t, setupOptions)
+
+	functionName := terraform.Output(t, setupOptions, "function_name")
+
+	config := &aws.Config{Region: aws.String("eu-west-2")}
+	sess := session.Must(session.NewSession(config))
+	client := lambda.New(sess)
+	invocationType := lambda.InvocationTypeEvent
+
+	_, err := client.Invoke(&lambda.InvokeInput{
+		InvocationType: &invocationType,
+		FunctionName:   &functionName,
+	})
+
+	assert.Nil(t, err)
 }

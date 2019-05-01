@@ -99,3 +99,4 @@ typings/
 prod_dep/
 *.zip
 vendor/
+.idea/

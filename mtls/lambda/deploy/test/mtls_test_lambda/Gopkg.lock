@@ -2,7 +2,7 @@
 
 
 [[projects]]
-  digest = "1:f7d87534782813b925f7297f89e598e0b6d4eeec97f81aadf8ab09e755d9db6e"
+  digest = "1:275bb1d09790bc3d99a46e3265495f89c70a61e1ff9bf200de50644706ee4e05"
   name = "github.com/aws/aws-sdk-go"
   packages = [
     "aws",
@@ -29,15 +29,27 @@
     "internal/sdkuri",
     "internal/shareddefaults",
     "private/protocol",
+    "private/protocol/json/jsonutil",
+    "private/protocol/jsonrpc",
     "private/protocol/query",
     "private/protocol/query/queryutil",
     "private/protocol/rest",
+    "private/protocol/restjson",
     "private/protocol/xml/xmlutil",
+    "service/lambda",
     "service/sts",
   ]
   pruneopts = "UT"
   revision = "754d07f5dfb0a42be29df8da4a5428a321377cb3"
   version = "v1.17.11"
+
+[[projects]]
+  digest = "1:ffe9824d294da03b391f44e1ae8281281b4afc1bdaa9588c9097785e3af10cec"
+  name = "github.com/davecgh/go-spew"
+  packages = ["spew"]
+  pruneopts = "UT"
+  revision = "8991bc29aa16c548c550c7ff78260e27b9ab7c73"
+  version = "v1.1.1"
 
 [[projects]]
   digest = "1:0198ff5d45c9767f5c38409b9aa25f58b139bcff4f8032d827e177095952e279"
@@ -63,6 +75,22 @@
   packages = ["."]
   pruneopts = "UT"
   revision = "c2b33e84"
+
+[[projects]]
+  digest = "1:0028cb19b2e4c3112225cd871870f2d9cf49b9b4276531f03438a88e94be86fe"
+  name = "github.com/pmezard/go-difflib"
+  packages = ["difflib"]
+  pruneopts = "UT"
+  revision = "792786c7400a136282c1664665ae0a8db921c6c2"
+  version = "v1.0.0"
+
+[[projects]]
+  digest = "1:972c2427413d41a1e06ca4897e8528e5a1622894050e2f527b38ddf0f343f759"
+  name = "github.com/stretchr/testify"
+  packages = ["assert"]
+  pruneopts = "UT"
+  revision = "ffdc059bfe9ce6a4e144ba849dbedead332c6053"
+  version = "v1.3.0"
 
 [[projects]]
   branch = "master"
@@ -101,10 +129,13 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/aws/aws-sdk-go/aws",
     "github.com/aws/aws-sdk-go/aws/session",
+    "github.com/aws/aws-sdk-go/service/lambda",
     "github.com/aws/aws-sdk-go/service/sts",
     "github.com/gruntwork-io/terratest/modules/random",
     "github.com/gruntwork-io/terratest/modules/terraform",
+    "github.com/stretchr/testify/assert",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
