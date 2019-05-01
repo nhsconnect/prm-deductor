@@ -1,13 +1,13 @@
 terragrunt = {
   terraform {
-    source = "../../src//status_lambda"
+    source = "../../src//mtls_test_lambda"
   }
 
   remote_state {
     backend = "s3"
     config {
       bucket = "prm-327778747031-terraform-states"
-      key = "dale/status_lambda/terraform.tfstate"
+      key = "dev/mtls_test_lambda/terraform.tfstate"
       region = "eu-west-2"
       encrypt = true
     }
@@ -20,6 +20,6 @@ terragrunt = {
 # ---------------------------------------------------------------------------------------------------------------------
 
 aws_region = "eu-west-2"
-environment = "dale"
+environment = "dev"
 # Path has 5 extra .. components in as Terragrunt copies the modules into a cache in several sub-directories of this directory
-lambda_zip = "../../../../../../../lambda/status/lambda.zip"
+lambda_zip = "../../../../../../../lambda/mtls_test/lambda.zip"

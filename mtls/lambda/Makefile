@@ -1,8 +1,5 @@
-test :
-	$(MAKE) -C lambda/test test
-
 build :
-	$(MAKE) -C lambda/test build
+	$(MAKE) -C lambda/mtls_test build
 
 deploy-% : build
-	$(MAKE) -C deploy/$*/test_lambda
+	$(MAKE) -C deploy/$*/mtls_test_lambda
