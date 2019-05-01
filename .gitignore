@@ -91,3 +91,10 @@ typings/
 
 # End of https://www.gitignore.io/api/node
 *.swp
+
+.terraform
+.terragrunt-cache
+*.tfstate
+*.tfstate.backup
+prod_dep/
+*.zip
