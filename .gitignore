@@ -98,3 +98,4 @@ typings/
 *.tfstate.backup
 prod_dep/
 *.zip
+vendor/
