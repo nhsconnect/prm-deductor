@@ -1,3 +1,9 @@
-const tms=require('./endpoint')
+const endpoint = require('./endpoint')
 
-tms.startServer()
+let server = endpoint.createServer({
+    ca: process.env.CA,
+    key: process.env.KEY,
+    cert: process.env.CERT
+})
+
+server.startServer()

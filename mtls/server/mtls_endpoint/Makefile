@@ -1,6 +1,6 @@
 .PHONY : build test clean docker
 
-source = main.js endpoint.js tls/*
+source = main.js endpoint.js 
 
 build : docker
 
