@@ -1,7 +1,7 @@
 const given = require("./givenAlt");
 const orchestrator = require("../src/orchestrator");
 
-describe('When appending data to standard attachments', () => {
+describe('When extracting all files', () => {
     let result;
 
     beforeAll(async () => {
