@@ -26,4 +26,4 @@ clean :
 	rm -rf node_modules prod_dep deploy.zip
 
 docker : Dockerfile deploy.zip
-	docker build -t mtls .
+	docker build -t 327778747031.dkr.ecr.eu-west-2.amazonaws.com/prm/mtls:$$(date +"%Y%m%d%H%M%S") .
