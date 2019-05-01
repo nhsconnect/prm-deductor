@@ -19,7 +19,7 @@ Content-Transfer-Encoding: base64
 ------=_Part_82_12073865.1555409597528
 Content-Type: text/xml
 Content-Id: <Attachment2@e-mis.com/EMISWeb/GP2GP2.2A>
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: magicBeans
 
 8TW8CYaLmjADP/kYvf/4+e2ZnjXl
 eZ/+6vG//H+uHzTqR863AA==
