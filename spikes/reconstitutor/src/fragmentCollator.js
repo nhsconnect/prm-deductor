@@ -2,35 +2,35 @@ const findInFiles = require('find-in-files');
 const fs = require('fs');
 const primaryFileBuilder = require('../src/masterFileBuilder');
 
-exports.getIndexFileForLargeAttachment = async (id, folderPath) => {
+exports.getAllFragmentsForLargeAttachment = async (id, folderPath) => {
+    let fullFilePaths = [];
+
     let indexFile = await findFilesContaining(id, folderPath);
+    fullFilePaths.push(indexFile[0]);
+
     let indexFileContent = fs.readFileSync(indexFile[0], 'utf8');
     let primaryFile = await primaryFileBuilder.build(indexFileContent); 
 
-    let files = [];
-    files.push(indexFile[0]);
     for (let index = 0; index < primaryFile.attachments.length; index++) {
-        const fragment = primaryFile.attachments[index];
-        console.log(fragment);        
-        let matches = await findFilesContaining(fragment.id, folderPath);
-        for (let index = 0; index < matches.length; index++) {
-            const match = matches[index]; 
-            files.push(match);
+        const fragment = primaryFile.attachments[index]; 
+        let fragmentFilesFound = await findFilesContaining(fragment.id, folderPath);
+        for (let index = 0; index < fragmentFilesFound.length; index++) {
+            const fragmentFullFilePath = fragmentFilesFound[index]; 
+            fullFilePaths.push(fragmentFullFilePath);
         }
     }
 
-    return files;
+    return fullFilePaths;
 }
 
 async function findFilesContaining(id, folderPath) {
     let searchTerm = `<message-id>${id}</message-id>`;
-    let files = [];
+    let fullFilePaths = [];
     await findInFiles.find(searchTerm, folderPath)
                         .then(function(fileMatches) {
-                            for (var fullFilePath in fileMatches) {
-                                console.log(fullFilePath);
-                                files.push(fullFilePath);
+                            for (let fullFilePath in fileMatches) {
+                                fullFilePaths.push(fullFilePath);
                             }
                         });
-    return files;
+    return fullFilePaths;
 }

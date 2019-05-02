@@ -8,7 +8,7 @@ describe('When gathering fragments for large attachments', () => {
     beforeAll(async () => {
         let fragmentLocation = "/Users/christiantaylor/Downloads/sandbox";
         let largeAttachmentId = 'E5EE718C-2577-401B-AFC3-CB651FD3011F';
-        fragments = await fragmentCollator.getIndexFileForLargeAttachment(largeAttachmentId, fragmentLocation);
+        fragments = await fragmentCollator.getAllFragmentsForLargeAttachment(largeAttachmentId, fragmentLocation);
     })
 
     test("it should return 10 items", async () => {
