@@ -1,4 +1,4 @@
-const given = require("./givenAlt");
+const given = require("./given");
 const orchestrator = require("../src/orchestrator");
 
 describe('When extracting all files', () => {
@@ -11,7 +11,7 @@ describe('When extracting all files', () => {
     })
 
     test("it should return the number of files extracted", async () => {
-        expect(result).toBe(2);
+        expect(result).toBe(6);
     });
 
 });

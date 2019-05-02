@@ -12,7 +12,11 @@ exports.build = async (content) => {
 }
 
 function getName(content) {
-    return content.match(/^------=_(.*?)\n/)[1];
+    let name = content.match(/^------=_(.*?)\n/);
+    if (name) {
+        return name[1];
+    }
+    return '';
 }
 
 function getAllAttachmentReferences(content) {
