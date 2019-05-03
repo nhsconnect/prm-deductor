@@ -5,7 +5,7 @@ const primaryFileBuilder = require('../src/masterFileBuilder');
 exports.getAllFragmentsForLargeAttachment = async (id, folderPath) => {
     let fragmentInfoCollection = [];
 
-    let indexFile = await findFilesContaining(id, folderPath); //?
+    let indexFile = await findFilesContaining(id, folderPath);
     let primaryFragmentInfo = {
         fullFilePath: indexFile[0]
     }
@@ -34,11 +34,9 @@ async function findFilesContaining(id, folderPath) {
     let fullFilePaths = [];
     await findInFiles.find(searchTerm, folderPath)
                         .then(function(fileMatches) {
-                            fileMatches //?
                             for (let fullFilePath in fileMatches) {
-                                fullFilePath //?
                                 fullFilePaths.push(fullFilePath);
                             }
                         });
-    return fullFilePaths; //?
+    return fullFilePaths;
 }
