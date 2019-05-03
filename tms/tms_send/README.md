@@ -7,7 +7,7 @@
 
 4. On line 24, replace the truststore with `$PRM_DEDUCTOR/tms/tls/mth.jks`.
 
-5. On lines 28 and 29, set the settings to *Yes*.
+5. On lines 28 and 30, set the settings tks.tls.servermutualauthentication and tks.tls.clientmutualauthentication to *Yes*.
 
 6. From `$ITK_HOME/config/SPINE_MTH/`, run `java -jar ../../TKW.jar -simulator tkw.properties`
 
