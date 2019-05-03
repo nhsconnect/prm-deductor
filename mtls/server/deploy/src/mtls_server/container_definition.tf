@@ -41,4 +41,10 @@ module "container_definition" {
       protocol      = "tcp"
     },
   ]
+
+  log_options {
+    "awslogs-region"        = "${var.aws_region}"
+    "awslogs-group"         = "/aws/fargate/mtls_server-${var.environment}"
+    "awslogs-stream-prefix" = "mtls_server"
+  }
 }

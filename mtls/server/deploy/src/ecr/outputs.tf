@@ -1,5 +1,5 @@
 output "completed" {
-    value = "${uuid()}"
+  value = "${uuid()}"
 }
 
 output "repo_url" {

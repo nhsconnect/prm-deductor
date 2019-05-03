@@ -1,7 +1,7 @@
 output "completed" {
-    value = "${uuid()}"
+  value = "${uuid()}"
 }
 
 output "cluster_arn" {
-    value = "${aws_ecs_cluster.cluster.arn}"
+  value = "${aws_ecs_cluster.cluster.arn}"
 }
