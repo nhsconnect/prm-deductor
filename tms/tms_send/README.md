@@ -7,7 +7,9 @@
 
 4. On line 24, replace the truststore with `$PRM_DEDUCTOR/tms/tls/mth.jks`.
 
-5. From `$ITK_HOME/config/SPINE_MTH/`, run `java -jar ../../TKW.jar -simulator tkw.properties`
+5. On lines 28 and 29, set the settings to *Yes*.
+
+6. From `$ITK_HOME/config/SPINE_MTH/`, run `java -jar ../../TKW.jar -simulator tkw.properties`
 
 # Setting up server to receive response
 To receive asynchronous responses from the MTH server, start the server like so:
