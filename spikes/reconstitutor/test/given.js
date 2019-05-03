@@ -1,4 +1,4 @@
-exports.fragmentContent = `------=_Part_82_12073865.1555409597528
+exports.primaryFileContent = `------=_Part_82_12073865.1555409597528
 Content-Id: <ContentRoot>
 Content-Type: text/xml; charset=UTF-8
 
@@ -25,3 +25,21 @@ Content-Transfer-Encoding: magicBeans
 eZ/+6vG//H+uHzTqR863AA==
 ------=_Part_82_12073865.1555409597528--`;
 
+exports.fragmentContent = `------=_Part_96_24463764.1555409629418
+Content-Id: <ContentRoot>
+Content-Type: text/xml; charset=UTF-8
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:eb="http://www.oasis-open.org/committees/ebxml-msg/schema/msg-header-2_0.xsd" xmlns:hl7ebXML="urn:hl7-org:transport/ebxml/DSTUv1.0" xmlns:hl7ebxml="urn:hl7-org:transport/ebxml/DSTUv1.0"><soap:Header><eb:MessageHeader eb:version="2.0" soap:mustUnderstand="1"><eb:From><eb:PartyId eb:type="urn:nhs:names:partyType:ocs+serviceInstance">5EP-807264</eb:PartyId></eb:From><eb:To><eb:PartyId eb:type="urn:nhs:names:partyType:ocs+serviceInstance">A28009-821605</eb:PartyId></eb:To><eb:CPAId>8fff3d7101f23f9c61bd</eb:CPAId><eb:ConversationId>84106041-3FD6-4A48-BEA4-2A1CBA2D2880</eb:ConversationId><eb:Service>urn:nhs:names:services:gp2gp</eb:Service><eb:Action>COPC_IN000001UK01</eb:Action><eb:MessageData><eb:MessageId>B48B8DC1-3C90-4817-8186-E2BA3B16E2EE</eb:MessageId><eb:Timestamp>2019-04-16T10:08:54.829Z</eb:Timestamp><eb:TimeToLive>2019-04-16T16:23:54.829Z</eb:TimeToLive></eb:MessageData><eb:DuplicateElimination/></eb:MessageHeader><eb:AckRequested eb:signed="false" eb:version="2.0" soap:actor="urn:oasis:names:tc:ebxml-msg:actor:nextMSH" soap:mustUnderstand="1"/></soap:Header><soap:Body><eb:Manifest eb:version="2.0" soap:mustUnderstand="1"><eb:Reference xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="cid:Content1@e-mis.com/EMISWeb/GP2GP2.2A"><eb:Description xml:lang="en">COPC_IN000001UK01</eb:Description><hl7ebxml:Payload encoding="XML" style="HL7" version="3.0"/><hl7ebXML:Payload eb:version="3.0" encoding="XML" style="HL7"/></eb:Reference><eb:Reference xmlns:xlink="http://www.w3.org/1999/xlink" eb:id="_AE675E0E-E729-44BE-85A5-9DE5D953609E" xlink:href="cid:Attachment1@e-mis.com/EMISWeb/GP2GP2.2A"><eb:Description xml:lang="en">3D085A2B-E00F-44F8-AA85-6699D2D4B259_(Encoded Compressed=No Length=42810092) 2003-16_1.tif</eb:Description></eb:Reference></eb:Manifest></soap:Body></soap:Envelope>
+------=_Part_96_24463764.1555409629418
+Content-Type: application/xml; charset=UTF-8
+Content-Id: <Content1@e-mis.com/EMISWeb/GP2GP2.2A>
+Content-Transfer-Encoding: 8bit
+
+<COPC_IN000001UK01 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:hl7-org:v3"><id root="B48B8DC1-3C90-4817-8186-E2BA3B16E2EE" /><creationTime value="20190416100748" /><versionCode code="3NPfIT7.2.02" /><interactionId root="2.16.840.1.113883.2.1.3.2.4.12" extension="COPC_IN000001UK01" /><processingCode code="P" /><processingModeCode code="T" /><acceptAckCode code="NE" /><communicationFunctionRcv type="CommunicationFunction" typeCode="RCV"><device type="Device" classCode="DEV" determinerCode="INSTANCE"><id root="1.2.826.0.1285.0.2.0.107" extension="200000000835" /></device></communicationFunctionRcv><communicationFunctionSnd type="CommunicationFunction" typeCode="SND"><device type="Device" classCode="DEV" determinerCode="INSTANCE"><id root="1.2.826.0.1285.0.2.0.107" extension="031759679512" /></device></communicationFunctionSnd><ControlActEvent classCode="OBS" moodCode="EVN"><author1 type="Participation" typeCode="AUT"><AgentSystemSDS type="RoleHeir" classCode="AGNT"><agentSystemSDS type="Device" classCode="DEV" determinerCode="INSTANCE"><id root="1.2.826.0.1285.0.2.0.107" extension="200000000835" /></agentSystemSDS></AgentSystemSDS></author1><subject typeCode="SUBJ" contextConductionInd="false"><PayloadInformation classCode="OBS" moodCode="EVN"><code code="GP2GPLMATTACHMENTINFO" codeSystem="2.16.840.1.113883.2.1.3.2.4.17.202" displayName="GP2GP Large Message Attachment Information" /><id root="B48B8DC1-3C90-4817-8186-E2BA3B16E2EE" /><messageType root="2.16.840.1.113883.2.1.3.2.4.18.17" extension="RCMR_MT000001GB01" xmlns="NPFIT:HL7:Localisation" /><value><Gp2gpfragment xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:nhs:names:services:gp2gp"><Version xsi:type="xsd:string">01</Version><Recipients><Recipient>A28009</Recipient></Recipients><From>C88653</From><subject>Attachment: 3D085A2B-E00F-44F8-AA85-6699D2D4B259_(Encoded Compressed=No Length=42810092) 2003-16_1.tif</subject><message-id>B48B8DC1-3C90-4817-8186-E2BA3B16E2EE</message-id></Gp2gpfragment></value><pertinentInformation typeCode="PERT"><sequenceNumber value="1" /><pertinentPayloadBody classCode="OBS" moodCode="EVN"><code code="GP2GPLMATTACHMENT" codeSystem="2.16.840.1.113883.2.1.3.2.4.17.202" displayName="GP2GP Large Message Attachment" /><id root="B48B8DC1-3C90-4817-8186-E2BA3B16E2EE" /><value><reference value="file://localhost/3D085A2B-E00F-44F8-AA85-6699D2D4B259_%28Encoded%20Compressed%3DNo%20Length%3D42810092%29%202003-16_1.tif" /></value></pertinentPayloadBody></pertinentInformation></PayloadInformation></subject></ControlActEvent></COPC_IN000001UK01>
+------=_Part_96_24463764.1555409629418
+Content-Type: image/tiff
+Content-Id: <Attachment1@e-mis.com/EMISWeb/GP2GP2.2A>
+Content-Transfer-Encoding: base64
+
+GBYXEBUVFRIUFhYUFhYSExEPEREQGBYYGhUZHRkXHBcXGxYaGRQTFxIQHhMSFRIQEgwMEA4PFxIT
+------=_Part_96_24463764.1555409629418--`;

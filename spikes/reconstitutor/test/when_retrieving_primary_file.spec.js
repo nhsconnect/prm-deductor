@@ -1,11 +1,11 @@
 const primaryFileBuilder = require("../src/primaryFileBuilder");
 const given = require("./given");
 
-describe('When retrieving master file', () => {
+describe('When retrieving primary file', () => {
     let primaryFile;
 
     beforeAll(async () => {
-        let content = given.fragmentContent;
+        let content = given.primaryFileContent;
         primaryFile = await primaryFileBuilder.build(content);
     })
 

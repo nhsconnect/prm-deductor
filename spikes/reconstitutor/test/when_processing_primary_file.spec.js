@@ -6,7 +6,7 @@ describe('When processing primary file', () => {
     let primaryFile;
 
     beforeAll(async () => {
-        let content = given.fragmentContent;
+        let content = given.primaryFileContent;
         primaryFile = await primaryFileBuilder.build(content);
         primaryFile = await dataCollator.appendDataToStandardAttachments(primaryFile);
     })

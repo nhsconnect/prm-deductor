@@ -5,9 +5,9 @@ describe('When extracting all files', () => {
     let result;
 
     beforeAll(async () => {
-        let masterFileContent = given.fragmentContent;
+        let primaryFileContent = given.primaryFileContent;
 
-        result = await orchestrator.doSomething(masterFileContent);
+        result = await orchestrator.doSomething(primaryFileContent);
     })
 
     test("it should return the number of files extracted", async () => {
