@@ -1,41 +1,41 @@
-const masterFileBuilder = require("../src/masterFileBuilder");
+const primaryFileBuilder = require("../src/primaryFileBuilder");
 const given = require("./given");
 
 describe('When retrieving master file', () => {
-    let masterFile;
+    let primaryFile;
 
     beforeAll(async () => {
         let content = given.fragmentContent;
-        masterFile = await masterFileBuilder.build(content);
+        primaryFile = await primaryFileBuilder.build(content);
     })
 
     test("it should contain the message completed element", async () => {
-        expect(masterFile.content).toContain('<RCMR_IN030000UK06');
+        expect(primaryFile.content).toContain('<RCMR_IN030000UK06');
     });
 
     test("it should contain the ehr extract element", async () => {
-        expect(masterFile.content).toContain('<EhrExtract');
+        expect(primaryFile.content).toContain('<EhrExtract');
     });
 
     test("it should contain a manifest element", async () => {
-        expect(masterFile.content).toContain("<eb:Manifest");
+        expect(primaryFile.content).toContain("<eb:Manifest");
     });
 
     test("it should have a name", async () => {
-        expect(masterFile.name).toBe('Part_82_12073865.1555409597528');
+        expect(primaryFile.name).toBe('Part_82_12073865.1555409597528');
     });
 
     test("it should have 6 files", async () => {
-        expect(masterFile.attachments.length).toBe(6);
+        expect(primaryFile.attachments.length).toBe(6);
     });
     
     test("it should have 4 large attachments in the file collection", async () => {
-        let largeAttachments = masterFile.attachments.filter(file => file.largeAttachment);
+        let largeAttachments = primaryFile.attachments.filter(file => file.largeAttachment);
         expect(largeAttachments.length).toBe(4);
     });
 
     test("it should have 2 standard attachments in the file collection", async () => {
-        let standardAttachments = masterFile.attachments.filter(file => file.largeAttachment === false);
+        let standardAttachments = primaryFile.attachments.filter(file => file.largeAttachment === false);
         expect(standardAttachments.length).toBe(2);
     });
 });

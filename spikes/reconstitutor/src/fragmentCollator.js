@@ -1,11 +1,12 @@
+const asyncHelper = require('./asyncHelper');
 const findInFiles = require('find-in-files');
 const fs = require('fs');
-const primaryFileBuilder = require('../src/masterFileBuilder');
+const primaryFileBuilder = require('../src/primaryFileBuilder');
 
 exports.getAllFragmentsForLargeAttachment = async (id, folderPath) => {
     let fragmentInfoCollection = [];
 
-    let indexFile = await findFilesContaining(id, folderPath); //?
+    let indexFile = await findFilesContaining(id, folderPath);
     let primaryFragmentInfo = {
         fullFilePath: indexFile[0]
     }
@@ -14,17 +15,15 @@ exports.getAllFragmentsForLargeAttachment = async (id, folderPath) => {
     let indexFileContent = fs.readFileSync(indexFile[0], 'utf8');
     let primaryFile = await primaryFileBuilder.build(indexFileContent); 
 
-    for (let index = 0; index < primaryFile.attachments.length; index++) {
-        const fragment = primaryFile.attachments[index]; 
+    await asyncHelper.forEach(primaryFile.attachments, async (fragment) => {
         let fragmentFilesFound = await findFilesContaining(fragment.id, folderPath);
-        for (let index = 0; index < fragmentFilesFound.length; index++) {
-            const fragmentFullFilePath = fragmentFilesFound[index]; 
+        await asyncHelper.forEach(fragmentFilesFound, async (fragmentFullFilePath) => {
             let fragmentInfo = {
                 fullFilePath: fragmentFullFilePath
             }
             fragmentInfoCollection.push(fragmentInfo);
-        }
-    }
+        })
+    });
 
     return fragmentInfoCollection;
 }
@@ -34,11 +33,9 @@ async function findFilesContaining(id, folderPath) {
     let fullFilePaths = [];
     await findInFiles.find(searchTerm, folderPath)
                         .then(function(fileMatches) {
-                            fileMatches //?
                             for (let fullFilePath in fileMatches) {
-                                fullFilePath //?
                                 fullFilePaths.push(fullFilePath);
                             }
                         });
-    return fullFilePaths; //?
+    return fullFilePaths;
 }

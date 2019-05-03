@@ -1,17 +1,17 @@
-exports.appendDataToStandardAttachments = (masterFile) => {
-    let standardAttachments = masterFile.attachments.filter(file => file.largeAttachment === false);
-    let attachmentParts = getAllAttachmentParts(masterFile);
+exports.appendDataToStandardAttachments = (primaryFile) => {
+    let standardAttachments = primaryFile.attachments.filter(file => file.largeAttachment === false);
+    let attachmentParts = getAllAttachmentParts(primaryFile);
 
     standardAttachments.forEach(standardAttachment => {
         standardAttachment.data = getAttachmentData(attachmentParts, standardAttachment.id);
         standardAttachment.encoding = getAttachmentEncoding(attachmentParts, standardAttachment.id);
     });
 
-    return masterFile;
+    return primaryFile;
 }
 
-function getAllAttachmentParts(masterFile) {
-    return masterFile.content.split(`------=_${masterFile.name}`).filter(part => {
+function getAllAttachmentParts(primaryFile) {
+    return primaryFile.content.split(`------=_${primaryFile.name}`).filter(part => {
         return part.length != 0 && part.indexOf('<Attachment') > -1
     });
 }
