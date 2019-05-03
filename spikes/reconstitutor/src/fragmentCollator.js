@@ -19,6 +19,7 @@ exports.getAllFragmentsForLargeAttachment = async (id, folderPath) => {
         let fragmentFilesFound = await findFilesContaining(fragment.id, folderPath);
         await asyncHelper.forEach(fragmentFilesFound, async (fragmentFullFilePath) => {
             let fragmentInfo = {
+                
                 fullFilePath: fragmentFullFilePath
             }
             fragmentInfoCollection.push(fragmentInfo);
