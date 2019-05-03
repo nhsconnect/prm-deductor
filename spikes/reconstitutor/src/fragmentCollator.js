@@ -3,10 +3,13 @@ const fs = require('fs');
 const primaryFileBuilder = require('../src/masterFileBuilder');
 
 exports.getAllFragmentsForLargeAttachment = async (id, folderPath) => {
-    let fullFilePaths = [];
+    let fragmentInfoCollection = [];
 
-    let indexFile = await findFilesContaining(id, folderPath);
-    fullFilePaths.push(indexFile[0]);
+    let indexFile = await findFilesContaining(id, folderPath); //?
+    let primaryFragmentInfo = {
+        fullFilePath: indexFile[0]
+    }
+    fragmentInfoCollection.push(primaryFragmentInfo);
 
     let indexFileContent = fs.readFileSync(indexFile[0], 'utf8');
     let primaryFile = await primaryFileBuilder.build(indexFileContent); 
@@ -16,11 +19,14 @@ exports.getAllFragmentsForLargeAttachment = async (id, folderPath) => {
         let fragmentFilesFound = await findFilesContaining(fragment.id, folderPath);
         for (let index = 0; index < fragmentFilesFound.length; index++) {
             const fragmentFullFilePath = fragmentFilesFound[index]; 
-            fullFilePaths.push(fragmentFullFilePath);
+            let fragmentInfo = {
+                fullFilePath: fragmentFullFilePath
+            }
+            fragmentInfoCollection.push(fragmentInfo);
         }
     }
 
-    return fullFilePaths;
+    return fragmentInfoCollection;
 }
 
 async function findFilesContaining(id, folderPath) {
@@ -28,9 +34,11 @@ async function findFilesContaining(id, folderPath) {
     let fullFilePaths = [];
     await findInFiles.find(searchTerm, folderPath)
                         .then(function(fileMatches) {
+                            fileMatches //?
                             for (let fullFilePath in fileMatches) {
+                                fullFilePath //?
                                 fullFilePaths.push(fullFilePath);
                             }
                         });
-    return fullFilePaths;
+    return fullFilePaths; //?
 }

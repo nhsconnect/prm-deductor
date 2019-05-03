@@ -1,6 +1,8 @@
 const streamerator = require('../src/streamerator');
 
 describe('When writing with a write stream', () => {
+    jest.setTimeout(120000);
+
     const spyLog = jest.spyOn( console, 'log' );
 
     let writeStream;
