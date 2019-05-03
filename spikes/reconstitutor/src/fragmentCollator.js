@@ -1,7 +1,7 @@
 const asyncHelper = require('./asyncHelper');
 const findInFiles = require('find-in-files');
 const fs = require('fs');
-const primaryFileBuilder = require('../src/masterFileBuilder');
+const primaryFileBuilder = require('../src/primaryFileBuilder');
 
 exports.getAllFragmentsForLargeAttachment = async (id, folderPath) => {
     let fragmentInfoCollection = [];

@@ -1,21 +1,21 @@
-const masterFileBuilder = require('./masterFileBuilder');
+const primaryFileBuilder = require('./primaryFileBuilder');
 const dataCollator = require('./dataCollator');
 const streamerator = require('./streamerator');
 
 
 exports.doSomething = async (content) => {
 
-    masterFile = await masterFileBuilder.build(content);
-    masterFile = await dataCollator.appendDataToStandardAttachments(masterFile);
+    primaryFile = await primaryFileBuilder.build(content);
+    primaryFile = await dataCollator.appendDataToStandardAttachments(primaryFile);
 
     let numberOfExtractedFiles = 0;
-    let standardAttachments = masterFile.attachments.filter(file => file.largeAttachment === false);
+    let standardAttachments = primaryFile.attachments.filter(file => file.largeAttachment === false);
     standardAttachments.forEach(attachment => {
         writeData(attachment.data);
         numberOfExtractedFiles++;
     });
 
-    let largeAttachments = masterFile.attachments.filter(file => file.largeAttachment === true);
+    let largeAttachments = primaryFile.attachments.filter(file => file.largeAttachment === true);
     largeAttachments.forEach(attachment => {
         // get all files for large attachment ...
         // for each file, get fragment attachment data
