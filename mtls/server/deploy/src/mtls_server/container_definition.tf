@@ -47,4 +47,6 @@ module "container_definition" {
     "awslogs-group"         = "/aws/fargate/mtls_server-${var.environment}"
     "awslogs-stream-prefix" = "mtls_server"
   }
+
+  readonly_root_filesystem = "true"
 }

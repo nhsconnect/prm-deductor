@@ -17,8 +17,8 @@ resource "aws_security_group_rule" "allow_https" {
   security_group_id = "${aws_security_group.service_sg.id}"
 }
 
-module "alb_service_task_2" {
-  source                         = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=master"
+module "alb_service_task" {
+  source                         = "git::https://github.com/subnova-nhs/terraform-aws-ecs-alb-service-task.git?ref=master"
   namespace                      = "prm"
   stage                          = "dev"
   name                           = "mtls_server"
@@ -32,10 +32,7 @@ module "alb_service_task_2" {
   vpc_id                         = "${data.aws_vpc.vpc.id}"
   security_group_ids             = ["${aws_security_group.service_sg.id}"]
   subnet_ids                     = ["${data.aws_subnet_ids.public_subnets.ids}"]
-}
-
-data "aws_iam_role" "task_role" {
-  name = "prm-${lower(var.environment)}-mtls_server-exec"
+  ignore_changes_task_definition = "false"
 }
 
 data "aws_iam_policy_document" "ssm" {
@@ -52,7 +49,7 @@ data "aws_iam_policy_document" "ssm" {
 
 resource "aws_iam_role_policy" "ssm" {
   name = "ssm"
-  role = "${data.aws_iam_role.task_role.id}"
+  role = "${module.alb_service_task.exec_role_id}"
 
   policy = "${data.aws_iam_policy_document.ssm.json}"
 }
