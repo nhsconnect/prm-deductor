@@ -7,6 +7,13 @@ describe('When extracting all files', () => {
     let result;
 
     beforeAll(async () => {
+        streamerator.createReadStream = () => {
+            return {
+                read: () => {},
+                pipe: () => {},
+                push: () => {}
+            }
+        };
         let primaryFileContent = given.primaryFileContent;
 
         result = await orchestrator.doSomething(primaryFileContent);
