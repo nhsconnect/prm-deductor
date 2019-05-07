@@ -1,39 +1,20 @@
-exports.build = async (content) => {
-    let name = getPartName(content);
-    let fragments = getAllFragments(content);
+const fs = require('fs');
+
+exports.build = (fullFilePath) => {
+    let content = fs.readFileSync(fullFilePath);
+    let id = getMessageId(content);
+    let partNumber = parseInt(getPartNumber(content));
 
     return {
-        name,
-        content, 
-        fragments
+        id,
+        partNumber
     };
 }
 
-function getAllFragments(content) {
-    let fragmentReferences = getAllFragmentsReferences(content);
-    let fragments = [];
-    fragmentReferences.forEach(attachmentReference => {
-        if (referenceIsForFragmentData(attachmentReference)) {
-            let name = getFragmentName(content);
-            fragments.push(name);
-        }
-    });
-    return fragments;
+function getMessageId(content) {
+    return content.match(/(?=\<eb:MessageId>)(.*?)(?=\<\/eb:MessageId>)/g)[0].slice(14);
 }
 
-function getPartName(content) {
-    let name = content.match(/^------=_(.*?)\n/);
-    return name[1];
-}
-
-function getFragmentName(content) {
-    return content.match(/(\<eb\:Description xml\:lang=\"en\"\>)(.*?)(?=\<\/eb\:Description\>)/g)[1].slice(30);
-}
-
-function getAllFragmentsReferences(content) {
-    return content.match(/(\<eb\:Reference)(.*?)\<\/eb\:Reference\>/g);
-}
-
-function referenceIsForFragmentData(reference) {
-    return reference.indexOf('cid:Content') < 0;
+function getPartNumber(content) {
+    return content.match(/(^------=_Part_)(\d*?)(?=_)/)[0].slice(13);
 }

@@ -1,28 +1,25 @@
 const fragmentBuilder = require("../src/fragmentBuilder");
 const given = require("./given");
+const fs = require('fs');
+jest.mock('fs');
 
-describe('When retrieving a fragment', () => {
+describe.only('When retrieving a fragment', () => {
     let fragmentFile;
 
-    beforeAll(async () => {
-        let content = given.fragmentContent;
-        fragmentFile = await fragmentBuilder.build(content);
+    beforeAll(() => {
+        let fullFilePath = 'somewhere over the rainbow';
+        fs.readFileSync = (path) => { 
+            return (path === fullFilePath) ? given.fragmentContent : '';
+        };
+
+        fragmentFile = fragmentBuilder.build(fullFilePath);
     })
 
-    test("it should contain a manifest element", async () => {
-        expect(fragmentFile.content).toContain("<eb:Manifest");
+    test("it should have an id", () => {
+        expect(fragmentFile.id).toBe('B48B8DC1-3C90-4817-8186-E2BA3B16E2EE');
     });
 
-    test("it should have a name", async () => {
-        expect(fragmentFile.name).toBe('Part_96_24463764.1555409629418');
+    test("it should have a partNumber", () => {
+        expect(fragmentFile.partNumber).toBe(96);
     });
-
-    test("it should only have 1 attachment", async () => {
-        expect(fragmentFile.fragments.length).toBe(1);
-    });
-
-    test("it should have a fragment name", async () => {
-        expect(fragmentFile.fragments).toContainEqual('3D085A2B-E00F-44F8-AA85-6699D2D4B259_(Encoded Compressed=No Length=42810092) 2003-16_1.tif');
-    });
-
 });
