@@ -11,5 +11,8 @@
   "devDependencies": {
     "get-port": "^5.0.0",
     "jest": "^24.7.1"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.450.0"
   }
 }
