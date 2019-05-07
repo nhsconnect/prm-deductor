@@ -1,21 +1,21 @@
 const asyncHelper = require('./asyncHelper');
 const findInFiles = require('find-in-files');
 const fs = require('fs');
-const primaryFileBuilder = require('../src/primaryFileBuilder');
+const fragmentFileBuilder = require('../src/fragmentBuilder');
 
-exports.getAllFragmentsForLargeAttachment = async (id, folderPath) => {
+exports.getAllFragmentsForLargeAttachment = async (largeAttachmentMessageId, folderPath) => {
     let fragmentInfoCollection = [];
 
-    let indexFile = await findFilesContaining(id, folderPath);
+    let indexFile = await findFilesContaining(largeAttachmentMessageId, folderPath);
     let primaryFragmentInfo = {
         fullFilePath: indexFile[0]
     }
     fragmentInfoCollection.push(primaryFragmentInfo);
 
-    let indexFileContent = fs.readFileSync(indexFile[0], 'utf8');
-    let primaryFile = await primaryFileBuilder.build(indexFileContent); 
+    let indexFileContent = fs.readFileSync(primaryFragmentInfo.fullFilePath, 'utf8');
+    let primaryFragmentFile = fragmentFileBuilder.build(indexFileContent);
 
-    await asyncHelper.forEach(primaryFile.attachments, async (fragment) => {
+    await asyncHelper.forEach(primaryFragmentFile.fragments, async (fragment) => {
         let fragmentFilesFound = await findFilesContaining(fragment.id, folderPath);
         await asyncHelper.forEach(fragmentFilesFound, async (fragmentFullFilePath) => {
             let fragmentInfo = {
@@ -38,5 +38,5 @@ async function findFilesContaining(id, folderPath) {
                                 fullFilePaths.push(fullFilePath);
                             }
                         });
-    return fullFilePaths;
+    return fullFilePaths; 
 }

@@ -13,8 +13,8 @@ exports.createWriteStream = () => {
         objectMode: true,
         autoDestroy: true,
         write: (chunk, _, next) => {
-            console.log(chunk.toString())
-            next()
+            console.log(chunk.toString());
+            next();
         }
       });
     return stream;

@@ -3,7 +3,7 @@ const given = require("./given");
 const fs = require('fs');
 jest.mock('fs');
 
-describe.only('When retrieving a fragment', () => {
+describe('When parsing a fragment', () => {
     let fragmentFile;
 
     beforeAll(() => {

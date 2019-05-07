@@ -1,5 +1,7 @@
 const given = require("./given");
 const orchestrator = require("../src/orchestrator");
+const streamerator = require('../src/streamerator');
+jest.mock('../src/streamerator');
 
 describe('When extracting all files', () => {
     let result;

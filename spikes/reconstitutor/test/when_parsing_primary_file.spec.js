@@ -1,7 +1,7 @@
 const primaryFileBuilder = require("../src/primaryFileBuilder");
 const given = require("./given");
 
-describe('When retrieving primary file', () => {
+describe('When parsing a primary file', () => {
     let primaryFile;
 
     beforeAll(async () => {

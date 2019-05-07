@@ -33,5 +33,5 @@ function writeData(data) {
     if (data) {
         read.push(data);
     }
-    read.push(null);    
+    read.push(null);
 }

@@ -1,7 +1,7 @@
 const fileParser = require('./fileParser');
 
 exports.build = async (content) => {
-    let name = getName(content);
+    let name = content.getPartName();
     let attachments = getAllAttachments(content);
 
     return {
@@ -11,17 +11,8 @@ exports.build = async (content) => {
     };
 }
 
-function getName(content) {
-    let name = content.match(/^------=_(.*?)\n/);
-    return name[1];
-}
-
-function getAllAttachmentReferences(content) {
-    return content.match(/(\<eb\:Reference)(.*?)\<\/eb\:Reference\>/g);
-}
-
 function getAllAttachments(content) {
-    let attachmentReferences = getAllAttachmentReferences(content);
+    let attachmentReferences = content.getAllAttachmentReferences();
     let attachments = [];
     attachmentReferences.forEach(attachmentReference => {
         if (attachmentReference.indexOf('cid:Content') < 0) {
@@ -29,4 +20,13 @@ function getAllAttachments(content) {
         }
     });
     return attachments;
+}
+
+String.prototype.getPartName = function() {
+    let name = this.match(/^------=_(.*?)\n/);
+    return name[1];
+}
+
+String.prototype.getAllAttachmentReferences = function() {
+    return this.match(/(\<eb\:Reference)(.*?)\<\/eb\:Reference\>/g);
 }

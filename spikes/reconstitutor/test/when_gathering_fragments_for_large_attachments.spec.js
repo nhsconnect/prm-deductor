@@ -5,8 +5,7 @@ jest.mock('find-in-files');
 const fs = require('fs');
 jest.mock('fs');
 
-describe('When gathering fragments for large attachments', () => {
-    jest.setTimeout(120000);
+describe.skip('When gathering fragments for large attachments', () => {
     let fragments;
     
     beforeAll(async () => {
@@ -44,17 +43,17 @@ describe('When gathering fragments for large attachments', () => {
     }
 
     let largeAttachmentFragmentFiles = [{
-        partName: '',
+        partName: 'Part_95_4989111.1555409626562',
         fullFilePath: "/Users/christiantaylor/Downloads/sandbox/0Zl8WQLw-ibKwJY6r4e9FA==",
         messageId: "<message-id>E5EE718C-2577-401B-AFC3-CB651FD3011F</message-id>"
     },
     {
-        partName: '',
+        partName: 'Part_96_24463764.1555409629418',
         fullFilePath: "/Users/christiantaylor/Downloads/sandbox/hQzneCPeb2-WCsSXOhER5g==",
         messageId: "<message-id>B48B8DC1-3C90-4817-8186-E2BA3B16E2EE</message-id>"
     },
     {
-        partName: '',
+        partName: 'Part_100_18047280.1555409633496',
         fullFilePath: "/Users/christiantaylor/Downloads/sandbox/gYQPLrMwNz2syD+HKBdTrQ==",
         messageId: "<message-id>02D052E4-F8CC-4D2D-832A-E8F1EBB5F064</message-id>"
     }];
