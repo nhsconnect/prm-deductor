@@ -17,15 +17,14 @@ exports.createServer = (options) => {
 
     var params = {
         FunctionName: 'mtls-test-dev',
-        // ClientContext: 'STRING_VALUE',
         InvocationType: 'Event',
-        // LogType: None | Tail,
-        // Payload: new Buffer('...') || 'STRING_VALUE' /* Strings will be Base-64 encoded on your behalf */,
-        // Qualifier: 'STRING_VALUE'
       };
       lambda.invoke(params, function(err, data) {
-        if (err) console.log(err, err.stack); // an error occurred
-        else     console.log(data);           // successful response
+        if (err) {
+          console.log(err, err.stack)
+        } else {
+          console.log(data);
+        }
       });
   }
 
