@@ -35,15 +35,25 @@ module "alb_service_task" {
   ignore_changes_task_definition = "false"
 }
 
-data "aws_iam_policy_document" "task_policy" {
+data "aws_iam_policy_document" "ssm" {
   statement {
     actions = [
       "ssm:GetParameters",
-      "lambda:InvokeFunction"
     ]
 
     resources = [
       "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/prm/${data.aws_caller_identity.current.account_id}/mtls_server/${var.environment}/*",
+    ]
+  }
+}
+
+data "aws_iam_policy_document" "lambda" {
+  statement {
+    actions = [
+      "lambda:InvokeFunction"
+    ]
+
+    resources = [
       "arn:aws:lambda:${var.aws_region}:${data.aws_caller_identity.current.account_id}:function:mtls-test-${var.environment}",
     ]
   }
@@ -53,7 +63,13 @@ resource "aws_iam_role_policy" "ssm" {
   name = "ssm"
   role = "${module.alb_service_task.exec_role_id}"
 
-  policy = "${data.aws_iam_policy_document.task_policy.json}"
+  policy = "${data.aws_iam_policy_document.ssm.json}"
+}
+
+resource "aws_iam_role_policy" "lambda" {
+  name    = "lambda"
+  role    = "${module.alb_service_task.task_role_id}"
+  policy  = "${data.aws_iam_policy_document.lambda.json}"
 }
 
 resource "aws_cloudwatch_log_group" "log" {

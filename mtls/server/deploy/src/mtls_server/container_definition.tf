@@ -24,7 +24,7 @@ data "aws_ssm_parameter" "aws_secret_access_key" {
 module "container_definition" {
   source          = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=master"
   container_name  = "mtls_server"
-  container_image = "327778747031.dkr.ecr.eu-west-2.amazonaws.com/prm/mtls:20190507150715"
+  container_image = "327778747031.dkr.ecr.eu-west-2.amazonaws.com/prm/mtls:20190507163200"
 
   environment = [
     {
@@ -41,14 +41,6 @@ module "container_definition" {
     {
       name      = "KEY"
       valueFrom = "${data.aws_ssm_parameter.key.arn}"
-    },
-    {
-      name      = "AWS_ACCESS_KEY_ID"
-      valueFrom = "${data.aws_ssm_parameter.aws_access_key_id.arn}"
-    },
-    {
-      name      = "AWS_SECRET_ACCESS_KEY"
-      valueFrom = "${data.aws_ssm_parameter.aws_secret_access_key.arn}"
     },
   ]
 
