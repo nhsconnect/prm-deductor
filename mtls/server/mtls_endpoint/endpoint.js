@@ -1,6 +1,6 @@
 const http = require('https')
 const AWS = require('aws-sdk')
-AWS.config.update({region: 'eu-west-2'});
+AWS.config.update({ region: 'eu-west-2' });
 const lambda = new AWS.Lambda();
 
 exports.createServer = (options) => {
@@ -16,14 +16,14 @@ exports.createServer = (options) => {
     server.listen(options.port)
 
     var params = {
-        FunctionName: 'mtls-test-dev',
-        InvocationType: 'Event',
-      };
-      lambda.invoke(params, function(err, data) {
-        if (err) {
-          console.log(err, err.stack)
-        }
-      });
+      FunctionName: 'mtls-test-dev',
+      InvocationType: 'Event',
+    };
+    lambda.invoke(params, function (err, data) {
+      if (err) {
+        console.log(err, err.stack)
+      }
+    });
   }
 
   return server

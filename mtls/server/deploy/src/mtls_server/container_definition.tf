@@ -11,16 +11,6 @@ data "aws_ssm_parameter" "key" {
   with_decryption = false
 }
 
-data "aws_ssm_parameter" "aws_access_key_id" {
-  name            = "/prm/${data.aws_caller_identity.current.account_id}/mtls_server/${var.environment}/AWS_ACCESS_KEY_ID"
-  with_decryption = false
-}
-
-data "aws_ssm_parameter" "aws_secret_access_key" {
-  name            = "/prm/${data.aws_caller_identity.current.account_id}/mtls_server/${var.environment}/AWS_SECRET_ACCESS_KEY"
-  with_decryption = false
-}
-
 module "container_definition" {
   source          = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=master"
   container_name  = "mtls_server"
