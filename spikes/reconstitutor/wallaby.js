@@ -3,9 +3,9 @@ module.exports = () => {
     return {
       loose: true,
       files: [
-        'src/*.js', 
-        'test/*.js', 
-        '!test/*.spec.js'
+        'src/**/*.js', 
+        'test/**/*.js', 
+        '!test/**/*.spec.js'
       ],
       tests: [
         'test/**/*.spec.js'

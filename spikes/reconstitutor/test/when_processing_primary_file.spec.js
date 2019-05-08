@@ -1,4 +1,4 @@
-const primaryFileBuilder = require("../src/primaryFileBuilder");
+const primaryFileBuilder = require("../src/parsers/primaryFileParser");
 const dataCollator = require('../src/dataCollator');
 const given = require("./given");
 
@@ -7,7 +7,7 @@ describe('When processing primary file', () => {
 
     beforeAll(async () => {
         let content = given.primaryFileContent;
-        primaryFile = await primaryFileBuilder.build(content);
+        primaryFile = await primaryFileBuilder.parse(content);
         primaryFile = await dataCollator.appendDataToStandardAttachments(primaryFile);
     })
 

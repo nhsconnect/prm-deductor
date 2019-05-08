@@ -1,11 +1,11 @@
-const primaryFileBuilder = require('./primaryFileBuilder');
+const primaryFileBuilder = require('./parsers/primaryFileParser');
 const dataCollator = require('./dataCollator');
 const streamerator = require('./streamerator');
 
 
 exports.doSomething = async (content) => {
 
-    primaryFile = await primaryFileBuilder.build(content);
+    primaryFile = await primaryFileBuilder.parse(content);
     primaryFile = await dataCollator.appendDataToStandardAttachments(primaryFile);
 
     let numberOfExtractedFiles = 0;
