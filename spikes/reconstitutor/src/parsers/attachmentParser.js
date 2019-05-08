@@ -1,11 +1,13 @@
 require('./dataExtensions');
+const fragmentFileParser = require('./fragmentFileParser');
+const path = require('path');
 const fs = require('fs');
 
 exports.parse = (fullFilePath) => {
     let content = fs.readFileSync(fullFilePath);
     let id = content.getMessageId();
     let partNumber = content.getPartNumber();
-    let fragments = getAllFragments(content);
+    let fragments = getAllFragments(content, fullFilePath);
 
     return {
         id,
@@ -14,12 +16,12 @@ exports.parse = (fullFilePath) => {
     };
 }
 
-function getAllFragments(content) {
+function getAllFragments(content, fullFilePath) {
     let fragmentReferences = content.getAllFragmentReferences();
     let fragments = [];
     fragmentReferences.forEach(fragmentReference => {
         if (isFragmentData(fragmentReference)) {
-            let fragment = buildFragment(fragmentReference, content);
+            let fragment = buildFragment(fragmentReference, content, fullFilePath);
             fragments.push(fragment);
         }
     });
@@ -42,13 +44,13 @@ function isTheFirstPieceOfFragmentData(fragmentReference) {
     return (fragmentReference.indexOf('Attachment1') < 0);
 }
 
-function buildFragment(fragmentReference, content){
+function buildFragment(fragmentReference, content, fullFilePath){
     let id = (isTheFirstPieceOfFragmentData(fragmentReference)) 
                         ? fragmentReference.getId()
                         : content.getMessageId();
-    let fragment = {
-        id
-    };
+
+    let parentFolder = path.dirname(fullFilePath).split(path.sep).pop();
+    let fragment = fragmentFileParser.parse(path.join(parentFolder, id));
 
     return fragment;
 }
