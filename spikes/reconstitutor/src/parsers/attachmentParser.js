@@ -57,10 +57,6 @@ function getAllFragmentReferences(content) {
     return content.match(/(\<eb\:Reference)(.*?)\<\/eb\:Reference\>/g);
 }
 
-function getId(content) {
-    return content.match(/xlink\:href=\"(.*?)(?=\">)/g)[0].slice(16); 
-}
-
 function getMessageId(content) {
     let x = content.match(/(?=\<eb:MessageId>)(.*?)(?=\<\/eb:MessageId>)/g); 
     return x[0].slice(14); 
@@ -69,8 +65,4 @@ function getMessageId(content) {
 function getPartNumber(content) {
     let number = content.match(/(^------=_Part_)(\d*?)(?=_)/)[0].slice(13);
     return parseInt(number);
-}
-
-function getSubjectFilename(content) {
-    return content.match(/(\<subject\>Attachment:\s)(.*?)(?=\<\/subject\>)/)[0].slice(21);
 }

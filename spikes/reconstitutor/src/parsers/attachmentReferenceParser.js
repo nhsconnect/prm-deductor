@@ -1,8 +1,5 @@
 exports.parse = (ebReferenceText) => {
     let fileInfo = getFileInfoElement(ebReferenceText);
-    if (!fileInfo) {
-        return '';
-    }
 
     let id = getReferenceId(ebReferenceText);
     let name = getFilename(fileInfo);
@@ -26,8 +23,7 @@ function getReferenceId(content) {
 }
 
 function getFilename(content) {
-    let x = content.match(/Filename=\"(.*?)(?=\"\s)/g);
-    return x[0].slice(10);
+    return content.match(/Filename=\"(.*?)(?=\"\s)/g)[0].slice(10);
 }
 
 function getContentType(content) {

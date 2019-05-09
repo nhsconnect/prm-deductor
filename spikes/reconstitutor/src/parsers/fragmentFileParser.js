@@ -14,8 +14,7 @@ exports.parse = (fullFilePath) => {
 }
 
 function getMessageId(content) {
-    let x = content.match(/(?=\<eb:MessageId>)(.*?)(?=\<\/eb:MessageId>)/g);
-    return x[0].slice(14);
+    return content.match(/(?=\<eb:MessageId>)(.*?)(?=\<\/eb:MessageId>)/g)[0].slice(14);
 }
 
 function getPartNumber(content) {
@@ -33,10 +32,5 @@ function getSubjectFilename(content) {
 }
 
 function getFilename(content) {
-    let x = content.match(/Filename=\"(.*?)(?=\"\s)/g); 
-    if (x) {
-        return x[0].slice(10);
-    } else {
-        return 'OMG!!!!!';
-    }
+    return content.match(/Filename=\"(.*?)(?=\"\s)/g)[0].slice(10);
 }

@@ -42,8 +42,7 @@ function getAllAttachmentReferences(content) {
 }
 
 function getMessageId(content) {
-    let x = content.match(/(?=\<eb:MessageId>)(.*?)(?=\<\/eb:MessageId>)/g); 
-    return x[0].slice(14);
+    return content.match(/(?=\<eb:MessageId>)(.*?)(?=\<\/eb:MessageId>)/g)[0].slice(14);
 }
 
 function isFragmentData(fragmentReference) {
