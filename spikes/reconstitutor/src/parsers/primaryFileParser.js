@@ -1,6 +1,8 @@
 const attachmentReferenceParser = require('./attachmentReferenceParser');
+const fs = require('fs');
 
-exports.parse = async (content) => {
+exports.parse = async (fullFilePath) => {
+    let content = fs.readFileSync(fullFilePath, 'utf8');
     let name = content.getPartName();
     let attachments = getAllAttachments(content);
 

@@ -28,12 +28,15 @@ function getAllFragments(content, fullFilePath) {
     return fragments;
 }
 
-String.prototype.getAllFragmentReferences = function() {
-    return this.match(/(\<eb\:Reference)(.*?)\<\/eb\:Reference\>/g);
-}
+function buildFragment(fragmentReference, content, fullFilePath){
+    let id = (isTheFirstPieceOfFragmentData(fragmentReference)) 
+                        ? fragmentReference.getId()
+                        : content.getMessageId();
 
-String.prototype.getId = function() {
-    return this.match(/xlink\:href=\"(.*?)(?=\">)/g)[0].slice(16);
+    let parentFolder = path.dirname(fullFilePath).split(path.sep).pop();
+    let fragment = fragmentFileParser.parse(path.join(parentFolder, id));
+
+    return fragment;
 }
 
 function isFragmentData(fragmentReference) {
@@ -44,13 +47,10 @@ function isTheFirstPieceOfFragmentData(fragmentReference) {
     return (fragmentReference.indexOf('Attachment1') < 0);
 }
 
-function buildFragment(fragmentReference, content, fullFilePath){
-    let id = (isTheFirstPieceOfFragmentData(fragmentReference)) 
-                        ? fragmentReference.getId()
-                        : content.getMessageId();
+String.prototype.getAllFragmentReferences = function() {
+    return this.match(/(\<eb\:Reference)(.*?)\<\/eb\:Reference\>/g);
+}
 
-    let parentFolder = path.dirname(fullFilePath).split(path.sep).pop();
-    let fragment = fragmentFileParser.parse(path.join(parentFolder, id));
-
-    return fragment;
+String.prototype.getId = function() {
+    return this.match(/xlink\:href=\"(.*?)(?=\">)/g)[0].slice(16);
 }

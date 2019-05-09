@@ -1,6 +1,6 @@
 const attachmentReferenceParser = require("../../src/parsers/attachmentReferenceParser");
 
-describe('When parsing file info', () => {
+describe('When parsing an attachment reference', () => {
     test(`and the file info is typical`, () => {
         let file = attachmentReferenceParser.parse(`<eb:Reference eb:id="_72FA3D52-D2B2-4197-87F4-238E9C6E4AA7" xlink:href="cid:Attachment1@e-mis.com/EMISWeb/GP2GP2.2A">
                                             <eb:Description xml:lang="en">Filename="72FA3D52-D2B2-4197-87F4-238E9C6E4AA7_Customizing a Project Plan 2013.mpp" ContentType=application/octet-stream Compressed=Yes LargeAttachment=No OriginalBase64=No Length=72580</eb:Description>

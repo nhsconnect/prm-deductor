@@ -1,13 +1,21 @@
 const primaryFileBuilder = require("../src/parsers/primaryFileParser");
 const dataCollator = require('../src/dataCollator');
 const given = require("./given");
+const fs = require('fs');
+jest.mock('fs');
 
 describe('When processing primary file', () => {
     let primaryFile;
 
     beforeAll(async () => {
-        let content = given.primaryFileContent;
-        primaryFile = await primaryFileBuilder.parse(content);
+        let fullFilePath = 'parentFolder/0F28A313-EEDB-413E-9D41-BED8213DCB95';
+        fs.readFileSync = (filePath) => { 
+            if (filePath === fullFilePath) {
+                return given.primaryFileContent;
+            }
+        };
+;
+        primaryFile = await primaryFileBuilder.parse(fullFilePath);
         primaryFile = await dataCollator.appendDataToStandardAttachments(primaryFile);
     })
 

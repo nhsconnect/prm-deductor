@@ -54,6 +54,6 @@ describe('When parsing an attachment', () => {
     });
 
     test("the first fragment should be the attachment primary file itself", () => {
-        expect(attachmentFile.fragments[0].id).toBe('E5EE718C-2577-401B-AFC3-CB651FD3011F');
+        expect(attachmentFile.fragments[0].id).toBe(attachmentFile.id);
     });
 });

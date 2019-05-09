@@ -9,7 +9,9 @@ describe('When parsing a fragment file', () => {
     beforeAll(() => {
         let fullFilePath = 'parentFolder/someFragment';
         fs.readFileSync = (path) => { 
-            return (path === fullFilePath) ? given.fragmentContent(96, 'B48B8DC1-3C90-4817-8186-E2BA3B16E2EE', 1) : '';
+            return (path === fullFilePath) 
+                    ? given.fragmentContent(96, 'B48B8DC1-3C90-4817-8186-E2BA3B16E2EE', 1) 
+                    : '';
         };
 
         fragmentFile = fragmentBuilder.parse(fullFilePath);

@@ -1,12 +1,20 @@
 const primaryFileBuilder = require("../../src/parsers/primaryFileParser");
 const given = require("../given");
+const fs = require('fs');
+jest.mock('fs');
 
 describe('When parsing a primary file', () => {
     let primaryFile;
 
     beforeAll(async () => {
-        let content = given.primaryFileContent;
-        primaryFile = await primaryFileBuilder.parse(content);
+        let fullFilePath = 'parentFolder/somePrimaryFile';
+        fs.readFileSync = (path) => { 
+            return (path === fullFilePath) 
+                    ? given.primaryFileContent 
+                    : '';
+        };
+;
+        primaryFile = await primaryFileBuilder.parse(fullFilePath);
     })
 
     test("it should contain the message completed element", async () => {
@@ -25,13 +33,13 @@ describe('When parsing a primary file', () => {
         expect(primaryFile.name).toBe('Part_82_12073865.1555409597528');
     });
 
-    test("it should have 6 files", async () => {
-        expect(primaryFile.attachments.length).toBe(6);
+    test("it should have 3 files", async () => {
+        expect(primaryFile.attachments.length).toBe(3);
     });
     
-    test("it should have 4 large attachments in the file collection", async () => {
+    test("it should have 1 large attachment in the file collection", async () => {
         let largeAttachments = primaryFile.attachments.filter(file => file.largeAttachment);
-        expect(largeAttachments.length).toBe(4);
+        expect(largeAttachments.length).toBe(1);
     });
 
     test("it should have 2 standard attachments in the file collection", async () => {

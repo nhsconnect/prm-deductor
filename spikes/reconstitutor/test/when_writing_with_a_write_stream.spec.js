@@ -1,6 +1,6 @@
 const streamerator = require('../src/streamerator');
 
-describe('When writing with a write stream', () => {
+describe.skip('When writing with a write stream', () => {
     
     const spyLog = jest.spyOn( console, 'log' );
 
