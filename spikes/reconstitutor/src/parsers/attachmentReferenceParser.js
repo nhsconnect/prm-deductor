@@ -1,14 +1,14 @@
 exports.parse = (ebReferenceText) => {
-    let fileInfo = ebReferenceText.getFileInfoElement();
+    let fileInfo = getFileInfoElement(ebReferenceText);
     if (!fileInfo) {
         return '';
     }
 
-    let id = ebReferenceText.getId();
-    let name = fileInfo.getFilename();
-    let contentType = fileInfo.getContentType();
-    let largeAttachment = fileInfo.isALargeAttachment();
-    let fileLength = fileInfo.getFileLength();
+    let id = getReferenceId(ebReferenceText);
+    let name = getFilename(fileInfo);
+    let contentType = getContentType(fileInfo);
+    let largeAttachment = isALargeAttachment(fileInfo);
+    let fileLength = getFileLength(fileInfo);
     
     let file = {
         id,
@@ -21,30 +21,31 @@ exports.parse = (ebReferenceText) => {
     return file;
 }
 
-String.prototype.getId = function() {
-    return this.match(/xlink\:href=\"(.*?)(?=\">)/g)[0].slice(16);
+function getReferenceId(content) {
+    return content.match(/xlink\:href=\"(.*?)(?=\">)/g)[0].slice(16);
 }
 
-String.prototype.getFilename = function() {
-    return this.match(/Filename=\"(.*?)(?=\"\s)/g)[0].slice(10);
+function getFilename(content) {
+    let x = content.match(/Filename=\"(.*?)(?=\"\s)/g);
+    return x[0].slice(10);
 }
 
-String.prototype.getContentType = function() {
-    return this.match(/ContentType=(.*?)(?=\s)/g)[0].slice(12); 
+function getContentType(content) {
+    return content.match(/ContentType=(.*?)(?=\s)/g)[0].slice(12); 
 }
 
-String.prototype.isALargeAttachment = function() {
-    return this.match(/LargeAttachment=(.*?)(?=\s)/g)[0].slice(16) === 'Yes';
+function isALargeAttachment(content) {
+    return content.match(/LargeAttachment=(.*?)(?=\s)/g)[0].slice(16) === 'Yes';
 }
 
-String.prototype.getFileLength = function() {
-    let lastInstanceOfLengthInText = this.slice(this.lastIndexOf('Length')); 
-    let fileLength = parseInt(lastInstanceOfLengthInText.match(/Length=(\d*?)(?=\s|\<)/g)[0].slice(7)); 
+function getFileLength(content) {
+    let lastInstanceOfLengthInText = content.slice(content.lastIndexOf('Length')); 
+    let fileLength = parseInt(lastInstanceOfLengthInText.slice(7)); 
     return fileLength;
 }
 
-String.prototype.getFileInfoElement = function() {
-    let element = this.match(/(\<eb\:Description xml\:lang=\"en\"\>Filename)(.*?)\<\/eb\:Description\>/g);
+function getFileInfoElement(content) {
+    let element = content.match(/(\<eb\:Description xml\:lang=\"en\"\>Filename)(.*?)(?=\<\/eb\:Description\>)/g);
     if (element) {
         element = element[0].slice(30);
     }

@@ -56,4 +56,24 @@ describe('When parsing an attachment', () => {
     test("the first fragment should be the attachment primary file itself", () => {
         expect(attachmentFile.fragments[0].id).toBe(attachmentFile.id);
     });
+
+    test("all the fragment filenames should be collated", () => {
+        let fragmentNames = [];
+        attachmentFile.fragments.forEach(fragment => {
+            fragmentNames.push(fragment.filename);
+        });
+        let expectedFilenames = [
+            '3D085A2B-E00F-44F8-AA85-6699D2D4B259_(Encoded Compressed=No Length=42810092) 2003-16_0.tif',
+            '3D085A2B-E00F-44F8-AA85-6699D2D4B259_(Encoded Compressed=No Length=42810092) 2003-16_1.tif',
+            '3D085A2B-E00F-44F8-AA85-6699D2D4B259_(Encoded Compressed=No Length=42810092) 2003-16_2.tif',
+            '3D085A2B-E00F-44F8-AA85-6699D2D4B259_(Encoded Compressed=No Length=42810092) 2003-16_3.tif',
+            '3D085A2B-E00F-44F8-AA85-6699D2D4B259_(Encoded Compressed=No Length=42810092) 2003-16_4.tif',
+            '3D085A2B-E00F-44F8-AA85-6699D2D4B259_(Encoded Compressed=No Length=42810092) 2003-16_5.tif',
+            '3D085A2B-E00F-44F8-AA85-6699D2D4B259_(Encoded Compressed=No Length=42810092) 2003-16_6.tif',
+            '3D085A2B-E00F-44F8-AA85-6699D2D4B259_(Encoded Compressed=No Length=42810092) 2003-16_7.tif',
+            '3D085A2B-E00F-44F8-AA85-6699D2D4B259_(Encoded Compressed=No Length=42810092) 2003-16_8.tif',
+            '3D085A2B-E00F-44F8-AA85-6699D2D4B259_(Encoded Compressed=No Length=42810092) 2003-16_9.tif'
+        ];
+        expect(fragmentNames).toEqual(expectedFilenames);
+    });
 });

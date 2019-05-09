@@ -1,12 +1,11 @@
-require('./dataExtensions');
 const fragmentFileParser = require('./fragmentFileParser');
 const path = require('path');
 const fs = require('fs');
 
 exports.parse = (fullFilePath) => {
     let content = fs.readFileSync(fullFilePath);
-    let id = content.getMessageId();
-    let partNumber = content.getPartNumber();
+    let id = getMessageId(content); 
+    let partNumber = getPartNumber(content);
     let fragments = getAllFragments(content, fullFilePath);
 
     return {
@@ -17,40 +16,61 @@ exports.parse = (fullFilePath) => {
 }
 
 function getAllFragments(content, fullFilePath) {
-    let fragmentReferences = content.getAllFragmentReferences();
+    let fragmentReferences = getAllFragmentReferences(content); 
     let fragments = [];
+    let fragment = fragmentFileParser.parse(fullFilePath);
+    fragments.push(fragment);
     fragmentReferences.forEach(fragmentReference => {
         if (isFragmentData(fragmentReference)) {
-            let fragment = buildFragment(fragmentReference, content, fullFilePath);
-            fragments.push(fragment);
+            if (isExternalDataFile(fragmentReference)) {
+                let fragment = buildFragment(fragmentReference, fullFilePath); 
+                fragments.push(fragment);
+            }
         }
     });
     return fragments;
 }
 
-function buildFragment(fragmentReference, content, fullFilePath){
-    let id = (isTheFirstPieceOfFragmentData(fragmentReference)) 
-                        ? fragmentReference.getId()
-                        : content.getMessageId();
+function buildFragment(fragmentReference, fullFilePath){
+    let id = getReferenceId(fragmentReference); 
 
     let parentFolder = path.dirname(fullFilePath).split(path.sep).pop();
-    let fragment = fragmentFileParser.parse(path.join(parentFolder, id));
+    let fragmentFilePath = path.join(parentFolder, id);  
+    let fragment = fragmentFileParser.parse(fragmentFilePath); 
 
     return fragment;
+}
+
+function getReferenceId(content) {
+    return content.match(/xlink\:href=\"(.*?)(?=\">)/g)[0].slice(16);
 }
 
 function isFragmentData(fragmentReference) {
     return (fragmentReference.indexOf('cid:Content') < 0);
 }
 
-function isTheFirstPieceOfFragmentData(fragmentReference) {
-    return (fragmentReference.indexOf('Attachment1') < 0);
+function isExternalDataFile(fragmentReference) {
+    return (fragmentReference.indexOf('cid:Attachment') < 0);
 }
 
-String.prototype.getAllFragmentReferences = function() {
-    return this.match(/(\<eb\:Reference)(.*?)\<\/eb\:Reference\>/g);
+function getAllFragmentReferences(content) {
+    return content.match(/(\<eb\:Reference)(.*?)\<\/eb\:Reference\>/g);
 }
 
-String.prototype.getId = function() {
-    return this.match(/xlink\:href=\"(.*?)(?=\">)/g)[0].slice(16);
+function getId(content) {
+    return content.match(/xlink\:href=\"(.*?)(?=\">)/g)[0].slice(16); 
+}
+
+function getMessageId(content) {
+    let x = content.match(/(?=\<eb:MessageId>)(.*?)(?=\<\/eb:MessageId>)/g); 
+    return x[0].slice(14); 
+}
+
+function getPartNumber(content) {
+    let number = content.match(/(^------=_Part_)(\d*?)(?=_)/)[0].slice(13);
+    return parseInt(number);
+}
+
+function getSubjectFilename(content) {
+    return content.match(/(\<subject\>Attachment:\s)(.*?)(?=\<\/subject\>)/)[0].slice(21);
 }
