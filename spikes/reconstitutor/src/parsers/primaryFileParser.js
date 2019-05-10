@@ -3,19 +3,20 @@ const attachmentParser = require('./attachmentParser');
 const fs = require('fs');
 const path = require('path');
 
-exports.parse = async (fullFilePath) => {
+exports.parse = (fullFilePath) => {
     let content = fs.readFileSync(fullFilePath, 'utf8');
     let name = getPartName(content);
     let parentFolder = path.dirname(fullFilePath);
     let id = getMessageId(content);
 
-    let attachmentReferences = getAllAttachmentReferences(content);
+    let primaryFileAttachmentReferences = getAllAttachmentReferences(content);
     let attachments = [];
-    attachmentReferences.forEach(attachmentReference => {
+    primaryFileAttachmentReferences.forEach(attachmentReference => {
         if (isFragmentData(attachmentReference)) {
             let attachment = attachmentReferenceParser.parse(attachmentReference);
             if (dataIsStoredInPrimaryFile(attachment)) {
                 attachment.id = id;
+                // internal attachment parser
             }
             let filePath = path.join(parentFolder, attachment.id);
             let attachmentData = attachmentParser.parse(filePath); 

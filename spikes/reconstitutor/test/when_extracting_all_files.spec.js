@@ -7,6 +7,7 @@ describe.skip('When extracting all files', () => {
     let result;
 
     beforeAll(async () => {
+        jest.clearAllMocks();
         streamerator.createReadStream = () => {
             return {
                 read: () => {},

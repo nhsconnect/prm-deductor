@@ -9,6 +9,7 @@ describe.skip('When gathering fragments for large attachments', () => {
     let fragments;
     
     beforeAll(async () => {
+        jest.clearAllMocks();
         fs.readFileSync = () => { return given.fragmentManifestContent; };
         findInFiles.find = retrieveFileFromTestArray;
         
@@ -16,10 +17,6 @@ describe.skip('When gathering fragments for large attachments', () => {
         let largeAttachmentId = 'E5EE718C-2577-401B-AFC3-CB651FD3011F';
         
         fragments = await fragmentCollator.getAllFragmentsForLargeAttachment(largeAttachmentId, fragmentLocation);
-    })
-
-    afterAll(() => {
-        jest.mockReset();
     })
     
     test("it should return 3 items", async () => {

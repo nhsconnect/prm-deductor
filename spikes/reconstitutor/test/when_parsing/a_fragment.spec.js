@@ -7,6 +7,7 @@ describe('When parsing a fragment file', () => {
     let fragmentFile;
 
     beforeAll(() => {
+        jest.clearAllMocks();
         let fullFilePath = 'parentFolder/someFragment';
         fs.readFileSync = (path) => { 
             return (path === fullFilePath) 

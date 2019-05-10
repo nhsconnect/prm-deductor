@@ -4,10 +4,10 @@ const fs = require('fs');
 const path = require('path');
 jest.mock('fs');
 
-describe('When parsing a primary file', () => {
+describe.only('When parsing a primary file', () => {
     let primaryFile;
 
-    beforeAll(async () => {
+    beforeAll(() => {
         let fullFilePath = 'parentFolder/0F28A313-EEDB-413E-9D41-BED8213DCB95';
         fs.readFileSync = (filePath) => { 
             switch (path.basename(filePath)) {
@@ -35,31 +35,31 @@ describe('When parsing a primary file', () => {
                     return given.fragmentContent(107, '23C41A31-DADB-45D3-BCA9-0EF4E4F4A779', 9);
             }
         };
-;
-        primaryFile = await primaryFileBuilder.parse(fullFilePath);
-    })
 
-    test("it should contain the message completed element", async () => {
+        primaryFile = primaryFileBuilder.parse(fullFilePath);
+    });
+
+    test("it should contain the message completed element", () => {
         expect(primaryFile.content).toContain('<RCMR_IN030000UK06');
     });
 
-    test("it should contain the ehr extract element", async () => {
+    test("it should contain the ehr extract element", () => {
         expect(primaryFile.content).toContain('<EhrExtract');
     });
 
-    test("it should contain a manifest element", async () => {
+    test("it should contain a manifest element", () => {
         expect(primaryFile.content).toContain("<eb:Manifest");
     });
 
-    test("it should have a name", async () => {
+    test("it should have a name", () => {
         expect(primaryFile.name).toBe('Part_82_12073865.1555409597528');
     });
 
-    test("it should have 3 files", async () => {
+    test("it should have 3 files", () => {
         expect(primaryFile.attachments.length).toBe(3);
     });
     
-    test("it should have 1 large attachment in the file collection", async () => {
+    test("it should have 1 large attachment in the file collection", () => {
         let largeAttachments = primaryFile.attachments.filter(file => file.largeAttachment);
         expect(largeAttachments.length).toBe(1);
     });
@@ -74,7 +74,7 @@ describe('When parsing a primary file', () => {
         expect(largeAttachments[0].fragments.length).toBe(10);
     });
 
-    test("it should have 2 standard attachments in the file collection", async () => {
+    test("it should have 2 standard attachments in the file collection", () => {
         let standardAttachments = primaryFile.attachments.filter(file => file.largeAttachment === false);
         expect(standardAttachments.length).toBe(2);
     });

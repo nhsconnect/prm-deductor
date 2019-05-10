@@ -8,6 +8,7 @@ describe('When parsing a large attachment', () => {
     let attachmentFile;
 
     beforeAll(() => {
+        jest.clearAllMocks();
         let fullFilePath = 'parentFolder/E5EE718C-2577-401B-AFC3-CB651FD3011F';
         fs.readFileSync = (filePath) => { 
             switch (path.basename(filePath)) {
