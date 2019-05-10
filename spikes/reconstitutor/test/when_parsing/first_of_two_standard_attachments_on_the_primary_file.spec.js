@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 jest.mock('fs');
 
-describe('When parsing the first of two standard attachments stored on the primary file', () => {
+describe.skip('When parsing the first of two standard attachments stored on the primary file', () => {
     let attachmentFile;
 
     beforeAll(() => {

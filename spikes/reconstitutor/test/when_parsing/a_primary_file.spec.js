@@ -87,6 +87,18 @@ describe('When parsing a primary file', () => {
         expect(standardAttachments.length).toBe(2);
     });
 
+    test("the standard attachments should have the same fullFilePath as the primary file", () => {
+        let standardAttachments = primaryFile.attachments.filter(file => file.largeAttachment === false);
+        standardAttachments.forEach(attachment => {
+            expect(attachment.fullFilePath).toBe(primaryFile.fullFilePath);
+        });
+    });
+
+    test("the first standard attachment should have a fragments collection", () => {
+        let standardAttachments = primaryFile.attachments.filter(file => file.largeAttachment === false);
+        expect(standardAttachments[0].id).toBe('Attachment1@e-mis.com/EMISWeb/GP2GP2.2A');
+    });
+
     test("the first standard attachment should have a fragments collection", () => {
         let standardAttachments = primaryFile.attachments.filter(file => file.largeAttachment === false);
         expect(standardAttachments[0].fragments).not.toBeUndefined();
@@ -95,6 +107,11 @@ describe('When parsing a primary file', () => {
     xtest(`the first standard attachment's fragments collection should be populated`, () => {
         let standardAttachments = primaryFile.attachments.filter(file => file.largeAttachment === false); 
         expect(standardAttachments[0].fragments.length).toBe(1);
+    });
+
+    test("the second standard attachment should have a fragments collection", () => {
+        let standardAttachments = primaryFile.attachments.filter(file => file.largeAttachment === false);
+        expect(standardAttachments[1].id).toBe('Attachment2@e-mis.com/EMISWeb/GP2GP2.2A');
     });
 
     test("the second standard attachment should have a fragments collection", () => {

@@ -15,11 +15,12 @@ exports.parse = (fullFilePath) => {
         if (isFragmentData(attachmentReference)) {
             let attachment = attachmentReferenceParser.parse(attachmentReference);
             if (dataIsStoredInPrimaryFile(attachment)) {
-                attachment.id = id;
+                attachment.fullFilePath = path.join(parentFolder, id);
                 // internal attachment parser
+            } else {
+                attachment.fullFilePath = path.join(parentFolder, attachment.id);
             }
-            let filePath = path.join(parentFolder, attachment.id);
-            let attachmentData = attachmentParser.parse(filePath); 
+            let attachmentData = attachmentParser.parse(attachment.fullFilePath); 
             attachment.fragments = attachmentData.fragments;
             // add more metadata to attachment
             attachments.push(attachment);
