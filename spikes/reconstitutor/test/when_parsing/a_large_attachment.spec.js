@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 jest.mock('fs');
 
-describe('When parsing an attachment', () => {
+describe('When parsing a large attachment', () => {
     let attachmentFile;
 
     beforeAll(() => {
