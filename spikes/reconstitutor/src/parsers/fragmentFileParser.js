@@ -8,6 +8,7 @@ exports.parse = (fullFilePath) => {
 
     return {
         id,
+        fullFilePath,
         partNumber,
         filename
     };

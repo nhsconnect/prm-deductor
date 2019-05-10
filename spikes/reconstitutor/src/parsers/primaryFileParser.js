@@ -27,6 +27,8 @@ exports.parse = (fullFilePath) => {
     });
 
     return {
+        id,
+        fullFilePath,
         name,
         content,
         attachments

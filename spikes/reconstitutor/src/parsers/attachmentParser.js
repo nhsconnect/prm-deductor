@@ -10,6 +10,7 @@ exports.parse = (fullFilePath) => {
 
     return {
         id,
+        fullFilePath,
         partNumber,
         fragments
     };

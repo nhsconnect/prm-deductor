@@ -42,6 +42,10 @@ describe('When parsing a large attachment', () => {
         expect(attachmentFile.id).toBe('E5EE718C-2577-401B-AFC3-CB651FD3011F');
     });
 
+    test("it should have a fullFilePath", () => {
+        expect(attachmentFile.fullFilePath).toBe('parentFolder/E5EE718C-2577-401B-AFC3-CB651FD3011F');
+    });
+
     test("it should have a partNumber", () => {
         expect(attachmentFile.partNumber).toBe(95);
     });

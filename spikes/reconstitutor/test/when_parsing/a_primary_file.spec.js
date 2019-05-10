@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 jest.mock('fs');
 
-describe.only('When parsing a primary file', () => {
+describe('When parsing a primary file', () => {
     let primaryFile;
 
     beforeAll(() => {
@@ -37,6 +37,14 @@ describe.only('When parsing a primary file', () => {
         };
 
         primaryFile = primaryFileBuilder.parse(fullFilePath);
+    });
+
+    test("it should have an id", () => {
+        expect(primaryFile.id).toBe('0F28A313-EEDB-413E-9D41-BED8213DCB95');
+    });
+
+    test("it should have a fullFilePath", () => {
+        expect(primaryFile.fullFilePath).toBe('parentFolder/0F28A313-EEDB-413E-9D41-BED8213DCB95');
     });
 
     test("it should contain the message completed element", () => {

@@ -3,11 +3,20 @@ const given = require("../given");
 const fs = require('fs');
 jest.mock('fs');
 
-describe('When parsing the second of two standard attachments stored on the primary file', () => {
+describe.skip('When parsing the second of two standard attachments stored on the primary file', () => {
     let attachmentFile;
 
     beforeAll(() => {
         jest.clearAllMocks();
+
+        let attachmentReference = { 
+            id: 'Attachment1@e-mis.com/EMISWeb/GP2GP2.2A',
+            name: '72FA3D52-D2B2-4197-87F4-238E9C6E4AA7_Customizing a Project Plan 2013.mpp',
+            contentType: 'application/octet-stream',
+            largeAttachment: false,
+            fileLength: 72580
+        };
+
         let fullFilePath = 'parentFolder/0F28A313-EEDB-413E-9D41-BED8213DCB95';
         fs.readFileSync = (filePath) => { 
             if (filePath === fullFilePath) {
