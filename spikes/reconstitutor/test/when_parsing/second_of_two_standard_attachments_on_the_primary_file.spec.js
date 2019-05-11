@@ -1,31 +1,31 @@
-const attachmentFileParser = require("../../src/parsers/attachmentParser");
+const attachmentParser = require("../../src/parsers/attachmentParser");
 const given = require("../given");
 const fs = require('fs');
 jest.mock('fs');
 
-describe.skip('When parsing the second of two standard attachments stored on the primary file', () => {
-    let attachmentFile;
+describe('When parsing the second of two standard attachments stored on the primary file', () => {
+    let attachment, attachmentFile;
 
     beforeAll(() => {
         jest.clearAllMocks();
 
-        let attachmentReference = { 
+        attachment = { 
             id: 'Attachment1@e-mis.com/EMISWeb/GP2GP2.2A',
-            name: '72FA3D52-D2B2-4197-87F4-238E9C6E4AA7_Customizing a Project Plan 2013.mpp',
+            name: '857419DE-7512-4619-A567-067CF9959EF1_EmisWeb.Hl7',
             contentType: 'application/octet-stream',
             largeAttachment: false,
-            fileLength: 72580
+            fileLength: 72580,
+            fullFilePath: 'parentFolder/0F28A313-EEDB-413E-9D41-BED8213DCB95'
         };
 
-        let fullFilePath = 'parentFolder/0F28A313-EEDB-413E-9D41-BED8213DCB95';
         fs.readFileSync = (filePath) => { 
-            if (filePath === fullFilePath) {
+            if (filePath === attachment.fullFilePath) {
                 return given.primaryFileContentWithTwoStandardAttachments;
             }
             return '';
         };
 
-        attachmentFile = attachmentFileParser.parse(fullFilePath);
+        attachmentFile = attachmentParser.parse(attachment);
     })
 
     test("it should have an id", () => {
@@ -45,10 +45,10 @@ describe.skip('When parsing the second of two standard attachments stored on the
     });
 
     test("all fragments should be the primary file itself", () => {
-        expect(attachmentFile.fragments[0].id).toBe(attachmentFile.id);
+        expect(attachmentFile.fragments[0].id).toBe(attachment.id);
     });
 
     test("all the fragment filenames should be collated", () => {
-        expect(attachmentFile.fragments[0].filename).toEqual('857419DE-7512-4619-A567-067CF9959EF1_EmisWeb.Hl7');
+        expect(attachmentFile.fragments[0].filename).toEqual(attachment.name);
     });
 });

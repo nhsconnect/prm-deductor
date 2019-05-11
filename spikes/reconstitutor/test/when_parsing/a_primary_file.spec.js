@@ -104,7 +104,7 @@ describe('When parsing a primary file', () => {
         expect(standardAttachments[0].fragments).not.toBeUndefined();
     });
 
-    xtest(`the first standard attachment's fragments collection should be populated`, () => {
+    test(`the first standard attachment's fragments collection should be populated`, () => {
         let standardAttachments = primaryFile.attachments.filter(file => file.largeAttachment === false); 
         expect(standardAttachments[0].fragments.length).toBe(1);
     });
@@ -119,7 +119,7 @@ describe('When parsing a primary file', () => {
         expect(standardAttachments[1].fragments).not.toBeUndefined();
     });
 
-    xtest(`the second standard attachment's fragments collection should be populated`, () => {
+    test(`the second standard attachment's fragments collection should be populated`, () => {
         let standardAttachments = primaryFile.attachments.filter(file => file.largeAttachment === false);
         expect(standardAttachments[1].fragments.length).toBe(1);
     });

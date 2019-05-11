@@ -1,23 +1,32 @@
-const attachmentFileParser = require("../../src/parsers/attachmentParser");
+const attachmentParser = require("../../src/parsers/attachmentParser");
 const given = require("../given");
 const path = require('path');
 const fs = require('fs');
 jest.mock('fs');
 
 describe('When parsing a standard attachment stored on the primary file', () => {
-    let attachmentFile;
+    let attachment, attachmentFile;
 
     beforeAll(() => {
         jest.clearAllMocks();
-        let fullFilePath = 'parentFolder/0F28A313-EEDB-413E-9D41-BED8213DCB95';
+        
+        attachment = { 
+            id: 'Attachment2@e-mis.com/EMISWeb/GP2GP2.2A',
+            name: '72FA3D52-D2B2-4197-87F4-238E9C6E4AA7_Customizing a Project Plan 2013.mpp',
+            contentType: 'application/octet-stream',
+            largeAttachment: false,
+            fileLength: 72580,
+            fullFilePath: 'parentFolder/0F28A313-EEDB-413E-9D41-BED8213DCB95'
+        };
+
         fs.readFileSync = (filePath) => { 
-            if (filePath === fullFilePath) {
-                return given.primaryFileContentWithOneStandardAttachment;
+            if (filePath === attachment.fullFilePath) {
+                return given.primaryFileContentWithTwoStandardAttachments;
             }
             return '';
         };
 
-        attachmentFile = attachmentFileParser.parse(fullFilePath);
+        attachmentFile = attachmentParser.parse(attachment);
     })
 
     test("it should have an id", () => {
@@ -37,10 +46,10 @@ describe('When parsing a standard attachment stored on the primary file', () => 
     });
 
     test("all fragments should be the primary file itself", () => {
-        expect(attachmentFile.fragments[0].id).toBe(attachmentFile.id);
+        expect(attachmentFile.fragments[0].id).toBe(attachment.id);
     });
 
     test("all the fragment filenames should be collated", () => {
-        expect(attachmentFile.fragments[0].filename).toEqual('72FA3D52-D2B2-4197-87F4-238E9C6E4AA7_Customizing a Project Plan 2013.mpp');
+        expect(attachmentFile.fragments[0].filename).toEqual(attachment.name);
     });
 });

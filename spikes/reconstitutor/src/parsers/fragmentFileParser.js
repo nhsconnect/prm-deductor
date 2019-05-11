@@ -1,10 +1,10 @@
 const fs = require('fs');
 
 exports.parse = (fullFilePath) => {
-    let content = fs.readFileSync(fullFilePath);
-    let id = getMessageId(content);
-    let partNumber = getPartNumber(content);
-    let filename = getSubjectFilename(content);
+    let content = fs.readFileSync(fullFilePath); //?
+    let id = getMessageId(content); //?
+    let partNumber = getPartNumber(content); //?
+    let filename = getSubjectFilename(content); //?
 
     return {
         id,
@@ -15,23 +15,25 @@ exports.parse = (fullFilePath) => {
 }
 
 function getMessageId(content) {
-    return content.match(/(?=\<eb:MessageId>)(.*?)(?=\<\/eb:MessageId>)/g)[0].slice(14);
+    let messageId = content.match(/(?=\<eb:MessageId>)(.*?)(?=\<\/eb:MessageId>)/g);
+    return (messageId) ? messageId[0].slice(14) : '';
 }
 
 function getPartNumber(content) {
-    let number = content.match(/(^------=_Part_)(\d*?)(?=_)/)[0].slice(13);
-    return parseInt(number);
+    let number = content.match(/(^------=_Part_)(\d*?)(?=_)/);
+    return (number) ? parseInt(number[0].slice(13)) : '';
 }
 
 function getSubjectFilename(content) {
-    let x = content.match(/(\<subject\>Attachment:\s)(.*?)(?=\<\/subject\>)/); 
-    if (x) {
-        return x[0].slice(21);
+    let filename = content.match(/(\<subject\>Attachment:\s)(.*?)(?=\<\/subject\>)/); 
+    if (filename) {
+        return filename[0].slice(21);
     } else {
         return getFilename(content);
     }
 }
 
 function getFilename(content) {
-    return content.match(/Filename=\"(.*?)(?=\"\s)/g)[0].slice(10);
+    let filename = content.match(/Filename=\"(.*?)(?=\"\s)/g);
+    return (filename) ? filename[0].slice(10) : '';
 }

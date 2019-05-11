@@ -1,4 +1,4 @@
-const attachmentFileParser = require("../../src/parsers/attachmentParser");
+const standardAttachmentParser = require("../../src/parsers/standardAttachmentParser");
 const given = require("../given");
 const path = require('path');
 const fs = require('fs');
@@ -17,7 +17,7 @@ describe.skip('When parsing the first of two standard attachments stored on the 
             return '';
         };
 
-        attachmentFile = attachmentFileParser.parse(fullFilePath);
+        attachmentFile = standardAttachmentParser.parse(fullFilePath);
     })
 
     test("it should have an id", () => {
