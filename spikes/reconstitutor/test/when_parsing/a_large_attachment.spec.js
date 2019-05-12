@@ -1,11 +1,11 @@
-const attachmentFileParser = require("../../src/parsers/attachmentParser");
+const attachmentFragmentBuilder = require("../../src/parsers/attachmentFragmentBuilder");
 const given = require("../given");
 const path = require('path');
 const fs = require('fs');
 jest.mock('fs');
 
 describe('When parsing a large attachment', () => {
-    let attachment, attachmentFile;
+    let attachment, fragments;
 
     beforeAll(() => {
         jest.clearAllMocks();
@@ -41,36 +41,20 @@ describe('When parsing a large attachment', () => {
             }
         };
 
-        attachmentFile = attachmentFileParser.parse(attachment);
+        fragments = attachmentFragmentBuilder.buildFragmentsFor(attachment);
     })
-
-    test("it should have an id", () => {
-        expect(attachmentFile.id).toBe('E5EE718C-2577-401B-AFC3-CB651FD3011F');
-    });
-
-    test("it should have a fullFilePath", () => {
-        expect(attachmentFile.fullFilePath).toBe('parentFolder/E5EE718C-2577-401B-AFC3-CB651FD3011F');
-    });
-
-    test("it should have a partNumber", () => {
-        expect(attachmentFile.partNumber).toBe(95);
-    });
     
-    test("it should have a fragments collection", () => {
-        expect(attachmentFile.fragments).not.toBeUndefined();
-    });
-
     test("the fragments collection should be populated", () => {
-        expect(attachmentFile.fragments.length).toBe(10);
+        expect(fragments.length).toBe(10);
     });
 
     test("the first fragment should be the attachment primary file itself", () => {
-        expect(attachmentFile.fragments[0].id).toBe(attachmentFile.id);
+        expect(fragments[0].id).toBe(attachment.id);
     });
 
     test("all the fragment filenames should be collated", () => {
         let fragmentNames = [];
-        attachmentFile.fragments.forEach(fragment => {
+        fragments.forEach(fragment => {
             fragmentNames.push(fragment.filename);
         });
         let expectedFilenames = [

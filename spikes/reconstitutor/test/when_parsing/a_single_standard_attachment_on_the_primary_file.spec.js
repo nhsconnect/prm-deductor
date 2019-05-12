@@ -1,11 +1,11 @@
-const attachmentParser = require("../../src/parsers/attachmentParser");
+const attachmentFragmentBuilder = require("../../src/parsers/attachmentFragmentBuilder");
 const given = require("../given");
 const path = require('path');
 const fs = require('fs');
 jest.mock('fs');
 
 describe('When parsing a standard attachment stored on the primary file', () => {
-    let attachment, attachmentFile;
+    let attachment, fragments;
 
     beforeAll(() => {
         jest.clearAllMocks();
@@ -26,30 +26,22 @@ describe('When parsing a standard attachment stored on the primary file', () => 
             return '';
         };
 
-        attachmentFile = attachmentParser.parse(attachment);
+        fragments = attachmentFragmentBuilder.buildFragmentsFor(attachment);
     })
-
-    test("it should have an id", () => {
-        expect(attachmentFile.id).toBe('0F28A313-EEDB-413E-9D41-BED8213DCB95');
-    });
-
-    test("it should have a partNumber", () => {
-        expect(attachmentFile.partNumber).toBe(82);
-    });
     
     test("it should have a fragments collection", () => {
-        expect(attachmentFile.fragments).not.toBeUndefined();
+        expect(fragments).not.toBeUndefined();
     });
 
     test("the fragments collection should be populated", () => {
-        expect(attachmentFile.fragments.length).toBe(1);
+        expect(fragments.length).toBe(1);
     });
 
     test("all fragments should be the primary file itself", () => {
-        expect(attachmentFile.fragments[0].id).toBe(attachment.id);
+        expect(fragments[0].id).toBe(attachment.id);
     });
 
     test("all the fragment filenames should be collated", () => {
-        expect(attachmentFile.fragments[0].filename).toEqual(attachment.name);
+        expect(fragments[0].filename).toEqual(attachment.name);
     });
 });

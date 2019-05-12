@@ -1,5 +1,5 @@
 const attachmentReferenceParser = require('./attachmentReferenceParser');
-const attachmentParser = require('./attachmentParser');
+const attachmentFragmentBuilder = require('./attachmentFragmentBuilder');
 const metadataExtractions = require('./metadataExtractions');
 const fs = require('fs');
 const path = require('path');
@@ -11,18 +11,15 @@ exports.parse = (fullFilePath) => {
     
     let parentFolder = path.dirname(fullFilePath);
     
-    let primaryFileAttachmentReferences = getAllAttachmentReferences(content);
+    let attachmentReferencesElements = getAllAttachmentReferences(content);
     let attachments = [];
-    primaryFileAttachmentReferences.forEach(attachmentReference => {
-        if (metadataExtractions.isFragmentData(attachmentReference)) {
-            let attachment = attachmentReferenceParser.parse(attachmentReference);
-            if (metadataExtractions.hasDataStoredOnPrimaryFile(attachment)) {
-                attachment.fullFilePath = path.join(parentFolder, id);
-            } else {
-                attachment.fullFilePath = path.join(parentFolder, attachment.id);
-            }
-            let attachmentData = attachmentParser.parse(attachment); 
-            attachment.fragments = attachmentData.fragments;
+    attachmentReferencesElements.forEach(attachmentReferenceElement => {
+        if (metadataExtractions.isFragmentData(attachmentReferenceElement)) {
+            let attachment = attachmentReferenceParser.parse(attachmentReferenceElement);
+            attachment.fullFilePath = (metadataExtractions.hasDataStoredOnPrimaryFile(attachment)) 
+                                            ? path.join(parentFolder, id)
+                                            : path.join(parentFolder, attachment.id);
+            attachment.fragments = attachmentFragmentBuilder.buildFragmentsFor(attachment); 
             
             attachments.push(attachment);
         }

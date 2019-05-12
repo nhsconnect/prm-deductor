@@ -3,18 +3,11 @@ const metadataExtractions = require('./metadataExtractions');
 const path = require('path');
 const fs = require('fs');
 
-exports.parse = (attachmentReference) => {
+exports.buildFragmentsFor = (attachmentReference) => {
     let content = fs.readFileSync(attachmentReference.fullFilePath);
-    let id = metadataExtractions.getMessageId(content); 
-    let partNumber = metadataExtractions.getPartNumber(content);
     let fragments = getAllFragments(content, attachmentReference);
 
-    return {
-        id,
-        fullFilePath: attachmentReference.fullFilePath,
-        partNumber,
-        fragments
-    };
+    return fragments;
 }
 
 function getAllFragments(content, attachmentReference) {
@@ -25,8 +18,9 @@ function getAllFragments(content, attachmentReference) {
         fragment.filename = attachmentReference.name;
         fragments.push(fragment);
     } else {
-        let fragmentReferences = getAllFragmentReferences(content); 
         fragments.push(fragment);
+        
+        let fragmentReferences = getAllFragmentReferences(content); 
         fragmentReferences.forEach(fragmentReference => {
             if (metadataExtractions.isFragmentData(fragmentReference)) {
                 if (isExternalDataFile(fragmentReference)) {
