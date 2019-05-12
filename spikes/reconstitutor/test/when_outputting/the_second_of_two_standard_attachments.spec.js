@@ -1,13 +1,13 @@
-const attachmentFragmentBuilder = require("../src/building/attachmentFragmentBuilder");
-const attachmentWriter = require("../src/attachmentWriter");
-const streamerator = require('../src/streamerator');
-jest.mock('../src/streamerator');
+const attachmentFragmentBuilder = require("../../src/building/attachmentFragmentBuilder");
+const attachmentWriter = require("../../src/attachmentWriter");
+const streamerator = require('../../src/streamerator');
+jest.mock('../../src/streamerator');
 const fs = require('fs');
 jest.mock('fs');
-const given = require("./given");
+const given = require("../given");
 const path = require('path');
 
-describe('When processing the first of two standard attachments', () => {
+describe('When processing the second of two standard attachments', () => {
     let someFolder, attachment, reader, result;
 
     beforeAll(() => {
@@ -28,8 +28,8 @@ describe('When processing the first of two standard attachments', () => {
         streamerator.createWriteStream = jest.fn();
 
         attachment = { 
-            id: 'Attachment1@e-mis.com/EMISWeb/GP2GP2.2A',
-            name: '72FA3D52-D2B2-4197-87F4-238E9C6E4AA7_Customizing a Project Plan 2013.mpp',
+            id: 'Attachment2@e-mis.com/EMISWeb/GP2GP2.2A',
+            name: '857419DE-7512-4619-A567-067CF9959EF1_EmisWeb.Hl7',
             fullFilePath: 'parentFolder/0F28A313-EEDB-413E-9D41-BED8213DCB95'
         };
 
@@ -68,7 +68,7 @@ describe('When processing the first of two standard attachments', () => {
     });
 
     test('it should write the expected fragment data', () => {
-        expect(reader.push.mock.calls[0][0]).toBe('2Zp8aeOjOf5EW4A+flpBXBueVnj08I8y66O3uoAW+huk2ak/4d/cKJ2XSnPKfwHFdVvQAF4GAA==');
+        expect(reader.push.mock.calls[0][0]).toBe('8TW8CYaLmjADP/kYvf/4+e2ZnjXleZ/+6vG//H+uHzTqR863AA==');
     });
 
 });
