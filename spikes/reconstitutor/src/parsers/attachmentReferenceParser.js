@@ -1,8 +1,10 @@
-exports.parse = (ebReferenceText) => {
-    let fileInfo = getFileInfoElement(ebReferenceText);
+const metadataExtractions = require('./metadataExtractions');
 
-    let id = getReferenceId(ebReferenceText);
-    let name = getFilename(fileInfo);
+exports.parse = (ebReferenceText) => {
+    let id = metadataExtractions.getReferenceId(ebReferenceText);
+    
+    let fileInfo = getFileInfoElement(ebReferenceText);
+    let name = metadataExtractions.getFilename(fileInfo);
     let contentType = getContentType(fileInfo);
     let largeAttachment = isALargeAttachment(fileInfo);
     let fileLength = getFileLength(fileInfo);
@@ -16,14 +18,6 @@ exports.parse = (ebReferenceText) => {
     };
 
     return file;
-}
-
-function getReferenceId(content) {
-    return content.match(/xlink\:href=\"(.*?)(?=\">)/g)[0].slice(16);
-}
-
-function getFilename(content) {
-    return content.match(/Filename=\"(.*?)(?=\"\s)/g)[0].slice(10);
 }
 
 function getContentType(content) {

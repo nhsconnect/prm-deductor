@@ -22,10 +22,10 @@ describe('When parsing the second of two standard attachments stored on the prim
             return '';
         };
 
-        attachmentFile = attachmentParser.parse(attachment);
+        attachmentFile = attachmentParser.parse(attachment); //?
     })
 
-    test("it should have an id", () => {
+    test("it should have the same Id as the primary file", () => {
         expect(attachmentFile.id).toBe('0F28A313-EEDB-413E-9D41-BED8213DCB95');
     });
 
@@ -37,15 +37,19 @@ describe('When parsing the second of two standard attachments stored on the prim
         expect(attachmentFile.fragments).not.toBeUndefined();
     });
 
-    test("the fragments collection should be populated", () => {
+    test("the fragments collection should have a single item", () => {
         expect(attachmentFile.fragments.length).toBe(1);
     });
 
-    test("all fragments should be the primary file itself", () => {
+    test("the fragment should have the Id of the attachment part", () => {
         expect(attachmentFile.fragments[0].id).toBe(attachment.id);
     });
 
-    test("all the fragment filenames should be collated", () => {
+    test("the fragment filename should be the original file", () => {
         expect(attachmentFile.fragments[0].filename).toEqual(attachment.name);
+    });
+
+    test("the fragment file path should be the primary file", () => {
+        expect(attachmentFile.fragments[0].fullFilePath).toEqual(attachment.fullFilePath);
     });
 });
