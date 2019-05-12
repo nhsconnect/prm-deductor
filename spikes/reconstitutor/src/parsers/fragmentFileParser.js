@@ -1,4 +1,4 @@
-const metadataExtractions = require('./metadataExtractions');
+const metadataExtractions = require('../common/metadataExtractions');
 const fs = require('fs');
 
 exports.parse = (fullFilePath) => {

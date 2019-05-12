@@ -1,4 +1,4 @@
-const metadataExtractions = require('./metadataExtractions');
+const metadataExtractions = require('../common/metadataExtractions');
 
 exports.parse = (ebReferenceText) => {
     let id = metadataExtractions.getReferenceId(ebReferenceText);

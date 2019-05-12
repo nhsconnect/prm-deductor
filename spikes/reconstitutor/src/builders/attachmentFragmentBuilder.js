@@ -1,5 +1,5 @@
-const fragmentFileParser = require('./fragmentFileParser');
-const metadataExtractions = require('./metadataExtractions');
+const fragmentFileParser = require('../parsers/fragmentFileParser');
+const metadataExtractions = require('../common/metadataExtractions');
 const path = require('path');
 const fs = require('fs');
 

@@ -1,6 +1,6 @@
-const attachmentParser = require('./attachmentParser');
-const fragmentBuilder = require('./attachmentFragmentBuilder');
-const metadataExtractions = require('./metadataExtractions');
+const attachmentParser = require('../parsers/attachmentParser');
+const fragmentBuilder = require('../builders/attachmentFragmentBuilder');
+const metadataExtractions = require('../common/metadataExtractions');
 const fs = require('fs');
 const path = require('path');
 
