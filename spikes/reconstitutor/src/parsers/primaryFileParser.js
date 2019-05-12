@@ -1,5 +1,5 @@
-const attachmentReferenceParser = require('./attachmentReferenceParser');
-const attachmentFragmentBuilder = require('./attachmentFragmentBuilder');
+const attachmentParser = require('./attachmentParser');
+const fragmentBuilder = require('./attachmentFragmentBuilder');
 const metadataExtractions = require('./metadataExtractions');
 const fs = require('fs');
 const path = require('path');
@@ -8,19 +8,19 @@ exports.parse = (fullFilePath) => {
     let content = fs.readFileSync(fullFilePath, 'utf8');
     let name = metadataExtractions.getPartName(content);
     let id = metadataExtractions.getMessageId(content);
-    
+
     let parentFolder = path.dirname(fullFilePath);
-    
+
     let attachmentReferencesElements = getAllAttachmentReferences(content);
     let attachments = [];
     attachmentReferencesElements.forEach(attachmentReferenceElement => {
-        if (metadataExtractions.isFragmentData(attachmentReferenceElement)) {
-            let attachment = attachmentReferenceParser.parse(attachmentReferenceElement);
+        if (metadataExtractions.isAttachmentData(attachmentReferenceElement)) {
+            let attachment = attachmentParser.parse(attachmentReferenceElement);
             attachment.fullFilePath = (metadataExtractions.hasDataStoredOnPrimaryFile(attachment)) 
-                                            ? path.join(parentFolder, id)
-                                            : path.join(parentFolder, attachment.id);
-            attachment.fragments = attachmentFragmentBuilder.buildFragmentsFor(attachment); 
-            
+                                                    ? path.join(parentFolder, id)
+                                                    : path.join(parentFolder, attachment.id);
+            attachment.fragments = fragmentBuilder.buildFragmentsFor(attachment); 
+
             attachments.push(attachment);
         }
     });

@@ -8,16 +8,14 @@ exports.parse = (ebReferenceText) => {
     let contentType = getContentType(fileInfo);
     let largeAttachment = isALargeAttachment(fileInfo);
     let fileLength = getFileLength(fileInfo);
-    
-    let file = {
+
+    return {
         id,
         name,
         contentType,
         largeAttachment,
         fileLength
     };
-
-    return file;
 }
 
 function getContentType(content) {

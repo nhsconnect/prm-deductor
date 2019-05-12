@@ -1,6 +1,5 @@
 const attachmentFragmentBuilder = require("../../src/parsers/attachmentFragmentBuilder");
 const given = require("../given");
-const path = require('path');
 const fs = require('fs');
 jest.mock('fs');
 

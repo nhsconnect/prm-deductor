@@ -22,7 +22,7 @@ function getAllFragments(content, attachmentReference) {
         
         let fragmentReferences = getAllFragmentReferences(content); 
         fragmentReferences.forEach(fragmentReference => {
-            if (metadataExtractions.isFragmentData(fragmentReference)) {
+            if (metadataExtractions.isAttachmentData(fragmentReference)) {
                 if (isExternalDataFile(fragmentReference)) {
                     let fragment = buildFragment(fragmentReference, attachmentReference.fullFilePath); 
                     fragments.push(fragment);

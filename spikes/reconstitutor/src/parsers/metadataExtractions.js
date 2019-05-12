@@ -27,7 +27,7 @@ exports.getReferenceId = (content) => {
     return (refId) ? refId[0].slice(16) : '';
 }
 
-exports.isFragmentData = (fragmentReference) => {
+exports.isAttachmentData = (fragmentReference) => {
     return fragmentReference.indexOf('cid:Content') < 0;
 }
 

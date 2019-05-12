@@ -1,4 +1,4 @@
-const fragmentBuilder = require("../../src/parsers/fragmentFileParser");
+const fragmentParser = require("../../src/parsers/fragmentFileParser");
 const given = require("../given");
 const fs = require('fs');
 jest.mock('fs');
@@ -15,7 +15,7 @@ describe('When parsing a fragment file', () => {
                     : '';
         };
 
-        fragmentFile = fragmentBuilder.parse(fullFilePath);
+        fragmentFile = fragmentParser.parse(fullFilePath);
     })
 
     test("it should have an id", () => {
