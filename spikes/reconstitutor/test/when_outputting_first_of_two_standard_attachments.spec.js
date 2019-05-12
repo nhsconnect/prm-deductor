@@ -1,4 +1,4 @@
-const attachmentFragmentBuilder = require("../src/builders/attachmentFragmentBuilder");
+const attachmentFragmentBuilder = require("../src/building/attachmentFragmentBuilder");
 const attachmentWriter = require("../src/attachmentWriter");
 const streamerator = require('../src/streamerator');
 jest.mock('../src/streamerator');
@@ -7,7 +7,7 @@ jest.mock('fs');
 const given = require("./given");
 const path = require('path');
 
-describe('When processing a standard attachment', () => {
+describe('When processing the first of two standard attachments', () => {
     let someFolder, attachment, reader, result;
 
     beforeAll(() => {
@@ -65,6 +65,10 @@ describe('When processing a standard attachment', () => {
 
     test('it should write for each fragment', () => {
         expect(reader.push.mock.calls.length).toBe(attachment.fragments.length);
+    });
+
+    test('it should write the expected fragment data', () => {
+        expect(reader.push.mock.calls[0][0]).toBe('2Zp8aeOjOf5EW4A+flpBXBueVnj08I8y66O3uoAW+huk2ak/4d/cKJ2XSnPKfwHFdVvQAF4GAA==');
     });
 
 });

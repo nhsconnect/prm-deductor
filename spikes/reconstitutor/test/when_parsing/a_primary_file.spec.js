@@ -1,4 +1,4 @@
-const primaryFileBuilder = require("../../src/parsers/primaryFileParser");
+const primaryFileBuilder = require("../../src/parsing/primaryFileParser");
 const given = require("../given");
 const fs = require('fs');
 const path = require('path');
@@ -60,7 +60,7 @@ describe('When parsing a primary file', () => {
     });
 
     test("it should have a name", () => {
-        expect(primaryFile.name).toBe('------=_Part_82_12073865.1555409597528');
+        expect(primaryFile.name).toBe('Part_82_12073865.1555409597528');
     });
 
     test("it should have 3 files", () => {

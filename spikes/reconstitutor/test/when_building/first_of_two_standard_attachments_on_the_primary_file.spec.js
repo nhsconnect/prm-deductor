@@ -1,4 +1,4 @@
-const attachmentFragmentBuilder = require("../../src/builders/attachmentFragmentBuilder");
+const attachmentFragmentBuilder = require("../../src/building/attachmentFragmentBuilder");
 const given = require("../given");
 const fs = require('fs');
 jest.mock('fs');

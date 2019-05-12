@@ -1,4 +1,4 @@
-const primaryFileBuilder = require('./parsers/primaryFileParser');
+const primaryFileBuilder = require('./parsing/primaryFileParser');
 const dataCollator = require('./dataCollator');
 const streamerator = require('./streamerator');
 

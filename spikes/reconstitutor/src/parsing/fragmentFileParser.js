@@ -4,13 +4,16 @@ const fs = require('fs');
 exports.parse = (fullFilePath) => {
     let content = fs.readFileSync(fullFilePath); 
     let id = metadataExtractions.getMessageId(content); 
-    let getPartName = metadataExtractions.getPartName(content); 
+    let partName = metadataExtractions.getPartName(content); 
     let filename = metadataExtractions.getSubjectFilename(content); 
 
-    return {
+    let fragment = {
         id,
-        fullFilePath,
-        getPartName,
-        filename
+        partName,
+        filename,
+        fullFilePath
     };
+
+    return fragment;
 }
+

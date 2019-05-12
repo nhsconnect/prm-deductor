@@ -1,4 +1,4 @@
-const attachmentParser = require("../../src/parsers/attachmentParser");
+const attachmentParser = require("../../src/parsing/attachmentParser");
 
 describe('When parsing an attachment reference', () => {
     test(`and the file info is typical`, () => {

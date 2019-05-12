@@ -1,4 +1,4 @@
-const fragmentParser = require("../../src/parsers/fragmentFileParser");
+const fragmentParser = require("../../src/parsing/fragmentFileParser");
 const given = require("../given");
 const fs = require('fs');
 jest.mock('fs');
@@ -27,7 +27,8 @@ describe('When parsing a fragment file', () => {
     });
 
     test("it should have a getPartName", () => {
-        expect(fragmentFile.getPartName).toBe('------=_Part_96_24463764.1555409629418');
+        fragmentFile //?
+        expect(fragmentFile.partName).toBe('Part_96_24463764.1555409629418');
     });
 
     test("it should have a filename", () => {

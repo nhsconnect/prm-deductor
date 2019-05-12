@@ -1,7 +1,7 @@
 const fragmentFileParser = require('../parsing/fragmentFileParser');
 const metadataExtractions = require('../common/metadataExtractions');
-const path = require('./node_modules/path');
-const fs = require('./node_modules/fs');
+const path = require('path');
+const fs = require('fs');
 
 exports.buildFragmentsFor = (attachmentReference) => {
     let content = fs.readFileSync(attachmentReference.fullFilePath);
