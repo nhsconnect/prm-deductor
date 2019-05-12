@@ -8,7 +8,7 @@ const given = require("../given");
 const path = require('path');
 
 describe('When processing the second of two standard attachments', () => {
-    let someFolder, attachment, reader, result;
+    let someFolder, attachment, reader;
 
     beforeAll(() => {
         jest.clearAllMocks();
@@ -30,7 +30,8 @@ describe('When processing the second of two standard attachments', () => {
         attachment = { 
             id: 'Attachment2@e-mis.com/EMISWeb/GP2GP2.2A',
             name: '857419DE-7512-4619-A567-067CF9959EF1_EmisWeb.Hl7',
-            fullFilePath: 'parentFolder/0F28A313-EEDB-413E-9D41-BED8213DCB95'
+            fullFilePath: 'parentFolder/0F28A313-EEDB-413E-9D41-BED8213DCB95',
+            largeAttachment: false
         };
 
         fs.readFileSync = (filePath) => { 

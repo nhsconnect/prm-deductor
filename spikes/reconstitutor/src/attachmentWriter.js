@@ -10,16 +10,16 @@ exports.writeFileTo = (attachment, outputFolder) => {
     read.pipe(write);
 
     attachment.fragments.forEach(fragment => {
-        let fragmentData = getFragmentData(fragment);
+        let fragmentData = getFragmentData(fragment, attachment.largeAttachment);
         read.push(fragmentData);
     });
 
     return 0;
 }
 
-function getFragmentData(fragment) {
+function getFragmentData(fragment, isLargeAttachment) {
     let dataFile = fs.readFileSync(fragment.fullFilePath);
-    let data = getAttachmentData(dataFile, fragment);
+    let data = getAttachmentData(dataFile, fragment, isLargeAttachment);
 
     return data;
 }
@@ -30,11 +30,18 @@ function getAllAttachmentParts(content, partName) {
     });
 }
 
-function getAttachmentData(content, fragment) {
+function getAttachmentData(content, fragment, isLargeAttachment) {
     let attachmentParts = getAllAttachmentParts(content, fragment.partName)
-    let partWithData = attachmentParts.find(attachmentPart => {
-        return attachmentPart.indexOf(fragment.id) > -1
-    });
+    let partWithData;
+
+    if (isLargeAttachment) {
+        partWithData = attachmentParts[attachmentParts.length - 1];
+    } else {
+        partWithData = attachmentParts.find(attachmentPart => {
+            return attachmentPart.indexOf(fragment.id) > -1
+        });
+    }
+    
     return getDataSegment(partWithData);
 }
 
