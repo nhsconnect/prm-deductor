@@ -7,7 +7,7 @@ jest.mock('fs');
 const given = require("./given");
 const path = require('path');
 
-describe.only('When processing a standard attachment', () => {
+describe('When processing a standard attachment', () => {
     let someFolder, attachment, reader, result;
 
     beforeAll(() => {

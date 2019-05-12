@@ -26,8 +26,8 @@ describe('When parsing a fragment file', () => {
         expect(fragmentFile.fullFilePath).toBe('parentFolder/B48B8DC1-3C90-4817-8186-E2BA3B16E2EE');
     });
 
-    test("it should have a partNumber", () => {
-        expect(fragmentFile.partNumber).toBe(96);
+    test("it should have a getPartName", () => {
+        expect(fragmentFile.getPartName).toBe('------=_Part_96_24463764.1555409629418');
     });
 
     test("it should have a filename", () => {

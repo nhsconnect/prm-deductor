@@ -3,11 +3,6 @@ exports.getMessageId = (content) => {
     return (messageId) ? messageId[0].slice(14) : ''; 
 }
 
-exports.getPartNumber = (content) => {
-    let number = content.match(/(^------=_Part_)(\d*?)(?=_)/);
-    return (number) ? parseInt(number[0].slice(13)) : '';
-}
-
 exports.getFilename = (content) => {
     let filename = content.match(/Filename=\"(.*?)(?=\"\s)/g);
     return (filename) ? filename[0].slice(10) : '';
@@ -32,8 +27,8 @@ exports.isAttachmentData = (fragmentReference) => {
 }
 
 exports.getPartName = (content) => {
-    let name = content.match(/^------=_(.*?)\n/);
-    return (name) ? name[1] : '';
+    let name = content.match(/^------=_(.*?)(?=\n)/);
+    return (name) ? name[0] : '';
 }
 
 exports.hasDataStoredOnPrimaryFile = (attachmentReference) => {
