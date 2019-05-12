@@ -1,12 +1,9 @@
 const primaryFileBuilder = require('./parsing/primaryFileParser');
-const dataCollator = require('./dataCollator');
-const streamerator = require('./streamerator');
-
+const streamerator = require('./common/streamerator');
 
 exports.doSomething = async (content) => {
 
     primaryFile = await primaryFileBuilder.parse(content);
-    primaryFile = await dataCollator.appendDataToStandardAttachments(primaryFile);
 
     let numberOfExtractedFiles = 0;
     let standardAttachments = primaryFile.attachments.filter(file => file.largeAttachment === false);

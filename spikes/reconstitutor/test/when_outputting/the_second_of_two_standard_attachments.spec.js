@@ -1,7 +1,7 @@
 const attachmentFragmentBuilder = require("../../src/building/attachmentFragmentBuilder");
-const attachmentWriter = require("../../src/attachmentWriter");
-const streamerator = require('../../src/streamerator');
-jest.mock('../../src/streamerator');
+const attachmentWriter = require("../../src/common/attachmentWriter");
+const streamerator = require('../../src/common/streamerator');
+jest.mock('../../src/common/streamerator');
 const fs = require('fs');
 jest.mock('fs');
 const given = require("../given");

@@ -1,6 +1,6 @@
-const streamerator = require('../src/streamerator');
+const streamerator = require('../src/common/streamerator');
 
-describe.skip('When pushing data to a read stream', () => {
+describe('When pushing data to a read stream', () => {
     let readStream, readOutput;
     let inputString = 'whassup?';
 

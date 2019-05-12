@@ -1,21 +1,11 @@
 const given = require("./given");
 const orchestrator = require("../src/orchestrator");
-const streamerator = require('../src/streamerator');
-jest.mock('../src/streamerator');
 
-describe.skip('When extracting all files', () => {
+describe.skip('When extracting all files in a folder', () => {
     let result;
 
     beforeAll(async () => {
         jest.clearAllMocks();
-        streamerator.createReadStream = () => {
-            return {
-                read: () => {},
-                pipe: () => {},
-                push: () => {}
-            }
-        };
-        let primaryFileContent = given.primaryFileContent;
 
         result = await orchestrator.doSomething(primaryFileContent);
     })
