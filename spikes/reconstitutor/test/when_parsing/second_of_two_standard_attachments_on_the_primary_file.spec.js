@@ -10,11 +10,8 @@ describe('When parsing the second of two standard attachments stored on the prim
         jest.clearAllMocks();
 
         attachment = { 
-            id: 'Attachment1@e-mis.com/EMISWeb/GP2GP2.2A',
+            id: 'Attachment2@e-mis.com/EMISWeb/GP2GP2.2A',
             name: '857419DE-7512-4619-A567-067CF9959EF1_EmisWeb.Hl7',
-            contentType: 'application/octet-stream',
-            largeAttachment: false,
-            fileLength: 72580,
             fullFilePath: 'parentFolder/0F28A313-EEDB-413E-9D41-BED8213DCB95'
         };
 

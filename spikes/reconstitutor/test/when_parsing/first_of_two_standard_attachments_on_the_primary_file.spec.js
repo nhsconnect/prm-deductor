@@ -4,20 +4,26 @@ const path = require('path');
 const fs = require('fs');
 jest.mock('fs');
 
-describe.skip('When parsing the first of two standard attachments stored on the primary file', () => {
-    let attachmentFile;
+describe('When parsing the first of two standard attachments stored on the primary file', () => {
+    let attachment, attachmentFile;
 
     beforeAll(() => {
         jest.clearAllMocks();
-        let fullFilePath = 'parentFolder/0F28A313-EEDB-413E-9D41-BED8213DCB95';
+
+        attachment = { 
+            id: 'Attachment1@e-mis.com/EMISWeb/GP2GP2.2A',
+            name: '72FA3D52-D2B2-4197-87F4-238E9C6E4AA7_Customizing a Project Plan 2013.mpp',
+            fullFilePath: 'parentFolder/0F28A313-EEDB-413E-9D41-BED8213DCB95'
+        };
+
         fs.readFileSync = (filePath) => { 
-            if (filePath === fullFilePath) {
+            if (filePath === attachment.fullFilePath) {
                 return given.primaryFileContentWithTwoStandardAttachments;
             }
             return '';
         };
 
-        attachmentFile = standardAttachmentParser.parse(fullFilePath);
+        attachmentFile = standardAttachmentParser.parse(attachment);
     })
 
     test("it should have an id", () => {

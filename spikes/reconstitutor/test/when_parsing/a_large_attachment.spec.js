@@ -4,12 +4,18 @@ const path = require('path');
 const fs = require('fs');
 jest.mock('fs');
 
-describe.skip('When parsing a large attachment', () => {
-    let attachmentFile;
+describe('When parsing a large attachment', () => {
+    let attachment, attachmentFile;
 
     beforeAll(() => {
         jest.clearAllMocks();
-        let fullFilePath = 'parentFolder/E5EE718C-2577-401B-AFC3-CB651FD3011F';
+
+        attachment = { 
+            id: 'E5EE718C-2577-401B-AFC3-CB651FD3011F',
+            name: '3D085A2B-E00F-44F8-AA85-6699D2D4B259_(Encoded Compressed=No Length=42810092) 2003-16.tif',
+            fullFilePath: 'parentFolder/E5EE718C-2577-401B-AFC3-CB651FD3011F'
+        };
+
         fs.readFileSync = (filePath) => { 
             switch (path.basename(filePath)) {
                 case 'E5EE718C-2577-401B-AFC3-CB651FD3011F':
@@ -35,7 +41,7 @@ describe.skip('When parsing a large attachment', () => {
             }
         };
 
-        attachmentFile = attachmentFileParser.parse(fullFilePath);
+        attachmentFile = attachmentFileParser.parse(attachment);
     })
 
     test("it should have an id", () => {
