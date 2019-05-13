@@ -1,7 +1,8 @@
 module "container_definition" {
   source          = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=master"
   container_name  = "mtls_server"
-  container_image = "327778747031.dkr.ecr.eu-west-2.amazonaws.com/prm/mtls:20190513120344"
+  container_image = "327778747031.dkr.ecr.eu-west-2.amazonaws.com/prm/mtls:20190513201343"
+  container_cpu   = 224
 
   environment = [
     {
@@ -11,6 +12,10 @@ module "container_definition" {
     {
       name  = "CERT"
       value = "${aws_ssm_parameter.cert.value}"
+    },
+    {
+      name  = "AWS_XRAY_DEBUG_MODE",
+      value = "TRUE"
     },
   ]
 
@@ -36,4 +41,24 @@ module "container_definition" {
   }
 
   readonly_root_filesystem = "true"
+}
+
+module "xray_daemon_definition" {
+  source          = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=master"
+  container_name  = "xray_daemon"
+  container_image = "amazon/aws-xray-daemon:latest"
+  container_cpu   = 32
+
+  port_mappings = [
+    {
+      containerPort = 2000
+      protocol      = "udp"
+    },
+  ],
+
+  log_options {
+    "awslogs-region"        = "${var.aws_region}"
+    "awslogs-group"         = "/aws/fargate/mtls_server-${var.environment}"
+    "awslogs-stream-prefix" = "xray_daemon"
+  }
 }

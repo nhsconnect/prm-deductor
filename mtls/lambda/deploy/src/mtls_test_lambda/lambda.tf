@@ -28,6 +28,10 @@ resource "aws_lambda_function" "lambda" {
   runtime          = "nodejs8.10"
   source_code_hash = "${base64sha256(file("${path.module}/${var.lambda_zip}"))}"
 
+  tracing_config {
+    mode = "Active"
+  }
+
   tags {
     Name          = "mtls-test-${var.environment}"
     Enviroronment = "${var.environment}"
@@ -61,6 +65,7 @@ data "aws_iam_policy_document" "lambda_policy" {
       "logs:CreateLogGroup",
       "logs:CreateLogStream",
       "logs:PutLogEvents",
+      "xray:PutTraceSegments",
     ]
 
     resources = ["*"]

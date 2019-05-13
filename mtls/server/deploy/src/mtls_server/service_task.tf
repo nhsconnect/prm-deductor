@@ -24,7 +24,7 @@ module "alb_service_task" {
   name                           = "mtls_server"
   alb_target_group_arn           = "${aws_lb_target_group.tls.arn}"
   assign_public_ip               = true
-  container_definition_json      = "${module.container_definition.json}"
+  container_definition_json      = "[${module.container_definition.json_map},${module.xray_daemon_definition.json_map}]"
   container_name                 = "mtls_server"
   container_port                 = 4444
   ecs_cluster_arn                = "${data.aws_ecs_cluster.cluster.arn}"
@@ -70,6 +70,11 @@ resource "aws_iam_role_policy" "lambda" {
   name    = "lambda"
   role    = "${module.alb_service_task.task_role_id}"
   policy  = "${data.aws_iam_policy_document.lambda.json}"
+}
+
+resource "aws_iam_role_policy_attachment" "xray" {
+  role       = "${module.alb_service_task.task_role_id}"
+  policy_arn = "arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess" 
 }
 
 resource "aws_cloudwatch_log_group" "log" {

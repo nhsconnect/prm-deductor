@@ -1,6 +1,8 @@
 const endpoint = require('./endpoint')
+const AWSXRay = require('aws-xray-sdk');
+AWSXRay.config([AWSXRay.plugins.ECSPlugin]);
 
-let server = endpoint.createServer({
+server = endpoint.createServer({
     ca: process.env.CA,
     key: process.env.KEY,
     cert: process.env.CERT,
