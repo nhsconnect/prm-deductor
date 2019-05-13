@@ -4,7 +4,7 @@ jest.mock('fs');
 const path = require('path');
 const given = require('./given');
 
-describe.only('When renaming all files in a folder', () => {
+describe('When renaming all files in a folder', () => {
     let targetFolder, result;
 
     beforeAll(() => {
