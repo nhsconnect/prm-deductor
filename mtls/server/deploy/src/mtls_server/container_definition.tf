@@ -1,16 +1,3 @@
-data "aws_ssm_parameter" "ca" {
-  name = "/prm/${data.aws_caller_identity.current.account_id}/mtls_server/${var.environment}/ca"
-}
-
-data "aws_ssm_parameter" "cert" {
-  name = "/prm/${data.aws_caller_identity.current.account_id}/mtls_server/${var.environment}/cert"
-}
-
-data "aws_ssm_parameter" "key" {
-  name            = "/prm/${data.aws_caller_identity.current.account_id}/mtls_server/${var.environment}/key"
-  with_decryption = false
-}
-
 module "container_definition" {
   source          = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=master"
   container_name  = "mtls_server"
@@ -19,18 +6,18 @@ module "container_definition" {
   environment = [
     {
       name  = "CA"
-      value = "${data.aws_ssm_parameter.ca.value}"
+      value = "${aws_ssm_parameter.ca.value}"
     },
     {
       name  = "CERT"
-      value = "${data.aws_ssm_parameter.cert.value}"
+      value = "${aws_ssm_parameter.cert.value}"
     },
   ]
 
   secrets = [
     {
       name      = "KEY"
-      valueFrom = "${data.aws_ssm_parameter.key.arn}"
+      valueFrom = "${aws_ssm_parameter.key.arn}"
     },
   ]
 
