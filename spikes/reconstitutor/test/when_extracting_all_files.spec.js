@@ -13,7 +13,12 @@ const path = require('path');
 describe('When extracting all files in a folder', () => {
     let targetFolder, outputFolder, result;
 
-    beforeAll(() => {
+    beforeAll(async () => {
+
+        process.argv = [
+            'someFolder',
+            'somewhereElseFolder'
+        ];
 
         targetFolder = 'someFolder';
         outputFolder = 'somewhereElseFolder';
@@ -53,7 +58,7 @@ describe('When extracting all files in a folder', () => {
             }
         };
 
-        result = orchestrator.processAllFiles(targetFolder, outputFolder);
+        result = await orchestrator.processAllFiles();
     })
 
     test('it should rename all files in the target folder', () => {
