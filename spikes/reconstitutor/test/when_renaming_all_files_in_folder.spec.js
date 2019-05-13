@@ -8,6 +8,7 @@ describe('When renaming all files in a folder', () => {
     let targetFolder, result;
 
     beforeAll(() => {
+        jest.clearAllMocks();
 
         targetFolder = 'someFolder';
 

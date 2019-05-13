@@ -6,6 +6,8 @@ describe('When finding all primary files in a folder', () => {
     let targetFolder, primaryFilesFound;
 
     beforeAll(async () => {
+        jest.clearAllMocks();
+        
         targetFolder = 'someFolder';
 
         findInFiles.find = retrieveFile;

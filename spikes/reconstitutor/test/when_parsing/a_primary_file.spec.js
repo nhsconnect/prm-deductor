@@ -8,6 +8,8 @@ describe('When parsing a primary file', () => {
     let primaryFile;
 
     beforeAll(() => {
+        jest.clearAllMocks();
+        
         let fullFilePath = 'parentFolder/0F28A313-EEDB-413E-9D41-BED8213DCB95';
         fs.readFileSync = (filePath) => { 
             switch (path.basename(filePath)) {

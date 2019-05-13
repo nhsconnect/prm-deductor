@@ -14,7 +14,8 @@ describe('When extracting all files in a folder', () => {
     let targetFolder, outputFolder, result;
 
     beforeAll(async () => {
-
+        jest.clearAllMocks();
+        
         targetFolder = 'someFolder';
         outputFolder = 'somewhereElseFolder';
 
