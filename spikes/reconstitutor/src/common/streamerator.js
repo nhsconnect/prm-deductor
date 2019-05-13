@@ -1,3 +1,4 @@
+/* ignore file coverage: pretty basic stream functions wrapper */
 const Stream = require('stream');
 
 exports.createReadStream = () => {
@@ -13,7 +14,6 @@ exports.createWriteStream = () => {
         objectMode: true,
         autoDestroy: true,
         write: (chunk, _, next) => {
-            console.log(chunk.toString());
             next();
         }
       });

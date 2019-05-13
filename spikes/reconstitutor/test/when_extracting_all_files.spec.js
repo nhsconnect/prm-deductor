@@ -7,10 +7,10 @@ const attachmentWriter = require('../src/common/attachmentWriter');
 jest.mock('../src/common/attachmentWriter');
 const given = require('./given');
 const fs = require('fs');
-const path = require('path');
 jest.mock('fs');
+const path = require('path');
 
-describe.only('When extracting all files in a folder', () => {
+describe('When extracting all files in a folder', () => {
     let targetFolder, outputFolder, result;
 
     beforeAll(() => {
