@@ -12,12 +12,9 @@ resource "tls_self_signed_cert" "root" {
   is_ca_certificate = true
 
   allowed_uses = [
-    "key_encipherment",
     "digital_signature",
     "cert_signing",
     "crl_signing",
-    "client_auth",
-    "server_auth",
   ]
 
   subject {
@@ -26,8 +23,6 @@ resource "tls_self_signed_cert" "root" {
     locality     = "Leeds"
     country      = "UK"
   }
-
-  dns_names = ["${aws_lb.nlb.dns_name}"]
 }
 
 resource "tls_private_key" "intermediate" {
@@ -44,8 +39,6 @@ resource "tls_cert_request" "intermediate" {
     locality     = "Leeds"
     country      = "UK"
   }
-
-  dns_names = ["${aws_lb.nlb.dns_name}"]
 }
 
 resource "tls_locally_signed_cert" "intermediate_ca" {
@@ -57,10 +50,9 @@ resource "tls_locally_signed_cert" "intermediate_ca" {
   validity_period_hours = 26280
 
   allowed_uses = [
-    "key_encipherment",
     "digital_signature",
-    "client_auth",
-    "server_auth",
+    "cert_signing",
+    "crl_signing",
   ]
 
   is_ca_certificate = true
@@ -94,7 +86,7 @@ resource "tls_locally_signed_cert" "server" {
   validity_period_hours = 17520
   early_renewal_hours   = 8760
 
-  allowed_uses = ["server_auth", "client_auth"]
+  allowed_uses = ["server_auth"]
 }
 
 resource "tls_private_key" "client" {
@@ -105,10 +97,11 @@ resource "tls_cert_request" "client" {
   key_algorithm   = "${tls_private_key.root.algorithm}"
   private_key_pem = "${tls_private_key.client.private_key_pem}"
 
-  dns_names = ["localhost"]
-
   subject {
     common_name = "Client"
+    organization = "NHSD"
+    locality     = "Leeds"
+    country      = "UK"
   }
 }
 
@@ -122,55 +115,56 @@ resource "tls_locally_signed_cert" "client" {
   validity_period_hours = 17520
   early_renewal_hours   = 8760
 
-  allowed_uses = ["server_auth", "client_auth"]
+  allowed_uses = ["client_auth"]
 }
 
 data "template_file" "trust" {
   template = <<EOT
-${tls_locally_signed_cert.intermediate_ca.cert_pem}${tls_self_signed_cert.root.cert_pem}EOT
+${tls_locally_signed_cert.intermediate_ca.cert_pem}${tls_self_signed_cert.root.cert_pem}
+EOT
 }
 
-# resource "aws_ssm_parameter" "ca" {
-#   name        = "/prm/${data.aws_caller_identity.current.account_id}/mtls_server/${var.environment}/ca"
-#   type        = "String"
-#   value       = "${data.template_file.trust.rendered}"
-#   description = "CA trust store for mTLS server"
+resource "aws_ssm_parameter" "ca" {
+  name        = "/prm/${data.aws_caller_identity.current.account_id}/mtls_server/${var.environment}/ca"
+  type        = "String"
+  value       = "${data.template_file.trust.rendered}"
+  description = "CA trust store for mTLS server"
 
-#   overwrite = true
-# }
+  overwrite = true
+}
 
-# resource "aws_ssm_parameter" "key" {
-#   name        = "/prm/${data.aws_caller_identity.current.account_id}/mtls_server/${var.environment}/key"
-#   type        = "SecureString"
-#   value       = "${tls_private_key.server.private_key_pem}"
-#   description = "Private key for mTLS server"
+resource "aws_ssm_parameter" "key" {
+  name        = "/prm/${data.aws_caller_identity.current.account_id}/mtls_server/${var.environment}/key"
+  type        = "SecureString"
+  value       = "${tls_private_key.server.private_key_pem}"
+  description = "Private key for mTLS server"
 
-#   overwrite = true
-# }
+  overwrite = true
+}
 
-# resource "aws_ssm_parameter" "cert" {
-#   name        = "/prm/${data.aws_caller_identity.current.account_id}/mtls_server/${var.environment}/cert"
-#   type        = "String"
-#   value       = "${tls_locally_signed_cert.server.cert_pem}"
-#   description = "Server certificate for mTLS server"
+resource "aws_ssm_parameter" "cert" {
+  name        = "/prm/${data.aws_caller_identity.current.account_id}/mtls_server/${var.environment}/cert"
+  type        = "String"
+  value       = "${tls_locally_signed_cert.server.cert_pem}"
+  description = "Server certificate for mTLS server"
 
-#   overwrite = true
-# }
+  overwrite = true
+}
 
-# resource "aws_ssm_parameter" "client_key" {
-#   name        = "/prm/${data.aws_caller_identity.current.account_id}/mtls_server/${var.environment}/client_key"
-#   type        = "SecureString"
-#   value       = "${tls_private_key.client.private_key_pem}"
-#   description = "Private key for mTLS server"
+resource "aws_ssm_parameter" "client_key" {
+  name        = "/prm/${data.aws_caller_identity.current.account_id}/mtls_server/${var.environment}/client_key"
+  type        = "SecureString"
+  value       = "${tls_private_key.client.private_key_pem}"
+  description = "Private key for mTLS server"
 
-#   overwrite = true
-# }
+  overwrite = true
+}
 
-# resource "aws_ssm_parameter" "client_cert" {
-#   name        = "/prm/${data.aws_caller_identity.current.account_id}/mtls_server/${var.environment}/client_cert"
-#   type        = "String"
-#   value       = "${tls_locally_signed_cert.client.cert_pem}"
-#   description = "Server certificate for mTLS server"
+resource "aws_ssm_parameter" "client_cert" {
+  name        = "/prm/${data.aws_caller_identity.current.account_id}/mtls_server/${var.environment}/client_cert"
+  type        = "String"
+  value       = "${tls_locally_signed_cert.client.cert_pem}"
+  description = "Server certificate for mTLS server"
 
-#   overwrite = true
-# }
+  overwrite = true
+}
