@@ -2,7 +2,7 @@ const primaryFileFinder = require('../src/common/primaryFileFinder');
 const findInFiles = require('find-in-files');
 jest.mock('find-in-files');
 
-describe('When finding all primary files in a folder', async () => {
+describe('When finding all primary files in a folder', () => {
     let targetFolder, primaryFilesFound;
 
     beforeAll(async () => {
