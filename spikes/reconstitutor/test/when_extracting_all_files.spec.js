@@ -15,19 +15,23 @@ describe('When extracting all files in a folder', () => {
 
     beforeAll(async () => {
 
-        process.argv = [
-            'someFolder',
-            'somewhereElseFolder'
-        ];
-
         targetFolder = 'someFolder';
         outputFolder = 'somewhereElseFolder';
 
+        process.argv = [
+            targetFolder,
+            outputFolder
+        ];
+
         fileRenamer.renameAllFilesInFolder = jest.fn();
         primaryFileFinder.findAllPrimaryFilesInFolder = jest.fn((folder) => {
-            return [
-                'someFolder/0F28A313-EEDB-413E-9D41-BED8213DCB95'
-            ];
+            if (folder === targetFolder) {
+                return [
+                    'someFolder/0F28A313-EEDB-413E-9D41-BED8213DCB95'
+                ];
+            } else {
+                return [];
+            }
         });
         attachmentWriter.writeFileTo = jest.fn();
 
