@@ -1,5 +1,6 @@
 /* ignore file coverage: pretty basic stream functions wrapper */
 const Stream = require('stream');
+const fs = require('fs');
 
 exports.createReadStream = () => {
     const stream = new Stream.Readable({
@@ -9,13 +10,7 @@ exports.createReadStream = () => {
     return stream;
 }
 
-exports.createWriteStream = () => {
-    stream = new Stream.Writable({
-        objectMode: true,
-        autoDestroy: true,
-        write: (chunk, _, next) => {
-            next();
-        }
-      });
+exports.createWriteStream = (outputFileFullPath) => {
+    stream = fs.createWriteStream(outputFileFullPath);
     return stream;
 };
