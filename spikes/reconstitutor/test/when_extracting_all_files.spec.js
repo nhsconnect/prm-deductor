@@ -20,6 +20,7 @@ describe('When extracting all files in a folder', () => {
         outputFolder = 'somewhereElseFolder';
 
         process.argv = [
+            nodePath = 'somethingOrOther',
             targetFolder,
             outputFolder
         ];

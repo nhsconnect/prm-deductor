@@ -8,13 +8,13 @@ exports.processAllFiles = async () => {
     let totalPrimaryFilesProcessed = 0;
     let totalAttachmentsProcessed = 0;
 
-    if (process.argv.length !== 2) {
+    if (process.argv.length !== 3) {
         console.error('You need to supply both the targetFolder and the outputFolder');
     } else {
-        let targetFolder = process.argv[0];
-        let outputFolder = process.argv[1];
+        let targetFolder = process.argv[1];
+        let outputFolder = process.argv[2];
 
-        fileRenamer.renameAllFilesInFolder(targetFolder);
+        await fileRenamer.renameAllFilesInFolder(targetFolder);
         let primaryFileFullPaths = await primaryFileFinder.findAllPrimaryFilesInFolder(targetFolder);
 
         primaryFileFullPaths.forEach(primaryFileFullPath => {

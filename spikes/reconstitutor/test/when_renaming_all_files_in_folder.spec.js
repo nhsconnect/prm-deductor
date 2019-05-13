@@ -15,9 +15,9 @@ describe('When renaming all files in a folder', () => {
         fs.readdirSync = (folder) => {
             if (folder === targetFolder) {
                 return [
-                    path.join(targetFolder, 'file1'),
-                    path.join(targetFolder, 'file2'),
-                    path.join(targetFolder, 'file3')
+                    'file1',
+                    'file2',
+                    'file3'
                 ];
             }
         }
@@ -43,18 +43,33 @@ describe('When renaming all files in a folder', () => {
     });
 
     test('it should rename the first file to its message Id', () => {
-        let expectedFullFilePath = path.join(targetFolder, '0F28A313-EEDB-413E-9D41-BED8213DCB95');
-        expect(fs.renameSync.mock.calls[0][1]).toBe(expectedFullFilePath);
+        let originalFullFilePath = path.join(targetFolder, 'file1');
+        let renameFullFilePath = path.join(targetFolder, '0F28A313-EEDB-413E-9D41-BED8213DCB95');
+
+        expect(fs.renameSync.mock.calls[0]).toEqual([
+            originalFullFilePath,
+            renameFullFilePath
+        ]);
     });
 
     test('it should rename the second file to its message Id', () => {
-        let expectedFullFilePath = path.join(targetFolder, 'E5EE718C-2577-401B-AFC3-CB651FD3011F');
-        expect(fs.renameSync.mock.calls[1][1]).toBe(expectedFullFilePath);
+        let originalFullFilePath = path.join(targetFolder, 'file2');
+        let renameFullFilePath = path.join(targetFolder, 'E5EE718C-2577-401B-AFC3-CB651FD3011F');
+
+        expect(fs.renameSync.mock.calls[1]).toEqual([
+            originalFullFilePath,
+            renameFullFilePath
+        ]);
     });
 
     test('it should rename the third file to its message Id', () => {
-        let expectedFullFilePath = path.join(targetFolder, 'B48B8DC1-3C90-4817-8186-E2BA3B16E2EE');
-        expect(fs.renameSync.mock.calls[2][1]).toBe(expectedFullFilePath);
+        let originalFullFilePath = path.join(targetFolder, 'file3');
+        let renameFullFilePath = path.join(targetFolder, 'B48B8DC1-3C90-4817-8186-E2BA3B16E2EE');
+
+        expect(fs.renameSync.mock.calls[2]).toEqual([
+            originalFullFilePath,
+            renameFullFilePath
+        ]);
     });
 
     test('it should return a detailed report', () => {

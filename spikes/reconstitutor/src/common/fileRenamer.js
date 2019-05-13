@@ -8,10 +8,11 @@ exports.renameAllFilesInFolder = (folder) => {
     let files = fs.readdirSync(folder);
 
     files.forEach(file => {
-        let content = fs.readFileSync(file);
+        let originalName = path.join(folder, file);
+        let content = fs.readFileSync(originalName, 'utf8');
         let messageId = metadataExtractions.getMessageId(content);
         let newFileName = path.join(folder, messageId);
-        fs.renameSync(file, newFileName);
+        fs.renameSync(originalName, newFileName);
         totalFilesRenamed++;
     });
 

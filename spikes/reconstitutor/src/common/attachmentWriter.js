@@ -18,7 +18,7 @@ exports.writeFileTo = (attachment, outputFolder) => {
 }
 
 function getFragmentData(fragment, isLargeAttachment) {
-    let dataFile = fs.readFileSync(fragment.fullFilePath);
+    let dataFile = fs.readFileSync(fragment.fullFilePath, 'utf8');
     let data = getAttachmentData(dataFile, fragment, isLargeAttachment);
 
     return data;

@@ -2,7 +2,7 @@ const metadataExtractions = require('../common/metadataExtractions');
 const fs = require('fs');
 
 exports.parse = (fullFilePath) => {
-    let content = fs.readFileSync(fullFilePath); 
+    let content = fs.readFileSync(fullFilePath, 'utf8'); 
     let id = metadataExtractions.getMessageId(content); 
     let partName = metadataExtractions.getPartName(content); 
     let filename = metadataExtractions.getSubjectFilename(content); 
