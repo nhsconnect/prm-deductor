@@ -12,12 +12,16 @@ exports.processAllFiles = (targetFolder, outputFolder) => {
     let primaryFileFullPaths = primaryFileFinder.findAllPrimaryFilesInFolder(targetFolder);
 
     primaryFileFullPaths.forEach(primaryFileFullPath => {
+
         let primaryFile = primaryFileBuilder.parse(primaryFileFullPath);
+
         primaryFile.attachments.forEach(attachment => {
             let outputFullFilePath = path.join(outputFolder, attachment.name);
             attachmentWriter.writeFileTo(attachment, outputFullFilePath);
+            
             totalAttachmentsProcessed++;
         });
+
         totalPrimaryFilesProcessed++;
     });
     
