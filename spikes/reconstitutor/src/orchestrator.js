@@ -1,34 +1,28 @@
+const fileRenamer = require('./common/fileRenamer');
+const primaryFileFinder = require('./common/primaryFileFinder');
 const primaryFileBuilder = require('./parsing/primaryFileParser');
-const streamerator = require('./common/streamerator');
+const attachmentWriter = require('./common/attachmentWriter');
+const path = require('path');
 
-exports.doSomething = async (content) => {
+exports.processAllFiles = (targetFolder, outputFolder) => {
+    let totalPrimaryFilesProcessed = 0;
+    let totalAttachmentsProcessed = 0;
 
-    primaryFile = await primaryFileBuilder.parse(content);
+    fileRenamer.renameAllFilesInFolder(targetFolder);
+    let primaryFileFullPaths = primaryFileFinder.findAllPrimaryFilesInFolder(targetFolder);
 
-    let numberOfExtractedFiles = 0;
-    let standardAttachments = primaryFile.attachments.filter(file => file.largeAttachment === false);
-    standardAttachments.forEach(attachment => {
-        writeData(attachment.data);
-        numberOfExtractedFiles++;
-    });
-
-    let largeAttachments = primaryFile.attachments.filter(file => file.largeAttachment === true);
-    largeAttachments.forEach(attachment => {
-        // get all files for large attachment ...
-        // for each file, get fragment attachment data
-        writeData(attachment);
-        numberOfExtractedFiles++;
+    primaryFileFullPaths.forEach(primaryFileFullPath => {
+        let primaryFile = primaryFileBuilder.parse(primaryFileFullPath);
+        primaryFile.attachments.forEach(attachment => {
+            let outputFullFilePath = path.join(outputFolder, attachment.name);
+            attachmentWriter.writeFileTo(attachment, outputFullFilePath);
+            totalAttachmentsProcessed++;
+        });
+        totalPrimaryFilesProcessed++;
     });
     
-    return numberOfExtractedFiles;
-}
-
-function writeData(data) {
-    let read = streamerator.createReadStream();
-    let write = streamerator.createWriteStream();
-    read.pipe(write);
-    if (data) {
-        read.push(data);
-    }
-    read.push(null);
+    return {
+        totalPrimaryFilesProcessed,
+        totalAttachmentsProcessed
+    };
 }
