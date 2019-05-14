@@ -15,6 +15,9 @@ describe('When parsing the second of two standard attachments stored on the prim
             fullFilePath: 'parentFolder/0F28A313-EEDB-413E-9D41-BED8213DCB95'
         };
 
+        fs.existsSync = (path) => {
+            return true;
+        }
         fs.readFileSync = (filePath) => { 
             if (filePath === attachment.fullFilePath) {
                 return given.primaryFileContentWithTwoStandardAttachments;

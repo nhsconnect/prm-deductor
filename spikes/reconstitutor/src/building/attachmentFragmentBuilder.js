@@ -37,7 +37,7 @@ function getAllFragments(content, attachmentReference) {
 function buildFragment(fragmentReference, fullFilePath){
     let id = metadataExtractions.getReferenceId(fragmentReference); 
 
-    let parentFolder = path.dirname(fullFilePath).split(path.sep).pop();
+    let parentFolder = path.dirname(fullFilePath);
     let fragmentFilePath = path.join(parentFolder, id); 
     let fragment = fragmentFileParser.parse(fragmentFilePath); 
 

@@ -34,6 +34,9 @@ describe('When processing the first of two standard attachments', () => {
             largeAttachment: false
         };
 
+        fs.existsSync = (path) => {
+            return true;
+        }
         fs.readFileSync = (filePath) => { 
             if (filePath === attachment.fullFilePath) {
                 return given.primaryFileContentWithTwoStandardAttachments;

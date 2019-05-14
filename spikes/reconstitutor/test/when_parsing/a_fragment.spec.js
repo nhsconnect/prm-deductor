@@ -3,13 +3,16 @@ const given = require("../given");
 const fs = require('fs');
 jest.mock('fs');
 
-describe('When parsing a fragment file', () => {
+describe.only('When parsing a fragment file', () => {
     let fragmentFile;
 
     beforeAll(() => {
         jest.clearAllMocks();
         
         let fullFilePath = 'parentFolder/B48B8DC1-3C90-4817-8186-E2BA3B16E2EE';
+        fs.existsSync = (path) => { 
+            return (path === fullFilePath);
+        };
         fs.readFileSync = (path) => { 
             return (path === fullFilePath) 
                     ? given.fragmentContent(96, 'B48B8DC1-3C90-4817-8186-E2BA3B16E2EE', 1) 

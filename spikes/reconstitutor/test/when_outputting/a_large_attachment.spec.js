@@ -34,6 +34,9 @@ describe('When processing a large attachment', () => {
             largeAttachment: true
         };
 
+        fs.existsSync = (path) => {
+            return true;
+        }
         fs.readFileSync = (filePath) => { 
             switch (path.basename(filePath)) {
                 case 'E5EE718C-2577-401B-AFC3-CB651FD3011F':
