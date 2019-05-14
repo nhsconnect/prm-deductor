@@ -3,6 +3,7 @@ const fs = require('fs');
 
 exports.parse = (fullFilePath) => {
     if (!fs.existsSync(fullFilePath)) {
+        console.log(`Fragment file not found for: ${fullFilePath}`);
         return {};
     }
     

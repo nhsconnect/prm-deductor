@@ -6,6 +6,7 @@ exports.writeFileTo = (attachment, outputFolder) => {
     let totalFragmentsWritten = 0;
 
     if (attachment.fragments.length === 0) {
+        console.log(`No fragments for attachment: ${attachment.name}`);
         return {
             totalFragmentsWritten
         };

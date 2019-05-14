@@ -32,6 +32,8 @@ function getAllFragments(content, attachmentReference) {
     }
 
     if (fragments.some(isEmpty)) {
+        console.log(`Some fragments missing for attachment: ${attachmentReference.fullFilePath}`);
+        console.log(`Purging fragments!`);
         fragments = [];
     }
 
