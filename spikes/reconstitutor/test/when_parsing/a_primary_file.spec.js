@@ -1,7 +1,7 @@
 const primaryFileBuilder = require("../../src/parsing/primaryFileParser");
 const given = require("../given");
-const fs = require('fs');
 const path = require('path');
+const fs = require('fs');
 jest.mock('fs');
 
 describe('When parsing a primary file', () => {
@@ -10,6 +10,9 @@ describe('When parsing a primary file', () => {
     beforeAll(() => {
         jest.clearAllMocks();
         
+        fs.existsSync = (path) => {
+            return true;
+        }
         let fullFilePath = 'parentFolder/0F28A313-EEDB-413E-9D41-BED8213DCB95';
         fs.readFileSync = (filePath) => { 
             switch (path.basename(filePath)) {
@@ -38,11 +41,15 @@ describe('When parsing a primary file', () => {
             }
         };
 
-        primaryFile = primaryFileBuilder.parse(fullFilePath);
+        primaryFile = primaryFileBuilder.parse(fullFilePath); //?
     });
 
     test("it should have an id", () => {
         expect(primaryFile.id).toBe('0F28A313-EEDB-413E-9D41-BED8213DCB95');
+    });
+
+    test("it should have the expected partName", () => {
+        expect(primaryFile.name).toBe('Part_82_12073865.1555409597528');
     });
 
     test("it should have a fullFilePath", () => {

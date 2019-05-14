@@ -3,6 +3,14 @@ const path = require('path');
 const fs = require('fs');
 
 exports.writeFileTo = (attachment, outputFolder) => {
+    let totalFragmentsWritten = 0;
+
+    if (attachment.fragments.length === 0) {
+        return {
+            totalFragmentsWritten
+        };
+    }
+
     let fullOutputFilePath = path.join(outputFolder, attachment.name);
 
     let read = streamerator.createReadStream();
@@ -12,9 +20,12 @@ exports.writeFileTo = (attachment, outputFolder) => {
     attachment.fragments.forEach(fragment => {
         let fragmentData = getFragmentData(fragment, attachment.largeAttachment);
         read.push(fragmentData);
+        totalFragmentsWritten++;
     });
 
-    return 0;
+    return {
+        totalFragmentsWritten
+    };
 }
 
 function getFragmentData(fragment, isLargeAttachment) {

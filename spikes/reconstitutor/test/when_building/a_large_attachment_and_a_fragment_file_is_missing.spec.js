@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 jest.mock('fs');
 
-describe.skip('When parsing a large attachment and a fragment file is missing', () => {
+describe('When parsing a large attachment and a fragment file is missing', () => {
     let attachment, fragments;
 
     beforeAll(() => {
@@ -16,9 +16,6 @@ describe.skip('When parsing a large attachment and a fragment file is missing', 
             fullFilePath: 'parentFolder/E5EE718C-2577-401B-AFC3-CB651FD3011F'
         };
 
-        fs.existsSync = (path) => {
-            return true;
-        }
         fs.readFileSync = (filePath) => { 
             switch (path.basename(filePath)) {
                 case 'E5EE718C-2577-401B-AFC3-CB651FD3011F':
@@ -27,8 +24,6 @@ describe.skip('When parsing a large attachment and a fragment file is missing', 
                     return given.fragmentContent(95, 'B48B8DC1-3C90-4817-8186-E2BA3B16E2EE', 1);
                 case '02D052E4-F8CC-4D2D-832A-E8F1EBB5F064':
                     return given.fragmentContent(96, '02D052E4-F8CC-4D2D-832A-E8F1EBB5F064', 2);
-                case '8DB7B37C-6A26-4C37-A4C0-80F6B46F02AF':
-                    throw('no file!');
             }
         };
 
@@ -45,7 +40,7 @@ describe.skip('When parsing a large attachment and a fragment file is missing', 
             }
         }
 
-        fragments = attachmentFragmentBuilder.buildFragmentsFor(attachment);
+        fragments = attachmentFragmentBuilder.buildFragmentsFor(attachment); 
     })
     
     test("none of the fragments should be collated", () => {

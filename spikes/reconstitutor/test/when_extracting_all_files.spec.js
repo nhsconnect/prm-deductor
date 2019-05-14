@@ -10,7 +10,7 @@ const fs = require('fs');
 jest.mock('fs');
 const path = require('path');
 
-describe.skip('When extracting all files in a folder', () => {
+describe('When extracting all files in a folder', () => {
     let targetFolder, outputFolder, result;
 
     beforeAll(async () => {
@@ -37,6 +37,9 @@ describe.skip('When extracting all files in a folder', () => {
         });
         attachmentWriter.writeFileTo = jest.fn();
 
+        fs.existsSync = (path) => { 
+            return true;
+        };
         fs.readFileSync = (filePath) => { 
             switch (path.basename(filePath)) {
                 case '0F28A313-EEDB-413E-9D41-BED8213DCB95':

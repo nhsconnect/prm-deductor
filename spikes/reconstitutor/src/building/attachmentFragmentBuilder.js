@@ -30,8 +30,20 @@ function getAllFragments(content, attachmentReference) {
             }
         });
     }
-    
+
+    if (fragments.some(isEmpty)) {
+        fragments = [];
+    }
+
     return fragments;
+}
+
+function isEmpty(element) {
+    for(var key in element) {
+        if(element.hasOwnProperty(key))
+            return false;
+    }
+    return true;
 }
 
 function buildFragment(fragmentReference, fullFilePath){

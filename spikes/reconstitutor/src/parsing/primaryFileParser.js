@@ -6,7 +6,7 @@ const path = require('path');
 
 exports.parse = (fullFilePath) => {
     let content = fs.readFileSync(fullFilePath, 'utf8');
-    let name = metadataExtractions.getPartName(content);
+    let name = metadataExtractions.getPartName(content); //?
     let id = metadataExtractions.getMessageId(content);
 
     let parentFolder = path.dirname(fullFilePath);

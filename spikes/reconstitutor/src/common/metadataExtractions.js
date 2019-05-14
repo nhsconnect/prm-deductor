@@ -27,7 +27,7 @@ exports.isAttachmentData = (fragmentReference) => {
 }
 
 exports.getPartName = (content) => {
-    let name = content.match(/^------=_(.*?)\s/);
+    let name = content.match(/^------=_(.*?)\s/); //?
     return name[1];
 }
 
