@@ -21,3 +21,4 @@ terragrunt = {
 
 aws_region = "eu-west-2"
 environment = "dev"
+docker_tag = "20190514151024"

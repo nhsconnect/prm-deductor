@@ -1,10 +1,10 @@
 data "aws_ecs_cluster" "cluster" {
-  cluster_name = "prm-${data.aws_caller_identity.current.account_id}-mtls-cluster-${lower(var.environment)}"
+  cluster_name = "prm-${data.aws_caller_identity.current.account_id}-mtls-cluster-${var.environment}"
 }
 
 resource "aws_security_group" "service_sg" {
   vpc_id      = "${data.aws_vpc.vpc.id}"
-  name        = "prm-${data.aws_caller_identity.current.account_id}-mtls-server-${lower(var.environment)}"
+  name        = "prm-${data.aws_caller_identity.current.account_id}-mtls-server-${var.environment}"
   description = "Security group for mTLS server"
 }
 
@@ -20,12 +20,12 @@ resource "aws_security_group_rule" "allow_https" {
 module "alb_service_task" {
   source                         = "git::https://github.com/subnova-nhs/terraform-aws-ecs-alb-service-task.git?ref=master"
   namespace                      = "prm"
-  stage                          = "dev"
-  name                           = "mtls_server"
+  stage                          = "${var.environment}"
+  name                           = "mtls-server"
   alb_target_group_arn           = "${aws_lb_target_group.tls.arn}"
   assign_public_ip               = true
   container_definition_json      = "[${module.container_definition.json_map},${module.xray_daemon_definition.json_map}]"
-  container_name                 = "mtls_server"
+  container_name                 = "mtls-server"
   container_port                 = 4444
   ecs_cluster_arn                = "${data.aws_ecs_cluster.cluster.arn}"
   launch_type                    = "FARGATE"
@@ -78,5 +78,5 @@ resource "aws_iam_role_policy_attachment" "xray" {
 }
 
 resource "aws_cloudwatch_log_group" "log" {
-  name = "/aws/fargate/mtls_server-${var.environment}"
+  name = "/aws/fargate/mtls-server-${var.environment}"
 }

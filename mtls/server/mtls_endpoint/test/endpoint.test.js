@@ -20,7 +20,10 @@ describe("When receiving a message from the Spine server,", () => {
             ca: CA,
             cert: SERVER_CERT,
             key: SERVER_KEY,
-            port: port
+            port: port,
+            invoke: () => {
+                return Promise.resolve()
+            }
         })
         server.on('listening', () => {
             console.log("Listening on " + server.address().port)

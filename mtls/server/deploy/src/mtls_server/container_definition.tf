@@ -1,7 +1,7 @@
 module "container_definition" {
   source          = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=master"
-  container_name  = "mtls_server"
-  container_image = "327778747031.dkr.ecr.eu-west-2.amazonaws.com/prm/mtls:20190513201343"
+  container_name  = "mtls-server"
+  container_image = "327778747031.dkr.ecr.eu-west-2.amazonaws.com/prm/mtls:${var.docker_tag}"
   container_cpu   = 224
 
   environment = [
@@ -12,6 +12,10 @@ module "container_definition" {
     {
       name  = "CERT"
       value = "${aws_ssm_parameter.cert.value}"
+    },
+    {
+      name = "LAMBDA"
+      value = "mtls-test-${var.environment}"
     },
     {
       name  = "AWS_XRAY_DEBUG_MODE",
@@ -36,8 +40,8 @@ module "container_definition" {
 
   log_options {
     "awslogs-region"        = "${var.aws_region}"
-    "awslogs-group"         = "/aws/fargate/mtls_server-${var.environment}"
-    "awslogs-stream-prefix" = "mtls_server"
+    "awslogs-group"         = "/aws/fargate/mtls-server-${var.environment}"
+    "awslogs-stream-prefix" = "mtls-server"
   }
 
   readonly_root_filesystem = "true"
@@ -45,7 +49,7 @@ module "container_definition" {
 
 module "xray_daemon_definition" {
   source          = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=master"
-  container_name  = "xray_daemon"
+  container_name  = "xray-daemon"
   container_image = "amazon/aws-xray-daemon:latest"
   container_cpu   = 32
 
@@ -58,7 +62,7 @@ module "xray_daemon_definition" {
 
   log_options {
     "awslogs-region"        = "${var.aws_region}"
-    "awslogs-group"         = "/aws/fargate/mtls_server-${var.environment}"
-    "awslogs-stream-prefix" = "xray_daemon"
+    "awslogs-group"         = "/aws/fargate/mtls-server-${var.environment}"
+    "awslogs-stream-prefix" = "xray-daemon"
   }
 }
