@@ -11,6 +11,7 @@ describe('When parsing an attachment reference', () => {
             contentType: 'application/octet-stream',
             largeAttachment: false,
             fileLength: 72580,
+            isCompressed: true,
             id: 'Attachment1@e-mis.com/EMISWeb/GP2GP2.2A'
         });
     });
@@ -25,6 +26,7 @@ describe('When parsing an attachment reference', () => {
             contentType: 'text/xml',
             largeAttachment: false,
             fileLength: 723420,
+            isCompressed: true,
             id: 'Attachment2@e-mis.com/EMISWeb/GP2GP2.2A'
         });
     });
@@ -38,6 +40,7 @@ describe('When parsing an attachment reference', () => {
             contentType: 'image/tiff',
             largeAttachment: true,
             fileLength: 42810092,
+            isCompressed: false,
             id: 'E5EE718C-2577-401B-AFC3-CB651FD3011F'
         });
     });

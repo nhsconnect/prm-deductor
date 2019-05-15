@@ -8,9 +8,11 @@ exports.parse = (ebReferenceText) => {
     let contentType = getContentType(fileInfo);
     let largeAttachment = isALargeAttachment(fileInfo);
     let fileLength = getFileLength(fileInfo);
+    let isCompressed = getIsCompressed(fileInfo);
 
     return {
         id,
+        isCompressed,
         name,
         contentType,
         largeAttachment,
@@ -38,4 +40,9 @@ function getFileInfoElement(content) {
         element = element[0].slice(30);
     }
     return element;
+}
+
+function getIsCompressed(content) {
+    let isCompressed = content.match(/(\sCompressed=)(.*?)(?=\s)/)[0].split('=')[1];
+    return isCompressed === 'Yes';
 }
