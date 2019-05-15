@@ -28,9 +28,7 @@ exports.processAllFiles = async () => {
 
             console.log(`Outputting attachments to folder: ${outputFolder}`);
             primaryFile.attachments.forEach(attachment => {
-                let outputFullFilePath = path.join(outputFolder, attachment.name);
-
-                attachmentWriter.writeFileTo(attachment, outputFullFilePath);
+                attachmentWriter.writeFileTo(attachment, outputFolder);
                 
                 totalAttachmentsProcessed++;
             });

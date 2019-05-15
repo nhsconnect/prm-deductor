@@ -93,8 +93,7 @@ describe('When extracting all files in a folder', () => {
     });
 
     test('it should write out the third attachment to the output folder', () => {
-        let expectedFullFilePath = path.join(outputFolder, '3D085A2B-E00F-44F8-AA85-6699D2D4B259_(Encoded Compressed=No Length=42810092) 2003-16.tif');
-        expect(attachmentWriter.writeFileTo.mock.calls[2][1]).toBe(expectedFullFilePath);
+        expect(attachmentWriter.writeFileTo.mock.calls[2][1]).toBe(outputFolder);
     });
 
     test('it should return a detailed report', () => {
