@@ -83,13 +83,11 @@ describe('When extracting all files in a folder', () => {
     });
 
     test('it should write out the first attachment to the output folder', () => {
-        let expectedFullFilePath = path.join(outputFolder, '72FA3D52-D2B2-4197-87F4-238E9C6E4AA7_Customizing a Project Plan 2013.mpp');
-        expect(attachmentWriter.writeFileTo.mock.calls[0][1]).toBe(expectedFullFilePath);
+        expect(attachmentWriter.writeFileTo.mock.calls[0][1]).toBe(outputFolder);
     });
 
     test('it should write out the second attachment to the output folder', () => {
-        let expectedFullFilePath = path.join(outputFolder, '857419DE-7512-4619-A567-067CF9959EF1_EmisWeb.Hl7');
-        expect(attachmentWriter.writeFileTo.mock.calls[1][1]).toBe(expectedFullFilePath);
+        expect(attachmentWriter.writeFileTo.mock.calls[1][1]).toBe(outputFolder);
     });
 
     test('it should write out the third attachment to the output folder', () => {
