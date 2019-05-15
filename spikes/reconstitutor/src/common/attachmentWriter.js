@@ -14,6 +14,10 @@ exports.writeFileTo = (attachment, outputFolder) => {
 
     let fullOutputFilePath = path.join(outputFolder, attachment.name);
 
+    if (attachment.isCompressed) {
+        fullOutputFilePath = fullOutputFilePath + '.gz'; 
+    }
+
     let read = streamerator.createReadStream();
     let write = streamerator.createWriteStream(fullOutputFilePath);
     read.pipe(write);
