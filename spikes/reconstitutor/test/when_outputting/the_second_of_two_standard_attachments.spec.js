@@ -68,11 +68,12 @@ describe('When processing the second of two standard attachments', () => {
     });
 
     test('it should write for each fragment', () => {
-        expect(reader.push.mock.calls.length).toBe(attachment.fragments.length);
+        expect(reader.push.mock.calls.length).toBe(attachment.fragments.length + 1);
     });
 
     test('it should write the expected fragment data', () => {
-        expect(reader.push.mock.calls[0][0]).toBe('8TW8CYaLmjADP/kYvf/4+e2ZnjXleZ/+6vG//H+uHzTqR863AA==');
+        let encodedData = new Buffer('8TW8CYaLmjADP/kYvf/4+e2ZnjXleZ/+6vG//H+uHzTqR863AA==', 'base64');
+        expect(reader.push.mock.calls[0][0]).toEqual(encodedData);
     });
 
 });

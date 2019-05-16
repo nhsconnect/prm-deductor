@@ -86,7 +86,7 @@ describe('When processing a large attachment', () => {
     });
 
     test('it should write for each fragment', () => {
-        expect(reader.push.mock.calls.length).toBe(attachment.fragments.length);
+        expect(reader.push.mock.calls.length).toBe(attachment.fragments.length + 1);
     });
 
     test('it should return a detailed response', () => {

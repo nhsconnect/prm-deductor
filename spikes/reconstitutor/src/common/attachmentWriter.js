@@ -24,9 +24,11 @@ exports.writeFileTo = (attachment, outputFolder) => {
 
     attachment.fragments.forEach(fragment => {
         let fragmentData = getFragmentData(fragment, attachment.largeAttachment);
-        read.push(fragmentData);
+        var bitmap = new Buffer(fragmentData, 'base64');
+        read.push(bitmap);
         totalFragmentsWritten++;
     });
+    read.push(null);
 
     return {
         totalFragmentsWritten
@@ -62,7 +64,12 @@ function getAttachmentData(content, fragment, isLargeAttachment) {
 }
 
 function getDataSegment(partWithData) {
-    return partWithData.split('\n').filter(line => {
-        return line.length != 0 && line.indexOf('Content-') === -1
-    }).join('');
+    let data = partWithData.split('\n')
+                            .filter(line => {
+                                        return line.length != 0 && line.indexOf('Content-') === -1
+                                })
+                            .join('\n')
+                            .replace(/\s/, '')
+                            .trim();
+    return data;
 }
