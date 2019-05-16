@@ -3,6 +3,7 @@ const primaryFileFinder = require('./common/primaryFileFinder');
 const primaryFileBuilder = require('./parsing/primaryFileParser');
 const attachmentWriter = require('./common/attachmentWriter');
 const path = require('path');
+const fs = require('fs');
 
 exports.processAllFiles = async () => {
     let totalPrimaryFilesProcessed = 0;
@@ -26,6 +27,8 @@ exports.processAllFiles = async () => {
 
             let primaryFile = primaryFileBuilder.parse(primaryFileFullPath);
 
+            WriteOutToJsonFile(outputFolder, primaryFile);
+
             console.log(`Outputting attachments to folder: ${outputFolder}`);
             primaryFile.attachments.forEach(attachment => {
                 attachmentWriter.writeFileTo(attachment, outputFolder);
@@ -42,4 +45,10 @@ exports.processAllFiles = async () => {
         totalPrimaryFilesProcessed,
         totalAttachmentsProcessed
     };
+}
+
+function WriteOutToJsonFile(folder, data) {
+    let fullPath = path.join(folder, 'primaryFile.json');
+    let jsonData = JSON.stringify(data);
+    fs.writeFileSync(fullPath, jsonData);
 }

@@ -78,6 +78,11 @@ describe('When extracting all files in a folder', () => {
         expect(primaryFileFinder.findAllPrimaryFilesInFolder.mock.calls.length).toBe(1);
     });
 
+    test('it should write out the primary file to the output folder', () => {
+        let fullPath = path.join(outputFolder, 'primaryFile.json');
+        expect(fs.writeFileSync.mock.calls[0][0]).toBe(fullPath);
+    });
+
     test('it should write out 3 attachments', () => {
         expect(attachmentWriter.writeFileTo.mock.calls.length).toBe(3);
     });
