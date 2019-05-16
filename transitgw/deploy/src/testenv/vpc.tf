@@ -14,7 +14,7 @@ module "testvpc1" {
     private_subnets = "${slice(local.test_env_1_private_subnets, 0, length(var.availability_zones))}"
 
     private_subnet_tags = {
-        Name = "${var.environment}-test-env-1-private-subnet"
+        Name = "${var.environment}-test-vpc-1-private-subnet"
     }
 
     enable_nat_gateway   = false
@@ -23,7 +23,7 @@ module "testvpc1" {
 
     tags = {
         Environment = "${var.environment}"
-        Component   = "test-env-1"
+        Component   = "test-vpc-1"
     }
 }
 
@@ -38,7 +38,7 @@ module "testvpc2" {
     private_subnets = "${slice(local.test_env_2_private_subnets, 0, length(var.availability_zones))}"
 
     private_subnet_tags = {
-        Name = "${var.environment}-test-env-2-private-subnet"
+        Name = "${var.environment}-test-vpc-2-private-subnet"
     }
 
     enable_nat_gateway     = false
@@ -47,6 +47,6 @@ module "testvpc2" {
 
     tags = {
         Environment = "${var.environment}"
-        Component   = "test-env-2"
+        Component   = "test-vpc-2"
     }
 }
