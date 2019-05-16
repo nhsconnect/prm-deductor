@@ -21,3 +21,4 @@ terragrunt = {
 
 aws_region = "eu-west-2"
 environment = "dev"
+availability_zones = ["eu-west-2a", "eu-west-2b", "eu-west-2c"]
