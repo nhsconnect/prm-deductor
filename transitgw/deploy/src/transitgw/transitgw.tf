@@ -25,6 +25,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "test-vpc-1" {
     vpc_id = "${data.aws_vpc.test-vpc-1.id}"
     transit_gateway_id = "${aws_ec2_transit_gateway.gw.id}"
     subnet_ids = ["${data.aws_subnet_ids.test-vpc-1-private.ids}"]
+    transit_gateway_default_route_table_association = false
     transit_gateway_default_route_table_propagation = false
 
     tags {
@@ -50,9 +51,36 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "test-vpc-2" {
     vpc_id = "${data.aws_vpc.test-vpc-2.id}"
     transit_gateway_id = "${aws_ec2_transit_gateway.gw.id}"
     subnet_ids = ["${data.aws_subnet_ids.test-vpc-2-private.ids}"]
+    transit_gateway_default_route_table_association = false
     transit_gateway_default_route_table_propagation = false
 
     tags {
         Name = "${var.environment}-test-vpc-2"
     }
 }
+
+data "aws_vpc" "network" {
+    tags {
+        Name = "${var.environment}-network"
+    }
+}
+
+data "aws_subnet_ids" "network-private" {
+    vpc_id = "${data.aws_vpc.network.id}"
+
+    tags {
+        Name = "${var.environment}-private-subnet"
+    }
+}
+
+resource "aws_ec2_transit_gateway_vpc_attachment" "network" {
+    vpc_id = "${data.aws_vpc.network.id}"
+    transit_gateway_id = "${aws_ec2_transit_gateway.gw.id}"
+    subnet_ids = ["${data.aws_subnet_ids.network-private.ids}"]
+    transit_gateway_default_route_table_propagation = false
+
+    tags {
+        Name = "${var.environment}-network"
+    }
+}
+
