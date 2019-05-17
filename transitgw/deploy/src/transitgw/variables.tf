@@ -18,3 +18,7 @@ variable "opentest_vpc_name" {
 variable "opentest_vpc_private_subnet_name" {
   description = "The name assigned to the opentest VPC private subnets"
 }
+
+variable "opentest_gw_sg" {
+  description = "The name of the security group used for the opentest gw"
+}

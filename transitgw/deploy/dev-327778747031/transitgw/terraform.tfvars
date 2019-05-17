@@ -24,3 +24,4 @@ environment = "dev"
 availability_zones = ["eu-west-2a", "eu-west-2b", "eu-west-2c"]
 opentest_vpc_name = "dev-network"
 opentest_vpc_private_subnet_name = "dev-private-subnet"
+opentest_gw_sg = "opentest-dev-ec2"
