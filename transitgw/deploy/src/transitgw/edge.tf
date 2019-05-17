@@ -32,6 +32,14 @@ module "edge" {
         Network = "private"
     }
 
+    amazon_side_asn      = "65100"
+    enable_vpn_gateway   = true
+    propagate_private_route_tables_vgw = true
+
+    vpn_gateway_tags = {
+        Name = "${var.environment}-edge-vpn-gw"
+    }
+
     enable_nat_gateway   = true
     single_nat_gateway   = true
     one_nat_gateway_per_az = false
