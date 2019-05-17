@@ -22,3 +22,5 @@ terragrunt = {
 aws_region = "eu-west-2"
 environment = "dev"
 availability_zones = ["eu-west-2a", "eu-west-2b", "eu-west-2c"]
+opentest_vpc_name = "dev-network"
+opentest_vpc_private_subnet_name = "dev-private-subnet"

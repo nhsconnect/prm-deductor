@@ -10,3 +10,11 @@ variable "availability_zones" {
   description = "The availability zones to use for the test VPCs"
   type = "list"
 }
+
+variable "opentest_vpc_name" {
+  description = "The name assigned to the opentest VPC"
+}
+
+variable "opentest_vpc_private_subnet_name" {
+  description = "The name assigned to the opentest VPC private subnets"
+}

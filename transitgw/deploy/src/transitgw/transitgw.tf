@@ -7,6 +7,7 @@ resource "aws_ec2_transit_gateway" "gw" {
     }
 }
 
+# Associate test-vpc-1
 data "aws_vpc" "test-vpc-1" {
     tags {
         Name = "${var.environment}-test-vpc-1"
@@ -33,6 +34,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "test-vpc-1" {
     }
 }
 
+# Associate test-vpc-2
 data "aws_vpc" "test-vpc-2" {
     tags {
         Name = "${var.environment}-test-vpc-2"
@@ -59,9 +61,10 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "test-vpc-2" {
     }
 }
 
+# Associate opentest network
 data "aws_vpc" "network" {
     tags {
-        Name = "${var.environment}-network"
+        Name = "${var.opentest_vpc_name}"
     }
 }
 
@@ -69,7 +72,7 @@ data "aws_subnet_ids" "network-private" {
     vpc_id = "${data.aws_vpc.network.id}"
 
     tags {
-        Name = "${var.environment}-private-subnet"
+        Name = "${var.opentest_vpc_private_subnet_name}"
     }
 }
 
@@ -80,7 +83,18 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "network" {
     transit_gateway_default_route_table_propagation = false
 
     tags {
-        Name = "${var.environment}-network"
+        Name = "${var.opentest_vpc_name}"
     }
 }
 
+# Associate edge network
+resource "aws_ec2_transit_gateway_vpc_attachment" "edge" {
+    vpc_id = "${module.edge.vpc_id}"
+    transit_gateway_id = "${aws_ec2_transit_gateway.gw.id}"
+    subnet_ids = ["${module.edge.private_subnets}"]
+    transit_gateway_default_route_table_propagation = false
+
+    tags {
+        Name = "${var.environment}-edge"
+    }
+}
