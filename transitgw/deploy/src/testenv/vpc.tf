@@ -13,6 +13,10 @@ module "testvpc1" {
     azs             = ["${var.availability_zones}"]
     private_subnets = "${slice(local.test_env_1_private_subnets, 0, length(var.availability_zones))}"
 
+    private_route_table_tags = {
+        Network = "private"
+    }
+
     private_subnet_tags = {
         Name = "${var.environment}-test-vpc-1-private-subnet"
     }
@@ -39,6 +43,10 @@ module "testvpc2" {
 
     private_subnet_tags = {
         Name = "${var.environment}-test-vpc-2-private-subnet"
+    }
+
+    private_route_table_tags = {
+        Network = "private"
     }
 
     enable_nat_gateway     = false

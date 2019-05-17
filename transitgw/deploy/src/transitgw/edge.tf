@@ -16,10 +16,20 @@ module "edge" {
 
     public_subnet_tags = {
         Name = "${var.environment}-edge-public-subnet"
+        Network = "public"
+    }
+
+    public_route_table_tags = {
+        Network = "public"
     }
 
     private_subnet_tags = {
         Name = "${var.environment}-edge-private-subnet"
+        Network = "private"
+    }
+
+    private_route_table_tags = {
+        Network = "private"
     }
 
     enable_nat_gateway   = true
