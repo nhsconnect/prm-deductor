@@ -51,8 +51,7 @@ resource "aws_ec2_transit_gateway_route" "vpc-to-opentest" {
     transit_gateway_route_table_id = "${aws_ec2_transit_gateway_route_table.vpc-outbound.id}"
 }
 
-resource "aws_ec2_transit_gateway_route" "vpc-to-opentest-vpc" {
-    destination_cidr_block = "10.0.0.0/16"
+resource "aws_ec2_transit_gateway_route_table_propagation" "opentest" {
     transit_gateway_attachment_id = "${aws_ec2_transit_gateway_vpc_attachment.network.id}"
     transit_gateway_route_table_id = "${aws_ec2_transit_gateway_route_table.vpc-outbound.id}"
 }
@@ -96,20 +95,18 @@ resource "aws_route" "test-vpc-2-private-to-transit" {
 }
 
 # Default Routes
-resource "aws_ec2_transit_gateway_route" "default-to-test-vpc-1" {
-    destination_cidr_block = "10.2.0.0/16"
+
+resource "aws_ec2_transit_gateway_route_table_propagation" "test-vpc-1" {
     transit_gateway_attachment_id = "${aws_ec2_transit_gateway_vpc_attachment.test-vpc-1.id}"
     transit_gateway_route_table_id = "${aws_ec2_transit_gateway.gw.association_default_route_table_id}"
 }
 
-resource "aws_ec2_transit_gateway_route" "default-to-test-vpc-2" {
-    destination_cidr_block = "10.3.0.0/16"
+resource "aws_ec2_transit_gateway_route_table_propagation" "test-vpc-2" {
     transit_gateway_attachment_id = "${aws_ec2_transit_gateway_vpc_attachment.test-vpc-2.id}"
     transit_gateway_route_table_id = "${aws_ec2_transit_gateway.gw.association_default_route_table_id}"
 }
 
-resource "aws_ec2_transit_gateway_route" "default-to-daleaws-vpc" {
-    destination_cidr_block = "172.31.0.0/16"
+resource "aws_ec2_transit_gateway_route_table_propagation" "daleaws-vpc" {
     transit_gateway_attachment_id = "${data.aws_ec2_transit_gateway_vpc_attachment.daleaws.id}"
     transit_gateway_route_table_id = "${aws_ec2_transit_gateway.gw.association_default_route_table_id}"
 }
