@@ -1,6 +1,7 @@
 resource "aws_ec2_transit_gateway" "gw" {
     description = "The middleman"
     default_route_table_propagation = "disable"
+    auto_accept_shared_attachments = "enable"
 
     tags {
         Name = "middleman"
