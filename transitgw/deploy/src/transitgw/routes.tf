@@ -1,35 +1,38 @@
-# Test VPC 1 Routes
-resource "aws_ec2_transit_gateway_route_table" "test-vpc-1" {
+# Test VPC 1 and 2 Routes
+resource "aws_ec2_transit_gateway_route_table" "vpc-outbound" {
     transit_gateway_id = "${aws_ec2_transit_gateway.gw.id}"
 
     tags {
-        Name = "test-vpc-1"
+        Name = "vpc-outbound"
     }
 }
 
 resource "aws_ec2_transit_gateway_route_table_association" "test-vpc-1" {
     transit_gateway_attachment_id  = "${aws_ec2_transit_gateway_vpc_attachment.test-vpc-1.id}"
-    transit_gateway_route_table_id = "${aws_ec2_transit_gateway_route_table.test-vpc-1.id}"
+    transit_gateway_route_table_id = "${aws_ec2_transit_gateway_route_table.vpc-outbound.id}"
 }
 
-# Transit VPC1 to OpenTest
-resource "aws_ec2_transit_gateway_route" "test-vpc-1-to-opentest" {
+resource "aws_ec2_transit_gateway_route_table_association" "test-vpc-2" {
+    transit_gateway_attachment_id  = "${aws_ec2_transit_gateway_vpc_attachment.test-vpc-2.id}"
+    transit_gateway_route_table_id = "${aws_ec2_transit_gateway_route_table.vpc-outbound.id}"
+}
+
+resource "aws_ec2_transit_gateway_route" "vpc-to-opentest" {
     destination_cidr_block = "192.168.128.0/24"
     transit_gateway_attachment_id = "${aws_ec2_transit_gateway_vpc_attachment.network.id}"
-    transit_gateway_route_table_id = "${aws_ec2_transit_gateway_route_table.test-vpc-1.id}"
+    transit_gateway_route_table_id = "${aws_ec2_transit_gateway_route_table.vpc-outbound.id}"
 }
 
-resource "aws_ec2_transit_gateway_route" "test-vpc-1-to-opentest-vpc" {
+resource "aws_ec2_transit_gateway_route" "vpc-to-opentest-vpc" {
     destination_cidr_block = "10.0.0.0/16"
     transit_gateway_attachment_id = "${aws_ec2_transit_gateway_vpc_attachment.network.id}"
-    transit_gateway_route_table_id = "${aws_ec2_transit_gateway_route_table.test-vpc-1.id}"
+    transit_gateway_route_table_id = "${aws_ec2_transit_gateway_route_table.vpc-outbound.id}"
 }
 
-# Transit VPC1 to Edge
-resource "aws_ec2_transit_gateway_route" "test-vpc-1-to-edge" {
+resource "aws_ec2_transit_gateway_route" "vpc-to-edge" {
     destination_cidr_block = "0.0.0.0/0"
     transit_gateway_attachment_id = "${aws_ec2_transit_gateway_vpc_attachment.edge.id}"
-    transit_gateway_route_table_id = "${aws_ec2_transit_gateway_route_table.test-vpc-1.id}"
+    transit_gateway_route_table_id = "${aws_ec2_transit_gateway_route_table.vpc-outbound.id}"
 }
 
 # VPC1 to Transit
@@ -46,41 +49,6 @@ resource "aws_route" "test-vpc-1-private-to-transit" {
     route_table_id = "${data.aws_route_tables.test-vpc-1-private.ids[count.index]}"
     destination_cidr_block = "0.0.0.0/0"
     transit_gateway_id = "${aws_ec2_transit_gateway.gw.id}"
-}
-
-# Test VPC 2 Routes
-resource "aws_ec2_transit_gateway_route_table" "test-vpc-2" {
-    transit_gateway_id = "${aws_ec2_transit_gateway.gw.id}"
-
-    tags {
-        Name = "test-vpc-2"
-    }
-}
-
-resource "aws_ec2_transit_gateway_route_table_association" "test-vpc-2" {
-    transit_gateway_attachment_id  = "${aws_ec2_transit_gateway_vpc_attachment.test-vpc-2.id}"
-    transit_gateway_route_table_id = "${aws_ec2_transit_gateway_route_table.test-vpc-2.id}"
-}
-
-
-# Transit VPC2 to OpenTest
-resource "aws_ec2_transit_gateway_route" "test-vpc-2-to-opentest" {
-    destination_cidr_block = "192.168.128.0/24"
-    transit_gateway_attachment_id = "${aws_ec2_transit_gateway_vpc_attachment.network.id}"
-    transit_gateway_route_table_id = "${aws_ec2_transit_gateway_route_table.test-vpc-2.id}"
-}
-
-resource "aws_ec2_transit_gateway_route" "test-vpc-2-to-opentest-vpc" {
-    destination_cidr_block = "10.0.0.0/16"
-    transit_gateway_attachment_id = "${aws_ec2_transit_gateway_vpc_attachment.network.id}"
-    transit_gateway_route_table_id = "${aws_ec2_transit_gateway_route_table.test-vpc-2.id}"
-}
-
-# Transit VPC2 to Edge
-resource "aws_ec2_transit_gateway_route" "test-vpc-2-to-edge" {
-    destination_cidr_block = "0.0.0.0/0"
-    transit_gateway_attachment_id = "${aws_ec2_transit_gateway_vpc_attachment.edge.id}"
-    transit_gateway_route_table_id = "${aws_ec2_transit_gateway_route_table.test-vpc-2.id}"
 }
 
 # VPC2 to Transit
