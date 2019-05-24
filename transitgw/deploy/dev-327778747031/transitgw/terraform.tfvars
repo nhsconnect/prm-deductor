@@ -3,6 +3,10 @@ terragrunt = {
     source = "../../src//transitgw"
   }
 
+  dependencies {
+    paths = ["../testenv"]
+  }
+
   remote_state {
     backend = "s3"
     config {

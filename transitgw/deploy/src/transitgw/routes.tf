@@ -103,14 +103,16 @@ resource "aws_route" "network-private-to-transit-2" {
 
 # Edge to Transit
 resource "aws_route" "edge-public-to-transit" {
-    count = "${length(module.edge.public_route_table_ids)}"
+    # count = "${length(module.edge.public_route_table_ids)}"
+    count = 1
     route_table_id = "${module.edge.public_route_table_ids[count.index]}"
     destination_cidr_block = "10.0.0.0/8"
     transit_gateway_id = "${aws_ec2_transit_gateway.gw.id}"
 }
 
 resource "aws_route" "edge-private-to-transit" {
-    count = "${length(module.edge.private_route_table_ids)}"
+    # count = "${length(module.edge.private_route_table_ids)}"
+    count = 1
     route_table_id = "${module.edge.private_route_table_ids[count.index]}"
     destination_cidr_block = "10.0.0.0/8"
     transit_gateway_id = "${aws_ec2_transit_gateway.gw.id}"
