@@ -5,6 +5,6 @@ deploy : output.json
 plan :
 	terragrunt plan
 
-output.json : terraform.tfvars ../../src/daleaws/*.tf
+output.json : terraform.tfvars ../../src/vpn/*.tf
 	terragrunt apply --terragrunt-non-interactive -no-color -auto-approve
 	terragrunt output -no-color -json > output.json

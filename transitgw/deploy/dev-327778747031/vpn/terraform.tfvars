@@ -1,13 +1,13 @@
 terragrunt = {
   terraform {
-    source = "../../src//daleaws"
+    source = "../../src//vpn"
   }
 
   remote_state {
     backend = "s3"
     config {
-      bucket = "daleaws-297212130122-terraform-states"
-      key = "dev/daleaws/terraform.tfstate"
+      bucket = "prm-327778747031-terraform-states"
+      key = "dev/vpn/terraform.tfstate"
       region = "eu-west-2"
       encrypt = true
     }
@@ -20,3 +20,6 @@ terragrunt = {
 # ---------------------------------------------------------------------------------------------------------------------
 
 aws_region = "eu-west-2"
+environment = "dev"
+availability_zones = ["eu-west-2a", "eu-west-2b", "eu-west-2c"]
+ami_id = "ami-053e8bbda53bdd8db"
