@@ -4,8 +4,12 @@ const path = require('path');
 const fs = require('fs');
 
 exports.buildFragmentsFor = (attachmentReference) => {
-    let content = fs.readFileSync(attachmentReference.fullFilePath, 'utf8');
-    let fragments = getAllFragments(content, attachmentReference);
+    let fragments = [];
+
+    if (fs.existsSync(attachmentReference.fullFilePath)) {
+        let content = fs.readFileSync(attachmentReference.fullFilePath, 'utf8');
+        fragments = getAllFragments(content, attachmentReference);
+    }
 
     return fragments;
 }
