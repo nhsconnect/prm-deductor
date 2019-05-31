@@ -8,8 +8,7 @@ exports.getMessageId = (content) => {
 }
 
 exports.getFilename = (content) => {
-    content //?
-    let filename = content.match(/[F|f]ilename=\"(.*?)(?=\"\s)/); //?
+    let filename = content.match(/[F|f]ilename=\"(.*?)(?=\"\s)/);
     return filename[0].slice(10);
 }
 
@@ -45,7 +44,6 @@ exports.hasDataStoredOnPrimaryFile = (attachmentReference) => {
 exports.getFileInfoElement = (content) => {
     let element = '';
     if (this.isAttachmentData(content)) {
-        content //?
         let referenceJson = convertXmlToJson(content);
         element = referenceJson['eb:Reference']['eb:Description']._text;
     }

@@ -3,7 +3,7 @@ const metadataExtractions = require('../common/metadataExtractions');
 exports.parse = (ebReferenceText) => {
     let id = metadataExtractions.getReferenceId(ebReferenceText);
     
-    let fileInfo = metadataExtractions.getFileInfoElement(ebReferenceText); //?
+    let fileInfo = metadataExtractions.getFileInfoElement(ebReferenceText);
     let name = metadataExtractions.getFilename(fileInfo);
     let contentType = getContentType(fileInfo);
     let largeAttachment = isALargeAttachment(fileInfo);

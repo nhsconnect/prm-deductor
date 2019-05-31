@@ -41,7 +41,7 @@ describe('When parsing a primary file', () => {
             }
         };
 
-        primaryFile = primaryFileBuilder.parse(fullFilePath); //?
+        primaryFile = primaryFileBuilder.parse(fullFilePath);
     });
 
     test("it should have an id", () => {
