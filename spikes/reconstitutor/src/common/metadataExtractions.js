@@ -9,14 +9,14 @@ exports.getMessageId = (content) => {
 }
 
 exports.getFilename = (content) => {
-    let filename = content.match(/Filename=\"(.*?)(?=\"\s)/);
+    let filename = content.match(/[F|f]ilename=\"(.*?)(?=\"\s)/);
     return filename[0].slice(10);
 }
 
 exports.getSubjectFilename = (content) => {
     let gp2gpFragmentJson = getGp2GpFragmentInfoAsJson(content);
     if (gp2gpFragmentJson.Gp2gpfragment) {
-        let filename = gp2gpFragmentJson.Gp2gpfragment.subject._text.match(/(Attachment:\s)(.*?)$/); 
+        let filename = gp2gpFragmentJson.Gp2gpfragment.subject._text.match(/([A|a]ttachment:\s)(.*?)$/); 
         return filename[0].slice(12);
     } else {
         return this.getFilename(content);
