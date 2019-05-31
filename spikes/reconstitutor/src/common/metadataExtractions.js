@@ -24,13 +24,13 @@ exports.getSubjectFilename = (content) => {
 }
 
 exports.getReferenceId = (content) => {
-    let referenceJson = getReferenceAsJson(content);
+    let referenceJson = convertToJson(content);
     let refId = referenceJson['eb:Reference']._attributes['xlink:href'];
     return refId.slice(4);
 }
 
 exports.isAttachmentData = (fragmentReference) => {
-    return fragmentReference.indexOf('cid:Content') < 0;
+    return fragmentReference.indexOf('hl7ebxml') < 0;
 }
 
 exports.getPartName = (content) => {
@@ -44,14 +44,14 @@ exports.hasDataStoredOnPrimaryFile = (attachmentReference) => {
 
 function getSoapEnvelopeAsJson(content) {
     let soapEnvelope = content.match(/(\<soap:Envelope\s)(.*?)(\<\/soap:Envelope\>)/);
-    return (soapEnvelope) ? JSON.parse(convert.xml2json(soapEnvelope[0], options)) : '';
+    return (soapEnvelope) ? convertToJson(soapEnvelope[0]) : '';
 }
 
 function getGp2GpFragmentInfoAsJson(content) {
     let gp2gpFragmentInfo = content.match(/(\<Gp2gpfragment\s)(.*?)(\<\/Gp2gpfragment\>)/);
-    return (gp2gpFragmentInfo) ? JSON.parse(convert.xml2json(gp2gpFragmentInfo[0], options)) : '';
+    return (gp2gpFragmentInfo) ? convertToJson(gp2gpFragmentInfo[0]) : '';
 }
 
-function getReferenceAsJson(content) {
+function convertToJson(content) {
     return JSON.parse(convert.xml2json(content, options));
 }
