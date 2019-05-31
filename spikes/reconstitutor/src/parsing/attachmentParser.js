@@ -3,7 +3,7 @@ const metadataExtractions = require('../common/metadataExtractions');
 exports.parse = (ebReferenceText) => {
     let id = metadataExtractions.getReferenceId(ebReferenceText);
     
-    let fileInfo = getFileInfoElement(ebReferenceText);
+    let fileInfo = metadataExtractions.getFileInfoElement(ebReferenceText); //?
     let name = metadataExtractions.getFilename(fileInfo);
     let contentType = getContentType(fileInfo);
     let largeAttachment = isALargeAttachment(fileInfo);
@@ -32,14 +32,6 @@ function getFileLength(content) {
     let lastInstanceOfLengthInText = content.slice(content.lastIndexOf('Length')); 
     let fileLength = parseInt(lastInstanceOfLengthInText.slice(7)); 
     return fileLength;
-}
-
-function getFileInfoElement(content) {
-    let element = content.match(/(\<eb\:Description xml\:lang=\"en\"\>Filename)(.*?)(?=\<\/eb\:Description\>)/g);
-    if (element) {
-        element = element[0].slice(30);
-    }
-    return element;
 }
 
 function getIsCompressed(content) {
