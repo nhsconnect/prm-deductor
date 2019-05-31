@@ -1,25 +1,32 @@
+const convert = require('xml-js');
+
+let options = {compact: true, spaces: 4};
+
 exports.getMessageId = (content) => {
-    let messageId = content.match(/(?=\<eb:MessageId>)(.*?)(?=\<\/eb:MessageId>)/g); 
-    return messageId[0].slice(14); 
+    let soapJson = getSoapEnvelopeAsJson(content);
+    let messageId = soapJson['soap:Envelope']['soap:Header']['eb:MessageHeader']['eb:MessageData']['eb:MessageId']._text;
+    return messageId; 
 }
 
 exports.getFilename = (content) => {
-    let filename = content.match(/Filename=\"(.*?)(?=\"\s)/g);
+    let filename = content.match(/Filename=\"(.*?)(?=\"\s)/);
     return filename[0].slice(10);
 }
 
 exports.getSubjectFilename = (content) => {
-    let filename = content.match(/(\<subject\>Attachment:\s)(.*?)(?=\<\/subject\>)/); 
-    if (filename) {
-        return filename[0].slice(21);
+    let gp2gpFragmentJson = getGp2GpFragmentInfoAsJson(content);
+    if (gp2gpFragmentJson.Gp2gpfragment) {
+        let filename = gp2gpFragmentJson.Gp2gpfragment.subject._text.match(/(Attachment:\s)(.*?)$/); 
+        return filename[0].slice(12);
     } else {
         return this.getFilename(content);
     }
 }
 
 exports.getReferenceId = (content) => {
-    let refId = content.match(/xlink\:href=\"(.*?)(?=\">)/g);
-    return refId[0].slice(16);
+    let referenceJson = getReferenceAsJson(content);
+    let refId = referenceJson['eb:Reference']._attributes['xlink:href'];
+    return refId.slice(4);
 }
 
 exports.isAttachmentData = (fragmentReference) => {
@@ -27,10 +34,24 @@ exports.isAttachmentData = (fragmentReference) => {
 }
 
 exports.getPartName = (content) => {
-    let name = content.match(/^------=_(.*?)\s/); //?
+    let name = content.match(/^------=_(.*?)\s/);
     return name[1];
 }
 
 exports.hasDataStoredOnPrimaryFile = (attachmentReference) => {
     return (attachmentReference.id.indexOf('Attachment') > -1);
+}
+
+function getSoapEnvelopeAsJson(content) {
+    let soapEnvelope = content.match(/(\<soap:Envelope\s)(.*?)(\<\/soap:Envelope\>)/);
+    return (soapEnvelope) ? JSON.parse(convert.xml2json(soapEnvelope[0], options)) : '';
+}
+
+function getGp2GpFragmentInfoAsJson(content) {
+    let gp2gpFragmentInfo = content.match(/(\<Gp2gpfragment\s)(.*?)(\<\/Gp2gpfragment\>)/);
+    return (gp2gpFragmentInfo) ? JSON.parse(convert.xml2json(gp2gpFragmentInfo[0], options)) : '';
+}
+
+function getReferenceAsJson(content) {
+    return JSON.parse(convert.xml2json(content, options));
 }
